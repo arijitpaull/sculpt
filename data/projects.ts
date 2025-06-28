@@ -120,9 +120,9 @@ export const projects: Project[] = [
     },
     gallery: [
       "/images/mh_banner.png",
-      "/images/my_ss1.png",
-      "/images/my_ss2.png",
-      "/images/my_ss3.png"
+      "/images/mh_ss1.png",
+      "/images/mh_ss2.png",
+      "/images/mh_ss3.png"
     ]
   },
 ]
