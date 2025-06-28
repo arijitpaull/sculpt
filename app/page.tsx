@@ -211,9 +211,12 @@ ${formData.details}
     { code: "+49", country: "DE" },
     { code: "+81", country: "JP" },
     { code: "+86", country: "CN" },
+    { code: "+31", country: "NL" },
+    { code: "+30", country: "GR" },
+    { code: "+971", country: "AE" },
   ]
 
-  const currencies = ["USD", "EUR", "GBP", "JPY", "AUD", "CAD", "INR", "CNY"]
+  const currencies = ["USD", "EUR", "GBP", "JPY", "AUD", "CAD", "INR", "CNY", "AED"]
 
   return (
     <>
