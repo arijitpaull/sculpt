@@ -34,7 +34,12 @@ export default function Toast({ show, message, onClose, duration = 5000 }: Toast
         >
           <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0" />
           <p className="text-[#EAEFFF] text-sm flex-grow">{message}</p>
-          <button onClick={onClose} className="text-[#EAEFFF]/70 hover:text-[#EAEFFF] transition-colors">
+          <button
+            onClick={onClose}
+            className="text-[#EAEFFF]/70 hover:text-[#EAEFFF] transition-colors"
+            aria-label="Close notification"
+            title="Close"
+          >
             <X className="h-4 w-4" />
           </button>
         </motion.div>

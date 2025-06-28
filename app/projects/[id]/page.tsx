@@ -47,16 +47,34 @@ export default function ProjectPage() {
 
   return (
     <div className="min-h-screen">
-      <header className="fixed top-0 left-0 right-0 z-40 px-6 py-6 mix-blend-difference">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold tracking-tighter">
+      {/* Floating Header */}
+      <motion.header 
+        className="fixed top-4 left-0 right-0 z-50 flex justify-center"
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+      >
+        <div className="bg-[#202020]/50 backdrop-blur-md rounded-full px-6 py-3 flex items-center space-x-8 border border-[#303030]/30 shadow-2xl">
+          {/* Logo */}
+          <Link href="/" className="text-xl font-bold tracking-tighter text-[#EAEFFF]">
             {siteConfig.name}
           </Link>
-          <Link href="/" className="inline-flex items-center hover:opacity-70 transition-opacity">
-            <ArrowLeft className="mr-2 h-4 w-4" /> Back to projects
+          
+          {/* Back to Projects Button */}
+          <Link 
+            href="/" 
+            className="relative overflow-hidden bg-[#EAEFFF] text-[#202020] px-6 py-2.5 rounded-full font-bold transition-all duration-300 hover:scale-105 group inline-flex items-center shadow-lg text-lg"
+            style={{
+              boxShadow: '0 0 20px rgba(234, 239, 255, 0.3), 0 4px 14px rgba(234, 239, 255, 0.15)'
+            }}
+          >
+            {/* Shine effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+            <ArrowLeft className="mr-2 h-4 w-4 relative z-10" />
+            <span className="relative z-10 flex items-center justify-center h-full">Back to projects</span>
           </Link>
         </div>
-      </header>
+      </motion.header>
 
       <main>
         <section className="pt-32 pb-16 px-6">

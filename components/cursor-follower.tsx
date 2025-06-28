@@ -7,51 +7,83 @@ export default function CursorFollower() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isHovering, setIsHovering] = useState(false)
   const [isClicking, setIsClicking] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
-    const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY })
+    // Check if device is mobile/touch device
+    const checkIsMobile = () => {
+      const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+      const smallScreen = window.innerWidth <= 768
+      const userAgent = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+      
+      return hasTouch || smallScreen || userAgent
     }
 
-    const handleMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement
-      const isClickable =
-        target.tagName === "A" ||
-        target.tagName === "BUTTON" ||
-        target.closest("a") ||
-        target.closest("button") ||
-        target.style.cursor === "pointer" ||
-        window.getComputedStyle(target).cursor === "pointer"
+    setIsMobile(checkIsMobile())
 
-      setIsHovering(Boolean(isClickable))
+    // Listen for window resize to update mobile detection
+    const handleResize = () => {
+      setIsMobile(checkIsMobile())
     }
 
-    const handleMouseOut = () => {
-      setIsHovering(false)
-    }
+    window.addEventListener('resize', handleResize)
 
-    const handleMouseDown = () => {
-      setIsClicking(true)
-    }
+    // Only add mouse event listeners if not mobile
+    if (!checkIsMobile()) {
+      const updateMousePosition = (e: MouseEvent) => {
+        setMousePosition({ x: e.clientX, y: e.clientY })
+      }
 
-    const handleMouseUp = () => {
-      setIsClicking(false)
-    }
+      const handleMouseOver = (e: MouseEvent) => {
+        const target = e.target as HTMLElement
+        const isClickable =
+          target.tagName === "A" ||
+          target.tagName === "BUTTON" ||
+          target.closest("a") ||
+          target.closest("button") ||
+          target.style.cursor === "pointer" ||
+          window.getComputedStyle(target).cursor === "pointer"
 
-    window.addEventListener("mousemove", updateMousePosition)
-    document.addEventListener("mouseover", handleMouseOver)
-    document.addEventListener("mouseout", handleMouseOut)
-    document.addEventListener("mousedown", handleMouseDown)
-    document.addEventListener("mouseup", handleMouseUp)
+        setIsHovering(Boolean(isClickable))
+      }
+
+      const handleMouseOut = () => {
+        setIsHovering(false)
+      }
+
+      const handleMouseDown = () => {
+        setIsClicking(true)
+      }
+
+      const handleMouseUp = () => {
+        setIsClicking(false)
+      }
+
+      window.addEventListener("mousemove", updateMousePosition)
+      document.addEventListener("mouseover", handleMouseOver)
+      document.addEventListener("mouseout", handleMouseOut)
+      document.addEventListener("mousedown", handleMouseDown)
+      document.addEventListener("mouseup", handleMouseUp)
+
+      return () => {
+        window.removeEventListener("mousemove", updateMousePosition)
+        document.removeEventListener("mouseover", handleMouseOver)
+        document.removeEventListener("mouseout", handleMouseOut)
+        document.removeEventListener("mousedown", handleMouseDown)
+        document.removeEventListener("mouseup", handleMouseUp)
+        window.removeEventListener('resize', handleResize)
+      }
+    }
 
     return () => {
-      window.removeEventListener("mousemove", updateMousePosition)
-      document.removeEventListener("mouseover", handleMouseOver)
-      document.removeEventListener("mouseout", handleMouseOut)
-      document.removeEventListener("mousedown", handleMouseDown)
-      document.removeEventListener("mouseup", handleMouseUp)
+      window.removeEventListener('resize', handleResize)
     }
   }, [])
+
+  // Don't render cursor follower on mobile devices
+  if (isMobile) {
+    return null
+  }
 
   return (
     <>
