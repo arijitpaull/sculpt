@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sculpt.work/sitemap.xml
