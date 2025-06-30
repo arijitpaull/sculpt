@@ -509,7 +509,7 @@ ${formData.details}
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [showSplash, setShowSplash] = useState(false)
+
   const [videoError, setVideoError] = useState(false)
   const [showContactModal, setShowContactModal] = useState(false)
   const [showServiceForm, setShowServiceForm] = useState(false)
@@ -520,28 +520,6 @@ export default function Home() {
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0])
   const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.95])
 
-  // Check if splash screen should be shown (only on first visit)
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const hasSeenSplash = sessionStorage.getItem("sculpt-splash-shown")
-      if (!hasSeenSplash) {
-        setShowSplash(true)
-      }
-    }
-  }, [])
-
-  // Prevent scrolling when splash screen is shown
-  useEffect(() => {
-    if (showSplash) {
-      document.body.style.overflow = "hidden"
-    } else {
-      document.body.style.overflow = "auto"
-    }
-
-    return () => {
-      document.body.style.overflow = "auto"
-    }
-  }, [showSplash])
 
   // Handle video loading
   useEffect(() => {
@@ -765,6 +743,8 @@ export default function Home() {
 
   return (
     <>
+
+
       {/* Floating Header */}
       <motion.header 
         className="fixed top-4 left-0 right-0 z-50 flex justify-center"
