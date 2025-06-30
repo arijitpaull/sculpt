@@ -7,7 +7,6 @@ import Image from "next/image"
 import { ArrowRight, Menu, X, Instagram, Linkedin, Mail, Calendar, FileText, Check } from "lucide-react"
 import ProjectCard from "@/components/project-card"
 import TestimonialScroller from "@/components/testimonial-scroller"
-import SplashScreen from "@/components/splash-screen"
 import FiverrLogo from "@/components/fiverr-logo"
 import Toast from "@/components/toast"
 import { sendEmail } from "@/lib/actions"
@@ -766,8 +765,6 @@ export default function Home() {
 
   return (
     <>
-      {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
-
       {/* Floating Header */}
       <motion.header 
         className="fixed top-4 left-0 right-0 z-50 flex justify-center"
