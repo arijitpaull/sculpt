@@ -35,6 +35,13 @@ export const testimonials: Testimonial[] = [
     id: "5",
     name: "@lighthousesolar 🇬🇷",
     role: "Client, Fiverr",
-    content: "Excellent job !",
+    content: "Excellent job, in time with the right price ! We are going to have many more projects !",
   },
+  {
+    id: "6",
+    name: "Tanya Singh 🇮🇳",
+    role: "Client",
+    content: "Great experience! Fixed all bugs quickly and gave the app a clean, modern design. Very professional and responsive. Highly recommend!",
+  },
+  
 ]
