@@ -49,6 +49,4 @@ export const testimonials: Testimonial[] = [
     role: "Client",
     content: "Great experience! Fixed all bugs quickly and gave the app a clean, modern design. Very professional and responsive. Highly recommend!",
   },
-  
-  
 ]

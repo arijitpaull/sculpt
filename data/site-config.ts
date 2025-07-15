@@ -25,11 +25,11 @@ export const siteConfig: SiteConfig = {
   logo: "/images/sculpt-logo.png",
   contact: {
     email: "admin@sculpt.work",
-    phone: "+1 (555) 123-4567", // Optional
+    phone: "+91 9650639071", // Optional
   },
   company: {
-    name: "SCULPT.",
-    foundedYear: 2020,
-    location: "San Francisco, CA", // Optional
+    name: "SCULPT",
+    foundedYear: 2024,
+    location: "Delhi, India", // Optional
   },
 }
