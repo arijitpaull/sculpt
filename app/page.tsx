@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from "react"
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowRight, Menu, X, Instagram, Linkedin, Mail, Calendar, FileText, Check } from "lucide-react"
+import { ArrowRight, Menu, X, Instagram, Linkedin, Mail, Calendar, FileText, Check, ChevronLeft, ChevronRight } from "lucide-react"
 import ProjectCard from "@/components/project-card"
 
 import FiverrLogo from "@/components/fiverr-logo"
@@ -510,17 +510,39 @@ ${formData.details}
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-
   const [videoError, setVideoError] = useState(false)
   const [showContactModal, setShowContactModal] = useState(false)
   const [showServiceForm, setShowServiceForm] = useState(false)
   const [showCalModal, setShowCalModal] = useState(false)
+  const [currentProjectPage, setCurrentProjectPage] = useState(0)
+  
   const { scrollYProgress } = useScroll()
   const headerRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0])
   const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.95])
 
+  // Projects pagination logic
+  const PROJECTS_PER_PAGE = 4
+  
+  // Reverse the projects array to show newest first (latest added project shows first)
+  const reversedProjects = [...projects].reverse()
+  const totalPages = Math.ceil(reversedProjects.length / PROJECTS_PER_PAGE)
+  const startIndex = currentProjectPage * PROJECTS_PER_PAGE
+  const endIndex = startIndex + PROJECTS_PER_PAGE
+  const currentProjects = reversedProjects.slice(startIndex, endIndex)
+  
+  const nextProjectPage = () => {
+    if (currentProjectPage < totalPages - 1) {
+      setCurrentProjectPage(currentProjectPage + 1)
+    }
+  }
+  
+  const prevProjectPage = () => {
+    if (currentProjectPage > 0) {
+      setCurrentProjectPage(currentProjectPage - 1)
+    }
+  }
 
   // Handle video loading
   useEffect(() => {
@@ -744,8 +766,6 @@ export default function Home() {
 
   return (
     <>
-
-
       {/* Floating Header */}
       <motion.header 
         className="fixed top-4 left-0 right-0 z-50 flex justify-center"
@@ -993,7 +1013,7 @@ export default function Home() {
 
         <section id="projects" className="relative py-32 px-6 -mt-16">
           <div className="max-w-7xl mx-auto relative z-10">
-            {/* Section Header */}
+            {/* Section Header with Navigation */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -1001,16 +1021,73 @@ export default function Home() {
               viewport={{ once: true }}
               className="mb-16"
             >
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4">Our Projects</h2>
-              <p className="text-lg opacity-70">Some of our work for your reference.</p>
+              <div className="flex justify-between items-center mb-4">
+                <div>
+                  <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4">Our Projects</h2>
+                  <p className="text-lg opacity-70">Some of our work for your reference.</p>
+                </div>
+                
+                {/* Navigation Controls */}
+                {totalPages > 1 && (
+                  <div className="flex items-center space-x-4">
+                    <button
+                      onClick={prevProjectPage}
+                      disabled={currentProjectPage === 0}
+                      className={`p-3 rounded-full border transition-all duration-300 ${
+                        currentProjectPage === 0
+                          ? "border-[#252525] text-[#252525] cursor-not-allowed"
+                          : "border-[#EAEFFF] text-[#EAEFFF] hover:bg-[#EAEFFF] hover:text-[#101010]"
+                      }`}
+                      aria-label="Previous projects"
+                    >
+                      <ChevronLeft className="h-5 w-5" />
+                    </button>
+                    
+                    <div className="flex items-center space-x-2">
+                      {Array.from({ length: totalPages }, (_, i) => (
+                        <button
+                          key={i}
+                          onClick={() => setCurrentProjectPage(i)}
+                          className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                            i === currentProjectPage ? "bg-[#EAEFFF]" : "bg-[#252525] hover:bg-[#EAEFFF]/50"
+                          }`}
+                          aria-label={`Go to page ${i + 1}`}
+                        />
+                      ))}
+                    </div>
+                    
+                    <button
+                      onClick={nextProjectPage}
+                      disabled={currentProjectPage === totalPages - 1}
+                      className={`p-3 rounded-full border transition-all duration-300 ${
+                        currentProjectPage === totalPages - 1
+                          ? "border-[#252525] text-[#252525] cursor-not-allowed"
+                          : "border-[#EAEFFF] text-[#EAEFFF] hover:bg-[#EAEFFF] hover:text-[#101010]"
+                      }`}
+                      aria-label="Next projects"
+                    >
+                      <ChevronRight className="h-5 w-5" />
+                    </button>
+                  </div>
+                )}
+              </div>
             </motion.div>
 
-            {/* Projects Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-              {projects.map((project, index) => (
-                <ProjectCard key={project.id} project={project} index={index} />
-              ))}
-            </div>
+            {/* Projects Grid with Animation */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentProjectPage}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.5 }}
+                className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12"
+              >
+                {currentProjects.map((project, index) => (
+                  <ProjectCard key={project.id} project={project} index={index} />
+                ))}
+              </motion.div>
+            </AnimatePresence>
           </div>
         </section>
 

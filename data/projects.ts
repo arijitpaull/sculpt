@@ -62,7 +62,7 @@ export const projects: Project[] = [
     testimonial: {
       quote:
         "Woque turned journaling from a chore into something I look forward to every night. Seeing my old answers and how I’ve changed is genuinely eye-opening.",
-      author: "Nikita A., early user"
+      author: "Nikita A., Early User"
     },
     gallery: [
       "/images/wq_banner.png",
@@ -90,7 +90,7 @@ export const projects: Project[] = [
     testimonial: {
       quote:
         "Using Mynd has become part of my nightly routine. I get to express myself, reflect, and even get support when I feel low—all without needing to wait for a therapy session.",
-      author: "Aarav D., user"
+      author: "Aarav D., User"
     },
     gallery: [
       "/images/my_banner.png",
@@ -115,14 +115,68 @@ export const projects: Project[] = [
     technologies: ["Flutter", "Hive", "Firebase", "Dart", "Notifications Plugin"],
     testimonial: {
       quote:
-        "Medi Hydrate keeps me on track with both my pills and hydration without overwhelming me. It’s simple, reliable, and a must-have for my daily routine.",
-      author: "Sneha V., user"
+        "Really helpful app! It's easy to use and a great reminder to stay hydrated, especially during busy days.",
+      author: "Abhay S., User"
     },
     gallery: [
       "/images/mh_banner.png",
       "/images/mh_ss1.png",
       "/images/mh_ss2.png",
       "/images/mh_ss3.png"
+    ]
+  },
+  {
+    id: "5",
+    title: "Dakkapel Offerte",
+    category: "Utilities",
+    description: "A precise roof angle measurement and renovation request app built for Dakkapel Fabriek in the Netherlands.",
+    fullDescription:
+      "Dakkapel Offerte is a utility app developed for Dakkapel Fabriek, a Dutch company specializing in roof renovations. The app leverages phone sensors to calculate the roof’s angle in real-time and lets users send a full renovation request—complete with project details, address, angle data (manual, normal, or AR mode), and attic images—to the company via email. It’s designed to streamline appointment booking and eliminate the need for initial site visits.",
+    image: "/images/dakkapel-thumbnail.png",
+    challenge:
+      "Capturing the roof angle accurately using the phone's sensors was the toughest challenge. Making sure the reading stayed consistent without fluctuating due to unwanted phone movement or shaky hands required a lot of experimentation. Implementing a visual protractor with a dynamic arrow that reflected real-time angle changes further added to the complexity. Calibrating the sensor to lock in stable values demanded trial-and-error across multiple Flutter packages.",
+    solution:
+      "I developed a clean, intuitive interface with three modes of angle entry: sensor-based, AR-assisted, and manual. A custom-built protractor UI displayed a real-time arrow indicating the roof angle based on sensor orientation. To ensure angle stability, I experimented with filtering and calibration techniques across several device orientations. Project submissions—including user info, angle values, and up to 3 attic photos—were sent directly to the company’s email using SMTP integration, automating the appointment request process.",
+    results:
+      "The app drastically improved the client's lead intake workflow, allowing customers to send accurate project details remotely. Dakkapel Fabriek reported better engagement and fewer scheduling hassles since the angle readings came in with context-rich project information. Despite being a niche use-case app, it stood out due to its precision and thoughtful user experience.",
+    technologies: ["Flutter", "Dart", "Device Sensors", "SMTP", "AR Mode"],
+    testimonial: {
+      quote:
+        "The combination of ease of use and a sleek, professional design makes the final product truly outstanding.",
+      author: "Aria, Dakkapel Fabbriek"
+    },
+    gallery: [
+      "/images/do_banner.png",
+      "/images/do_ss1.png",
+      "/images/do_ss2.png",
+      "/images/do_ss3.png"
+    ]
+  },
+  {
+    id: "6",
+    title: "Funutrition",
+    category: "Education",
+    description: "A child-friendly app to track food, water, mood, and daily activities with full parental and admin supervision.",
+    fullDescription:
+      "Funutrition is a complete wellness and learning tracker designed for children. The app helps young users log meals, water intake, moods, and physical activities in a fun, engaging way. It also offers a portal for parents to track everything in one place and for admins to monitor data, assign lessons and challenges, and upload recipes or custom plans for each child. Admins can respond to user requests, issue personalized nutrition quotes, and view uploaded challenge proofs submitted by children—all stored securely through a sophisticated database and storage system.",
+    image: "/images/funutrition-thumbnail.png",
+    challenge:
+      "Designing an engaging, child-friendly experience that integrates multiple complex features like custom lesson uploads, secure photo storage, mood/activity tracking, and role-based dashboards for parents and admins. Database architecture had to support authentication, permissions, media uploads, and custom workflows across multiple user roles.",
+    solution:
+      "I designed and developed Funutrition with a playful yet structured UI, ensuring it appealed to children while maintaining clarity for parents and admins. The app incorporated 200+ AI-generated lessons and 40+ unique challenges. Admins could upload content, track responses, and send custom plans, while users could log habits, upload proof-of-completion images, and receive personalized responses. I used Supabase for database logic, policies, and storage buckets, ensuring fast, secure operations and seamless integration of media handling with user actions.",
+    results:
+      "The client was extremely satisfied with the polished architecture and smooth UX of the app. They praised how child-friendly the interface turned out while also being feature-rich for admins. The use of AI-generated media saved significant time. The structured database and clean UI received great feedback during initial trials, leading the client to greenlight future enhancements, including gamification and multi-child family support.",
+    technologies: ["Flutter", "Supabase", "Hive", "Dart", "AI Media Tools"],
+    testimonial: {
+      quote:
+        "Looks promising ! Great work so far man.",
+      author: "Anurag Sharma, Arctic Bee"
+    },
+    gallery: [
+      "/images/fn_banner.png",
+      "/images/fn_ss1.png",
+      "/images/fn_ss2.png",
+      "/images/fn_ss3.png"
     ]
   },
 ]

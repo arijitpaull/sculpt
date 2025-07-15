@@ -45,7 +45,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     id: "7",
-    name: "@ari20000 🇳🇱",
+    name: "Aria",
     role: "Client, Dakkapel Fabriek",
     content: "We had a mobile app developed and are extremely satisfied with the result. The app is not only highly functional and works exactly as intended, but it’s also beautifully designed from the start. The combination of ease of use and a sleek, professional design makes the final product truly outstanding. Highly recommended!",
   },
