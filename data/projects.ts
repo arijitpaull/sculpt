@@ -1,6 +1,7 @@
 export interface Project {
   id: string
   title: string
+  slug: string
   category: string
   description: string
   fullDescription: string
@@ -20,6 +21,7 @@ export const projects: Project[] = [
   {
     id: "1",
     title: "Charmify",
+    slug: "charmify",
     category: "Dating",
     description: "AI-powered texting assistant and dating coach to level up your dating game.",
     fullDescription:
@@ -47,6 +49,7 @@ export const projects: Project[] = [
   {
     id: "2",
     title: "Woque",
+    slug: "woque",
     category: "Lifestyle",
     description: "Daily journaling questions that help you reflect, grow, and track your emotional journey.",
     fullDescription:
@@ -74,6 +77,7 @@ export const projects: Project[] = [
   {
     id: "3",
     title: "Mynd",
+    slug: "mynd",
     category: "Health and mindfulness",
     description: "AI-powered therapy and journaling to support emotional wellbeing.",
     fullDescription:
@@ -101,6 +105,7 @@ export const projects: Project[] = [
   {
     id: "4",
     title: "Medi Hydrate",
+    slug: "medi-hydrate",
     category: "Health and Lifestyle",
     description: "Smart medicine and hydration tracker for better daily wellness.",
     fullDescription:
@@ -128,6 +133,7 @@ export const projects: Project[] = [
   {
     id: "5",
     title: "Dakkapel Offerte",
+    slug: "dakkapel-offerte",
     category: "Utilities",
     description: "A precise roof angle measurement and renovation request app built for Dakkapel Fabriek in the Netherlands.",
     fullDescription:
@@ -155,6 +161,7 @@ export const projects: Project[] = [
   {
     id: "6",
     title: "Funutrition",
+    slug: "funutrition",
     category: "Education",
     description: "A child-friendly app to track food, water, mood, and daily activities with full parental and admin supervision.",
     fullDescription:

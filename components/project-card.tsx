@@ -20,7 +20,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
       viewport={{ once: true }}
       className="group"
     >
-      <Link href={`/projects/${project.id}`} className="block">
+      <Link href={`/projects/${project.slug}`} className="block">
         <div className="relative overflow-hidden bg-[#0a0a0a] border border-[#1a1a1a] rounded-2xl transition-all duration-700 hover:border-[#2a2a2a] hover:shadow-2xl hover:shadow-black/30 aspect-[4/5]">
           {/* Background Image - Uses first gallery image or fallback to main image */}
           <Image

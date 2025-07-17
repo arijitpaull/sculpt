@@ -10,17 +10,17 @@ import { projects, type Project } from "@/data/projects"
 import { siteConfig } from "@/data/site-config"
 
 export default function ProjectPage() {
-  const params = useParams() as { id: string } // 👈 assert type
+  const params = useParams() as { slug: string } // 👈 assert type
   const [project, setProject] = useState<Project | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const foundProject = projects.find((p) => p.id === params.id)
+    const foundProject = projects.find((p) => p.slug === params.slug)
     if (foundProject) {
       setProject(foundProject)
     }
     setLoading(false)
-  }, [params.id])
+  }, [params.slug])
 
   if (loading) {
     return (
