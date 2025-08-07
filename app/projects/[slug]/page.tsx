@@ -6,7 +6,6 @@ import ClientProjectPage from "./client-page"
 
 // This is a server component that generates metadata
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-  // Await params in Next.js 15+
   const resolvedParams = await params
   const project = projects.find((p) => p.slug === resolvedParams.slug)
   
@@ -70,7 +69,6 @@ export async function generateStaticParams() {
 
 // Server component that fetches data and passes to client
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
-  // Await params in Next.js 15+
   const resolvedParams = await params
   const project = projects.find((p) => p.slug === resolvedParams.slug)
 
