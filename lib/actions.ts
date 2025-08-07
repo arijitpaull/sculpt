@@ -36,7 +36,7 @@ export async function sendEmail(data: EmailData) {
       from: "SCULPT Contact <noreply@sculpt.work>",
       to: "sculptvisions@gmail.com", // Corrected email address
       subject: `New contact form submission from ${name}`,
-      reply_to: email,
+      replyTo: email,
       html: `
         <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
           <div style="background-color: #101010; color: #EAEFFF; padding: 30px; border-radius: 8px;">
