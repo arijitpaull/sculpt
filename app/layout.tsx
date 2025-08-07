@@ -4,6 +4,19 @@ import { Analytics } from "@vercel/analytics/react"
 import { Suspense } from "react"
 import CursorFollower from "@/components/cursor-follower"
 
+// Separate viewport export (required in Next.js 15+)
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#EAEFFF" },
+    { media: "(prefers-color-scheme: dark)", color: "#101010" }
+  ],
+  colorScheme: "dark light",
+}
+
 export const metadata = {
   metadataBase: new URL('https://www.sculpt.work'),
   
@@ -66,23 +79,8 @@ export const metadata = {
   
   // Enhanced application info
   applicationName: "SCULPT Agency",
-  generator: "Next.js 14",
+  generator: "Next.js 15",
   referrer: "origin-when-cross-origin",
-  
-  // Color scheme
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#EAEFFF" },
-    { media: "(prefers-color-scheme: dark)", color: "#101010" }
-  ],
-  colorScheme: "dark light",
-  
-  // Viewport settings
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 5,
-    userScalable: true,
-  },
 
   // Enhanced OpenGraph
   openGraph: {
@@ -193,7 +191,6 @@ export const metadata = {
     "mobile-web-app-capable": "yes",
     "msapplication-TileColor": "#101010",
     "msapplication-config": "/browserconfig.xml",
-    "theme-color": "#101010",
   },
 }
 

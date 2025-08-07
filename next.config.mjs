@@ -8,15 +8,13 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: true, // Keeping your setting
+    unoptimized: true, // Keeping your setting for static export compatibility
     formats: ['image/webp', 'image/avif'], // Added for better SEO
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
 
-  // SEO & Performance optimizations - new additions
-  output: 'export',
-  trailingSlash: true,
+  // SEO & Performance optimizations
   compress: true,
   
   // Headers for SEO and performance
