@@ -132,6 +132,34 @@ export const projects: Project[] = [
   },
   {
     id: "5",
+    title: "IoT Weather Integration with Thinger.io",
+    slug: "thinger-weather-iot",
+    category: "IoT & Automation",
+    description: "Real-time weather data delivery to 100+ IoT devices using Thinger.io, Python, and AWS.",
+    fullDescription:
+      "This project involved enabling seamless weather data delivery to ESP32-based IoT devices for a client in Greece. Initially, the devices were integrated with Thinger.io—a no-code IoT platform compatible with the hardware. Without prior experience on Thinger.io, a proof-of-concept was developed in under 15 days, where weather data from an external API was fetched using the platform’s endpoints and Postman testing. The second phase focused on scaling this setup to over 100 devices, each with unique IDs and location parameters. A Python script was built to fetch weather data from OpenWeatherMap every 30 minutes and send it to all active devices, with AWS hosting ensuring 24/7 uptime without interruptions.",
+    image: "/images/thinger-thumbnail.png",
+    challenge:
+      "The challenge was twofold: first, quickly learning and adapting to Thinger.io's limitations with a non-premium account, and second, scaling the weather delivery system to 100+ devices with unique location-based requests. The free deployment platforms tested—such as Render and GitHub Actions—caused interruptions or delays, resulting in inconsistent device data. Finding a hosting solution that could handle continuous execution without failure was crucial.",
+    solution:
+      "A phased approach was implemented. The proof-of-concept was built entirely within Thinger.io, utilizing its API endpoints to fetch external weather data. Once the scaling requirement emerged, the approach shifted to a dedicated Python backend. The script pulled weather data from OpenWeatherMap’s API based on each device's registered location, then pushed the data to the devices every 30 minutes. AWS EC2 was selected for deployment to ensure uninterrupted, high-frequency data delivery.",
+    results:
+      "The client received a stable, scalable, and maintenance-friendly solution that ensured real-time weather data delivery to all devices without downtime. The AWS-hosted Python system has been running smoothly, supporting future expansion beyond the initial 100 devices.",
+    technologies: ["Thinger.io", "ESP32", "Python", "AWS EC2", "OpenWeatherMap API", "Postman"],
+    testimonial: {
+      quote:
+        "Excellent job, in time with the right price ! We are going to have many more projects !",
+      author: "@lighthousesolar"
+    },
+    gallery: [
+      "/images/thng_banner.png",
+      "/images/thng_ss1.png",
+      "/images/thng_ss2.png",
+      "/images/thng_ss3.png"
+    ]
+  },
+  {
+    id: "6",
     title: "Dakkapel Offerte",
     slug: "dakkapel-offerte",
     category: "Utilities",
@@ -159,7 +187,7 @@ export const projects: Project[] = [
     ]
   },
   {
-    id: "6",
+    id: "7",
     title: "Funutrition",
     slug: "funutrition",
     category: "Education",
@@ -186,6 +214,4 @@ export const projects: Project[] = [
       "/images/fn_ss3.png"
     ]
   }
-  
-  
 ]
