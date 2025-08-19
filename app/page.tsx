@@ -521,6 +521,9 @@ export default function Home() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0])
   const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.95])
+  
+  // Add arrow opacity control based on scroll
+  const arrowOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0])
 
   // Projects pagination logic
   const PROJECTS_PER_PAGE = 4
@@ -989,8 +992,8 @@ export default function Home() {
             )}
           </motion.div>
 
-          {/* Gradient overlay for smooth transition */}
-          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#101010] via-[#101010]/80 to-transparent z-10" />
+          {/* Updated gradient overlay - moved down and made more subtle */}
+          <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#101010] via-[#101010]/60 to-transparent z-10" />
 
           <div className="relative z-20 h-full flex flex-col items-center justify-center px-4">
             <motion.div
@@ -1004,11 +1007,15 @@ export default function Home() {
             </motion.div>
           </div>
 
-          <div className="absolute bottom-10 left-0 right-0 flex justify-center z-20">
+          {/* Updated scroll arrow - now disappears on scroll */}
+          <motion.div 
+            className="absolute bottom-10 left-0 right-0 flex justify-center z-20"
+            style={{ opacity: arrowOpacity }}
+          >
             <motion.div animate={{ y: [0, 10, 0] }} transition={{ repeat: Number.POSITIVE_INFINITY, duration: 1.5 }}>
               <ArrowRight className="h-6 w-6 rotate-90" />
             </motion.div>
-          </div>
+          </motion.div>
         </section>
 
         <section id="projects" className="relative py-32 px-6 -mt-16">
