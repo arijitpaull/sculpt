@@ -1096,7 +1096,7 @@ export default function Home() {
             href={`/projects/${reversedProjects[0]?.slug}`}
             className="inline-flex items-center px-6 py-3 border border-[#EAEFFF] rounded-full hover:bg-[#EAEFFF] hover:text-[#101010] transition-colors"
           >
-            Read more
+            View Project Details
           </Link>
         </div>
       </div>
