@@ -22,11 +22,11 @@ export const metadata = {
   
   // Enhanced basic meta tags
   title: {
-    default: "SCULPT - App Development Freelancing Agency | Hire Top Developers",
+    default: "SCULPT - Software Development Agency | Full-Stack Development & AI Solutions",
     template: "%s | SCULPT - Expert App & AI Development"
   },
   
-  description: "SCULPT is a premier software freelancing agency specializing in mobile app development, web development, and AI tools. Hire vetted developers through Fiverr, Upwork, or work directly with our agency for custom software solutions.",
+  description: "SCULPT is a premium software freelancing agency specializing in mobile app AI models, and web apps development, and logo design and branding. Hire through Fiverr, Linkedin, or work directly with our agency for custom software solutions.",
   
   keywords: [
     // Primary keywords
