@@ -510,6 +510,38 @@ ${formData.details}
 }
 
 export default function Home() {
+
+  function useTypewriter(words: string[], typeSpeed = 100, deleteSpeed = 50, delayBetweenWords = 2000) {
+    const [currentWordIndex, setCurrentWordIndex] = useState(0)
+    const [currentText, setCurrentText] = useState("")
+    const [isDeleting, setIsDeleting] = useState(false)
+
+    useEffect(() => {
+      const currentWord = words[currentWordIndex]
+
+      const timer = setTimeout(() => {
+        if (!isDeleting) {
+          if (currentText.length < currentWord.length) {
+            setCurrentText(currentWord.slice(0, currentText.length + 1))
+          } else {
+            setTimeout(() => setIsDeleting(true), delayBetweenWords)
+          }
+        } else {
+          if (currentText.length > 0) {
+            setCurrentText(currentText.slice(0, -1))
+          } else {
+            setIsDeleting(false)
+            setCurrentWordIndex((prev) => (prev + 1) % words.length)
+          }
+        }
+      }, isDeleting ? deleteSpeed : typeSpeed)
+
+      return () => clearTimeout(timer)
+    }, [currentText, isDeleting, currentWordIndex, words, typeSpeed, deleteSpeed, delayBetweenWords])
+
+    return currentText
+  }
+
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [videoError, setVideoError] = useState(false)
   const [showContactModal, setShowContactModal] = useState(false)
@@ -517,6 +549,8 @@ export default function Home() {
   const [showCalModal, setShowCalModal] = useState(false)
   const [currentProjectPage, setCurrentProjectPage] = useState(0)
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+  const typewriterWords = ["An App", "An AI Model", "A Website", "A Chatbot", "An AI Automation"]
+  const dynamicText = useTypewriter(typewriterWords, 150, 100, 2000)
 
   
   const { scrollYProgress } = useScroll()
@@ -781,14 +815,18 @@ export default function Home() {
       >
         <div className="bg-[#202020]/50 backdrop-blur-md rounded-full px-6 py-3 flex items-center space-x-8 border border-[#303030]/30 shadow-2xl">
           {/* Logo */}
-          <Link href="/" className="text-xl font-bold tracking-tighter text-[#EAEFFF]">
-            {siteConfig.name}
+          <Link href="/" className="flex items-center">
+            <img 
+              src="/images/sculpt_logo.png" 
+              alt={siteConfig.name}
+              className="h-10 w-auto"
+            />
           </Link>
           
           {/* Desktop Navigation - unchanged */}
           <div className="hidden md:flex items-center space-x-6">
             {/* Social Icons */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-5">
               {socialLinks.map(renderSocialIcon)}
             </div>
             
@@ -1005,7 +1043,13 @@ export default function Home() {
               transition={{ delay: 0.5, duration: 0.8 }}
               className="text-center max-w-4xl mx-auto"
             >
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter mb-6">{siteConfig.tagline}</h1>
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter mb-6">
+  Build{" "}
+  <span className="text-[#EAEFFF]">
+    {dynamicText}
+    <span className="animate-pulse">|</span>
+  </span>
+</h1>
               <p className="text-lg md:text-xl opacity-80 mb-8 max-w-2xl mx-auto">{siteConfig.description}</p>
             </motion.div>
           </div>
@@ -1326,13 +1370,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
           <div className="mb-6 md:mb-0">
             <Link href="/" className="block">
-              <Image
-                src={siteConfig.logo || "/placeholder.svg"}
-                alt={siteConfig.name}
-                width={150}
-                height={40}
-                className="h-auto"
-              />
+            <div className="text-xl font-bold tracking-tighter text-[#EAEFFF]">
+  {siteConfig.name}
+</div>
             </Link>
             <p className="mt-4 text-sm opacity-70">
               © {new Date().getFullYear()} {siteConfig.company.name} All rights reserved.

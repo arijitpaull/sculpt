@@ -2,7 +2,6 @@ import type React from "react"
 import "./globals.css"
 import { Analytics } from "@vercel/analytics/react"
 import { Suspense } from "react"
-import CursorFollower from "@/components/cursor-follower"
 
 // Separate viewport export (required in Next.js 15+)
 export const viewport = {
@@ -24,6 +23,14 @@ export const metadata = {
   title: {
     default: "SCULPT - Software Development Agency | Full-Stack Development & AI Solutions",
     template: "%s | SCULPT - Expert App & AI Development"
+  },
+  icons: {
+    icon: [
+      { url: '/images/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/images/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: '/images/apple-touch-icon.png',
+    shortcut: '/favicon.ico',
   },
   
   description: "SCULPT is a premium software freelancing agency specializing in mobile app AI models, and web apps development, and logo design and branding. Hire through Fiverr, Linkedin, or work directly with our agency for custom software solutions.",
@@ -141,26 +148,6 @@ export const metadata = {
     },
   },
 
-  // Enhanced icons
-  icons: {
-    icon: [
-      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "/images/s_logo.png", sizes: "192x192", type: "image/png" },
-    ],
-    shortcut: "/favicon.ico",
-    apple: [
-      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
-    ],
-    other: [
-      {
-        rel: "mask-icon",
-        url: "/safari-pinned-tab.svg",
-        color: "#EAEFFF",
-      },
-    ],
-  },
-
   // Manifest for PWA
   manifest: "/site.webmanifest",
 
@@ -227,8 +214,8 @@ export default function RootLayout({
                   logo: {
                     "@type": "ImageObject",
                     "@id": "https://www.sculpt.work/#logo",
-                    url: "https://www.sculpt.work/images/s_logo.png",
-                    contentUrl: "https://www.sculpt.work/images/s_logo.png",
+                    url: "https://www.sculpt.work/images/sculpt_logo.png",
+                    contentUrl: "https://www.sculpt.work/images/sculpt_logo.png",
                     width: 512,
                     height: 512,
                     caption: "SCULPT Logo"
@@ -510,7 +497,6 @@ export default function RootLayout({
 
         <Suspense>
           {children}
-          <CursorFollower />
           <Analytics />
         </Suspense>
       </body>
