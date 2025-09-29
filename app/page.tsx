@@ -1043,9 +1043,19 @@ export default function Home() {
               transition={{ delay: 0.5, duration: 0.8 }}
               className="text-center max-w-4xl mx-auto"
             >
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter mb-6">
+              <h1 
+                className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter mb-6"
+                style={{
+                  textShadow: '0 0 20px rgba(234, 239, 255, 0.6), 0 0 40px rgba(234, 239, 255, 0.4), 0 0 60px rgba(234, 239, 255, 0.2)'
+                }}
+              >
   Build{" "}
-  <span className="text-[#EAEFFF]">
+  <span 
+    className="text-[#EAEFFF]"
+    style={{
+      textShadow: '0 0 20px rgba(234, 239, 255, 0.6), 0 0 40px rgba(234, 239, 255, 0.4), 0 0 60px rgba(234, 239, 255, 0.2)'
+    }}
+  >
     {dynamicText}
     <span className="animate-pulse">|</span>
   </span>
