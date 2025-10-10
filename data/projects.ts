@@ -15,67 +15,14 @@ export interface Project {
     author: string
   }
   gallery: string[]
+  appStoreUrl?: string      
+  playStoreUrl?: string     
+  websiteUrl?: string 
 }
 
 export const projects: Project[] = [
   {
     id: "1",
-    title: "Charmify",
-    slug: "charmify",
-    category: "Dating",
-    description: "AI-powered texting assistant and dating coach to level up your dating game.",
-    fullDescription:
-      "Charmify is an AI-driven dating assistant designed to help users navigate the early stages of conversation and dating with confidence. The app suggests responses based on context, tone, and even profile screenshots, while also generating pickup lines and icebreakers tailored to unique personalities and scenarios.",
-    image: "/images/charmify-thumbnail.png",
-    challenge:
-      "We noticed that users often felt overwhelmed when texting during early dating stages—unsure what to say or how to keep the momentum going. Creating a system that could personalize replies while feeling human and timely was key.",
-    solution:
-      "We built a clean, chat-focused interface powered by OpenAI that analyzes chat context in real time and delivers smart, witty suggestions. Users can input screenshots or conversation cues, and Charmify delivers appropriate responses or icebreakers. RevenueCat was integrated for in-app purchases and subscription handling.",
-    results:
-      "Beta testers reported feeling more confident and relaxed in their interactions. Many shared that conversations flowed more naturally with Charmify’s suggestions, and they even looked forward to chatting more frequently.",
-    technologies: ["Flutter", "OpenAI API", "Revenuecat", "Hive", "Dart"],
-    testimonial: {
-      quote:
-        "I used to stare at my phone for ages not knowing what to reply. Now with Charmify, I actually enjoy texting—it feels smooth, natural, and even fun.",
-      author: "Ananya R., Beta Tester"
-    },
-    gallery: [
-      "/images/ch_banner.png",
-      "/images/ch_ss1.png",
-      "/images/ch_ss2.png",
-      "/images/ch_ss3.png"
-    ]
-  },
-  {
-    id: "2",
-    title: "Woque",
-    slug: "woque",
-    category: "Lifestyle",
-    description: "Daily journaling questions that help you reflect, grow, and track your emotional journey.",
-    fullDescription:
-      "Woque is a guided journaling and reflection app designed to help users grow through consistency and introspection. Each day, the app asks one thoughtful question. A year later, the same prompt resurfaces so users can compare how they've changed. It features Mistral AI-powered growth insights, mood tracking, and streak-based rewards.",
-    image: "/images/woque-thumbnail.png",
-    challenge:
-      "Many people struggle with journaling consistency, and most apps don’t offer meaningful progression or self-comparison. We aimed to build something simple but emotionally intelligent—something that encourages growth.",
-    solution:
-      "We created a clean journaling experience with a futuristic AI-driven engine. Daily questions are carefully crafted, and mood tracking is built into the flow. Over time, Woque visualizes emotional patterns and presents old responses for self-comparison. Users are rewarded for streaks with collectible characters to gamify the habit.",
-    results:
-      "Woque was warmly received by early adopters. They appreciated the simplicity, enjoyed the mood tracking, and felt more self-aware as they compared responses year-over-year. Many said it finally made journaling a fun, rewarding habit.",
-    technologies: ["Flutter", "Mistral AI", "Hive", "Dart"],
-    testimonial: {
-      quote:
-        "Woque turned journaling from a chore into something I look forward to every night. Seeing my old answers and how I’ve changed is genuinely eye-opening.",
-      author: "Nikita A., Early User"
-    },
-    gallery: [
-      "/images/wq_banner.png",
-      "/images/wq_ss1.png",
-      "/images/wq_ss2.png",
-      "/images/wq_ss3.png"
-    ]
-  },
-  {
-    id: "3",
     title: "Mynd",
     slug: "mynd",
     category: "Health and mindfulness",
@@ -95,6 +42,7 @@ export const projects: Project[] = [
         "Using Mynd has become part of my nightly routine. I get to express myself, reflect, and even get support when I feel low—all without needing to wait for a therapy session.",
       author: "Aarav D., User"
     },
+    playStoreUrl:"https://play.google.com/store/apps/details?id=com.mycompany.mynd&ref=producthunt" ,
     gallery: [
       "/images/my_banner.png",
       "/images/my_ss1.png",
@@ -103,7 +51,7 @@ export const projects: Project[] = [
     ]
   },
   {
-    id: "4",
+    id: "2",
     title: "Medi Hydrate",
     slug: "medi-hydrate",
     category: "Health and Lifestyle",
@@ -130,6 +78,66 @@ export const projects: Project[] = [
       "/images/mh_ss3.png"
     ]
   },
+  {
+    id: "3",
+    title: "Charmify",
+    slug: "charmify",
+    category: "Dating",
+    description: "AI-powered texting assistant and dating coach to level up your dating game.",
+    fullDescription:
+      "Charmify is an AI-driven dating assistant designed to help users navigate the early stages of conversation and dating with confidence. The app suggests responses based on context, tone, and even profile screenshots, while also generating pickup lines and icebreakers tailored to unique personalities and scenarios.",
+    image: "/images/charmify-thumbnail.png",
+    challenge:
+      "We noticed that users often felt overwhelmed when texting during early dating stages—unsure what to say or how to keep the momentum going. Creating a system that could personalize replies while feeling human and timely was key.",
+    solution:
+      "We built a clean, chat-focused interface powered by OpenAI that analyzes chat context in real time and delivers smart, witty suggestions. Users can input screenshots or conversation cues, and Charmify delivers appropriate responses or icebreakers. RevenueCat was integrated for in-app purchases and subscription handling.",
+    results:
+      "Beta testers reported feeling more confident and relaxed in their interactions. Many shared that conversations flowed more naturally with Charmify’s suggestions, and they even looked forward to chatting more frequently.",
+    technologies: ["Flutter", "OpenAI API", "Revenuecat", "Hive", "Dart"],
+    testimonial: {
+      quote:
+        "I used to stare at my phone for ages not knowing what to reply. Now with Charmify, I actually enjoy texting—it feels smooth, natural, and even fun.",
+      author: "Ananya R., Beta Tester"
+    },
+    appStoreUrl:"https://apps.apple.com/in/app/charmify-dating-coach/id6743173949" ,
+    playStoreUrl:"https://play.google.com/store/apps/details?id=com.sculpt.charmify&ref=producthunt" ,
+    gallery: [
+      "/images/ch_banner.png",
+      "/images/ch_ss1.png",
+      "/images/ch_ss2.png",
+      "/images/ch_ss3.png"
+    ]
+  },
+  {
+    id: "4",
+    title: "Woque",
+    slug: "woque",
+    category: "Lifestyle",
+    description: "Daily journaling questions that help you reflect, grow, and track your emotional journey.",
+    fullDescription:
+      "Woque is a guided journaling and reflection app designed to help users grow through consistency and introspection. Each day, the app asks one thoughtful question. A year later, the same prompt resurfaces so users can compare how they've changed. It features Mistral AI-powered growth insights, mood tracking, and streak-based rewards.",
+    image: "/images/woque-thumbnail.png",
+    challenge:
+      "Many people struggle with journaling consistency, and most apps don’t offer meaningful progression or self-comparison. We aimed to build something simple but emotionally intelligent—something that encourages growth.",
+    solution:
+      "We created a clean journaling experience with a futuristic AI-driven engine. Daily questions are carefully crafted, and mood tracking is built into the flow. Over time, Woque visualizes emotional patterns and presents old responses for self-comparison. Users are rewarded for streaks with collectible characters to gamify the habit.",
+    results:
+      "Woque was warmly received by early adopters. They appreciated the simplicity, enjoyed the mood tracking, and felt more self-aware as they compared responses year-over-year. Many said it finally made journaling a fun, rewarding habit.",
+    technologies: ["Flutter", "Mistral AI", "Hive", "Dart"],
+    testimonial: {
+      quote:
+        "Woque turned journaling from a chore into something I look forward to every night. Seeing my old answers and how I’ve changed is genuinely eye-opening.",
+      author: "Nikita A., Early User"
+    },
+    appStoreUrl:"https://apps.apple.com/in/app/woque-know-yourself/id6745866800" ,
+    gallery: [
+      "/images/wq_banner.png",
+      "/images/wq_ss1.png",
+      "/images/wq_ss2.png",
+      "/images/wq_ss3.png"
+    ]
+  },
+  
   {
     id: "5",
     title: "IoT Weather Integration with Thinger.io",
@@ -207,6 +215,8 @@ export const projects: Project[] = [
         "Looks promising! Great work so far man.",
       author: "Anurag Sharma, Arctic Bee"
     },
+    appStoreUrl:"https://apps.apple.com/in/app/funutrition-meals-learning/id6751509563" ,
+    playStoreUrl:"https://play.google.com/store/apps/details?id=com.sculpt.funutrition" ,
     gallery: [
       "/images/fn_banner.png",
       "/images/fn_ss1.png",

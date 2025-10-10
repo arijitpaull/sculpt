@@ -17,7 +17,7 @@ export interface SiteConfig {
 }
 
 export const siteConfig: SiteConfig = {
-  name: "SCULPT.",
+  name: "SCULPT",
   tagline: "Chiseling Visions into Apps",
   description: "We craft digital experiences that blend form and function into seamless, captivating products.",
   heroVideo: "/videos/sculpt-hero.mp4",

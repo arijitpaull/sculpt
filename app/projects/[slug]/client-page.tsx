@@ -6,6 +6,7 @@ import Image from "next/image"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import type { Project } from "@/data/projects"
 import { siteConfig } from "@/data/site-config"
+import ProjectLinks from "@/components/project-links"
 
 interface ClientProjectPageProps {
   project: Project
@@ -118,8 +119,15 @@ export default function ClientProjectPage({ project }: ClientProjectPageProps) {
                 </nav>
 
                 <div className="inline-block bg-[#1a1a1a] px-3 py-1 rounded-full text-sm mb-4">{project.category}</div>
-                <h1 className="text-4xl md:text-6xl font-bold tracking-tighter mb-6">{project.title}</h1>
-                <p className="text-xl md:text-2xl opacity-80 max-w-3xl">{project.fullDescription}</p>
+                <div className="flex flex-wrap items-center gap-4 mb-6">
+                  <h1 className="text-4xl md:text-6xl font-bold tracking-tighter">{project.title}</h1>
+                <ProjectLinks 
+                  appStoreUrl={project.appStoreUrl}
+                  playStoreUrl={project.playStoreUrl}
+                  websiteUrl={project.websiteUrl}
+                />
+                </div>
+<p className="text-xl md:text-2xl opacity-80 max-w-3xl">{project.fullDescription}</p>
 
                 {/* Technology tags for SEO */}
                 <div className="mt-8 flex flex-wrap gap-2">
