@@ -220,22 +220,26 @@ export default function ClientProjectPage({ project }: ClientProjectPageProps) {
                   </div>
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold mb-6">Client Testimonial</h2>
-                  <blockquote className="border-l-2 border-[#EAEFFF] pl-6 italic" itemProp="reviewBody">
-                    <p className="text-lg opacity-80 mb-4">"{project.testimonial.quote}"</p>
-                    <footer className="text-sm">
-                      — <span itemProp="author" itemScope itemType="https://schema.org/Person">
-                        <span itemProp="name">{project.testimonial.author}</span>
-                      </span>
-                    </footer>
-                  </blockquote>
-                  <div style={{display: "none"}}>
-                    <span itemProp="reviewRating" itemScope itemType="https://schema.org/Rating">
-                      <meta itemProp="ratingValue" content="5" />
-                      <meta itemProp="bestRating" content="5" />
-                    </span>
-                  </div>
-                </div>
+  {project.testimonial.quote && project.testimonial.author && (
+    <>
+      <h2 className="text-2xl font-bold mb-6">Client Testimonial</h2>
+      <blockquote className="border-l-2 border-[#EAEFFF] pl-6 italic" itemProp="reviewBody">
+        <p className="text-lg opacity-80 mb-4">"{project.testimonial.quote}"</p>
+        <footer className="text-sm">
+          — <span itemProp="author" itemScope itemType="https://schema.org/Person">
+            <span itemProp="name">{project.testimonial.author}</span>
+          </span>
+        </footer>
+      </blockquote>
+      <div style={{display: "none"}}>
+        <span itemProp="reviewRating" itemScope itemType="https://schema.org/Rating">
+          <meta itemProp="ratingValue" content="5" />
+          <meta itemProp="bestRating" content="5" />
+        </span>
+      </div>
+    </>
+  )}
+</div>
               </div>
             </div>
           </section>

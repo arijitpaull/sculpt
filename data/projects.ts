@@ -39,8 +39,8 @@ export const projects: Project[] = [
     technologies: ["Flutter", "OpenAI API", "Supabase", "Hive", "Dart"],
     testimonial: {
       quote:
-        "Using Mynd has become part of my nightly routine. I get to express myself, reflect, and even get support when I feel low—all without needing to wait for a therapy session.",
-      author: "Aarav D., User"
+        "",
+      author: ""
     },
     playStoreUrl:"https://play.google.com/store/apps/details?id=com.mycompany.mynd&ref=producthunt" ,
     gallery: [
@@ -96,8 +96,8 @@ export const projects: Project[] = [
     technologies: ["Flutter", "OpenAI API", "Revenuecat", "Hive", "Dart"],
     testimonial: {
       quote:
-        "I used to stare at my phone for ages not knowing what to reply. Now with Charmify, I actually enjoy texting—it feels smooth, natural, and even fun.",
-      author: "Ananya R., Beta Tester"
+        "",
+      author: ""
     },
     appStoreUrl:"https://apps.apple.com/in/app/charmify-dating-coach/id6743173949" ,
     playStoreUrl:"https://play.google.com/store/apps/details?id=com.sculpt.charmify&ref=producthunt" ,
@@ -126,8 +126,8 @@ export const projects: Project[] = [
     technologies: ["Flutter", "Mistral AI", "Hive", "Dart"],
     testimonial: {
       quote:
-        "Woque turned journaling from a chore into something I look forward to every night. Seeing my old answers and how I’ve changed is genuinely eye-opening.",
-      author: "Nikita A., Early User"
+        "",
+      author: ""
     },
     appStoreUrl:"https://apps.apple.com/in/app/woque-know-yourself/id6745866800" ,
     gallery: [
@@ -222,6 +222,35 @@ export const projects: Project[] = [
       "/images/fn_ss1.png",
       "/images/fn_ss2.png",
       "/images/fn_ss3.png"
+    ]
+  },
+  {
+    id: "8",
+    title: "MelodAI",
+    slug: "melodai",
+    category: "Music",
+    description: "AI-powered music studio in your pocket—create original songs and covers with full control over emotion, genre, and voice.",
+    fullDescription:
+      "MelodAI is a comprehensive AI music creation platform that puts a full studio experience in users' hands. The app enables anyone to generate original AI songs from prompts or lyrics, create covers using preset voices, and customize every aspect of their music—from emotion and genre to voice type and recording style. Users can fetch any song via YouTube API for cover generation, select from random suggested lyrics, and fine-tune their creations with studio-quality controls.",
+    image: "/images/melodai-thumbnail.png",
+    challenge:
+      "The primary challenge was designing a premium, intuitive UI that could handle complex music generation features without overwhelming users. We needed to create an attractive paywall system, streamline the credit-based payment flow for weekly and annual subscriptions, and iterate through multiple design versions for App Store screenshots and walkthrough pages to meet the client's vision. Balancing powerful functionality with visual appeal while integrating YouTube API, managing subscription tiers, and building a flexible credit system required extensive UI/UX refinement.",
+    solution:
+      "We built a sleek, studio-inspired interface where users can choose between AI song generation and AI cover creation. The song generation flow lets users input prompts or lyrics (with random suggestions available), then select emotion (happy, sad, bold, etc.), genre (electronic, pop, rock, R&B, etc.), voice gender (masculine/feminine), and recording style (studio, live concert, etc.). The YouTube API integration enables seamless song fetching for covers. We implemented a comprehensive credit system with weekly and annual subscription options, plus add-on credit purchases. The UI underwent multiple iterations—from premium paywall designs to animated walkthrough pages—all tailored to the client's specifications. RevenueCat handles subscription management, and Supabase with Hive powers the backend.",
+    results:
+      "MelodAI delivered a professional-grade music creation experience that users found both powerful and accessible. The premium UI successfully conveyed the app's value, leading to strong conversion rates on the subscription tiers. Users praised the intuitive controls and the ability to fine-tune every aspect of their music. The flexible credit system and add-on purchases provided multiple monetization pathways. The app successfully launched on the App Store with polished screenshots and onboarding flow. Voice cloning and clone cover features are scheduled for the next major update.",
+    technologies: ["Flutter", "Supabase", "Hive", "Dart", "MusicGPT", "AI Music", "YouTube API"],
+    testimonial: {
+      quote:
+        "",
+      author: ""
+    },
+    appStoreUrl:"https://apps.apple.com/in/app/melodai-ai-music-generator/id6753100795",
+    gallery: [
+      "/images/ma_banner.png",
+      "/images/ma_ss1.png",
+      "/images/ma_ss2.png",
+      "/images/ma_ss3.png"
     ]
   }
 ]
