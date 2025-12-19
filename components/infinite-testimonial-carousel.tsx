@@ -123,7 +123,7 @@ const InfiniteTestimonialCarousel = () => {
   }, []);
 
   return (
-    <div className="w-full overflow-hidden bg-[#101010] py-12">
+    <div className="w-full overflow-hidden py-12">
       <div className="max-w-7xl mx-auto px-6 mb-12">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between">
           <div className="mb-6 md:mb-0">
@@ -155,8 +155,8 @@ const InfiniteTestimonialCarousel = () => {
       
       <div className="relative overflow-hidden">
         {/* Gradient overlays for smooth edges */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#101010] to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#101010] to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#101010] via-[#101010]/80 to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#101010] via-[#101010]/80 to-transparent z-10 pointer-events-none" />
         
         <div
           ref={scrollerRef}

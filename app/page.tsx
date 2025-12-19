@@ -1554,56 +1554,66 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="py-12 px-6 relative z-20">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
-          <div className="mb-6 md:mb-0">
-            <Link href="/" className="block">
-              <div className="text-xl font-bold tracking-tighter text-[#EAEFFF]">
-                {siteConfig.name}
-              </div>
-            </Link>
-            <p className="mt-4 text-sm opacity-70">
-              © {new Date().getFullYear()} {siteConfig.company.name} All rights reserved.
-            </p>
-          </div>
-          
-          {/* New footer section */}
-          <div className="text-center md:text-right">
-            <p 
-              className="text-3xl md:text-4xl mb-2" 
-              style={{ 
-                color: '#EAEFFF', 
-                opacity: 0.7,
-                fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
-                fontWeight: 'bold'
-              }}
-            >
-              See how you can provide us value
-            </p>
-            <button
-              onClick={openConnectModal}
-              className="text-lg underline hover:opacity-100 transition-opacity"
-              style={{ color: '#EAEFFF', opacity: 0.5, fontWeight: 'bold' }}
-            >
-              Let's Connect!
-            </button>
-          </div>
-        </div>
+      <footer className="py-12 px-6 relative overflow-visible">
+  {/* Footer background image - BEHIND everything */}
+  <div 
+    className="absolute bottom-0 left-0 right-0 pointer-events-none"
+    style={{
+      backgroundImage: 'url(/images/footer_img.png)',
+      backgroundPosition: 'bottom center',
+      backgroundSize: 'cover',
+      backgroundRepeat: 'no-repeat',
+      height: '1000px',
+      transform: 'translateY(0)',
+      zIndex: -2
+    }}
+  />
+  
+  {/* Gradient overlay - also BEHIND everything */}
+  <div 
+    className="absolute bottom-0 left-0 right-0 pointer-events-none"
+    style={{
+      height: '1000px',
+      background: 'linear-gradient(to bottom, #101010 0%, transparent 100%)',
+      zIndex: -1
+    }}
+  />
 
-        {/* Footer background image - positioned at the very bottom of the entire website */}
-        <div 
-          className="absolute bottom-0 left-0 right-0 pointer-events-none"
-          style={{
-            backgroundImage: 'url(/images/footer_img.png)',
-            backgroundPosition: 'bottom center',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            height: '1000px',
-            transform: 'translateY(0)',
-            zIndex: -1
-          }}
-        />
-      </footer>
+  <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center relative z-10">
+    <div className="mb-6 md:mb-0">
+      <Link href="/" className="block">
+        <div className="text-xl font-bold tracking-tighter text-[#EAEFFF]">
+          {siteConfig.name}
+        </div>
+      </Link>
+      <p className="mt-4 text-sm opacity-70">
+        © {new Date().getFullYear()} {siteConfig.company.name} All rights reserved.
+      </p>
+    </div>
+    
+    {/* New footer section */}
+    <div className="text-center md:text-right">
+      <p 
+        className="text-3xl md:text-4xl mb-2" 
+        style={{ 
+          color: '#EAEFFF', 
+          opacity: 0.7,
+          fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+          fontWeight: 'bold'
+        }}
+      >
+        See how you can provide us value
+      </p>
+      <button
+        onClick={openConnectModal}
+        className="text-lg underline hover:opacity-100 transition-opacity"
+        style={{ color: '#EAEFFF', opacity: 0.5, fontWeight: 'bold' }}
+      >
+        Let's Connect!
+      </button>
+    </div>
+  </div>
+</footer>
     </>
   )
 }

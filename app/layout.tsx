@@ -229,7 +229,7 @@ export default function RootLayout({
                     height: 630,
                     caption: "SCULPT - App Development Agency"
                   },
-                  description: "SCULPT is a premier software freelancing agency specializing in mobile app development, web development, and AI tools. We connect businesses with skilled developers through Fiverr, Upwork, or direct hire.",
+                  description: "SCULPT is a premium software development agency specializing in mobile app development, web development, and AI tools.",
                   slogan: "Chiseling Visions into Apps",
                   foundingDate: "2024",
                   foundingLocation: {

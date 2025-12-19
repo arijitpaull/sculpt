@@ -46,6 +46,7 @@ html {
 
 body {
   font-feature-settings: "rlig" 1, "calt" 1;
+  background-color: #101010;
   /* Keep default cursor visible */
 }
 
