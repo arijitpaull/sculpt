@@ -1532,11 +1532,11 @@ export default function Home() {
   </div>
 </section>
 
-        <section id="testimonials" className="py-24">
+        <section id="testimonials" className="py-24 relative">
           <InfiniteTestimonialCarousel />
         </section>
 
-        <section id="contact" className="py-24 px-6">
+        <section id="contact" className="py-24 px-6 relative">
           <div className="max-w-7xl mx-auto">
             <div className="text-center">
               <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-6">Let's Create Something Amazing</h2>
@@ -1554,7 +1554,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="py-12 px-6">
+      <footer className="py-12 px-6 relative z-20">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
           <div className="mb-6 md:mb-0">
             <Link href="/" className="block">
@@ -1583,12 +1583,26 @@ export default function Home() {
             <button
               onClick={openConnectModal}
               className="text-lg underline hover:opacity-100 transition-opacity"
-              style={{ color: '#EAEFFF', opacity: 0.5 }}
+              style={{ color: '#EAEFFF', opacity: 0.5, fontWeight: 'bold' }}
             >
               Let's Connect!
             </button>
           </div>
         </div>
+
+        {/* Footer background image - positioned at the very bottom of the entire website */}
+        <div 
+          className="absolute bottom-0 left-0 right-0 pointer-events-none"
+          style={{
+            backgroundImage: 'url(/images/footer_img.png)',
+            backgroundPosition: 'bottom center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            height: '1000px',
+            transform: 'translateY(0)',
+            zIndex: -1
+          }}
+        />
       </footer>
     </>
   )
