@@ -547,6 +547,7 @@ export default function Home() {
   const [showContactModal, setShowContactModal] = useState(false)
   const [showServiceForm, setShowServiceForm] = useState(false)
   const [showCalModal, setShowCalModal] = useState(false)
+  const [showConnectModal, setShowConnectModal] = useState(false)
   const [currentProjectPage, setCurrentProjectPage] = useState(0)
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const typewriterWords = ["An App", "An AI Model", "A Website", "A Chatbot", "An AI Automation"]
@@ -768,6 +769,126 @@ export default function Home() {
     document.body.style.overflow = "auto"
   }
 
+  const openConnectModal = () => {
+    setShowConnectModal(true)
+    document.body.style.overflow = "hidden"
+    
+    // Initialize Cal.com embed after modal opens
+    setTimeout(() => {
+      if (typeof window !== 'undefined') {
+        const embedContainer = document.getElementById('my-cal-connect-inline')
+        if (embedContainer) {
+          embedContainer.innerHTML = ''
+        }
+
+        const initCalEmbed = () => {
+          const script = document.createElement('script')
+          script.innerHTML = `
+            (function (C, A, L) { 
+              let p = function (a, ar) { a.q.push(ar); }; 
+              let d = C.document; 
+              C.Cal = C.Cal || function () { 
+                let cal = C.Cal; 
+                let ar = arguments; 
+                if (!cal.loaded) { 
+                  cal.ns = {}; 
+                  cal.q = cal.q || []; 
+                  d.head.appendChild(d.createElement("script")).src = A; 
+                  cal.loaded = true; 
+                } 
+                if (ar[0] === L) { 
+                  const api = function () { p(api, arguments); }; 
+                  const namespace = ar[1]; 
+                  api.q = api.q || []; 
+                  if(typeof namespace === "string"){
+                    cal.ns[namespace] = cal.ns[namespace] || api;
+                    p(cal.ns[namespace], ar);
+                    p(cal, ["initNamespace", namespace]);
+                  } else p(cal, ar); 
+                  return;
+                } 
+                p(cal, ar); 
+              }; 
+            })(window, "https://app.cal.com/embed/embed.js", "init");
+            
+            Cal("init", "new-connection", {origin:"https://app.cal.com"});
+
+            Cal.ns["new-connection"]("inline", {
+              elementOrSelector:"#my-cal-connect-inline",
+              config: {
+                "layout":"column_view",
+                "theme": "dark"
+              },
+              calLink: "sculptvisions/new-connection",
+            });
+
+            Cal.ns["new-connection"]("ui", {
+              "cssVarsPerTheme":{
+                "light":{"cal-brand":"#101010"},
+                "dark":{"cal-brand":"#eaefff"}
+              },
+              "hideEventTypeDetails":false,
+              "layout":"column_view",
+              "styles": {
+                "branding": {
+                  "brandColor": "#eaefff"
+                }
+              }
+            });
+
+            setTimeout(() => {
+              const style = document.createElement('style');
+              style.textContent = \`
+                #my-cal-connect-inline {
+                  background-color: #151515 !important;
+                }
+                #my-cal-connect-inline * {
+                  box-sizing: border-box;
+                }
+                #my-cal-connect-inline iframe {
+                  width: 100% !important;
+                  height: 100% !important;
+                  min-height: 100% !important;
+                  background-color: transparent !important;
+                }
+                #my-cal-connect-inline .cal-embed {
+                  height: 100% !important;
+                  min-height: 100% !important;
+                  overflow: hidden !important;
+                  background-color: transparent !important;
+                }
+                #my-cal-connect-inline [data-cal-embed] {
+                  position: relative !important;
+                  height: 100% !important;
+                  min-height: 100% !important;
+                  overflow: hidden !important;
+                  background-color: transparent !important;
+                }
+              \`;
+              document.head.appendChild(style);
+            }, 1000);
+          `
+          
+          try {
+            eval(script.innerHTML)
+          } catch (error) {
+            console.error('Cal.com embed error:', error)
+            if (embedContainer) {
+              embedContainer.innerHTML = '<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 2rem; text-align: center;"><h3 style="color: #EAEFFF; margin-bottom: 1rem;">Unable to load booking calendar</h3><p style="color: #EAEFFF; opacity: 0.7; margin-bottom: 2rem;">Please book directly on our calendar:</p><a href="https://cal.com/sculptvisions/new-connection" target="_blank" rel="noopener noreferrer" style="background: #EAEFFF; color: #101010; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold;">Book on Cal.com →</a></div>'
+            }
+          }
+        }
+
+        initCalEmbed()
+      }
+    }, 500)
+  }
+
+  const closeConnectModal = () => {
+    setShowConnectModal(false)
+    document.body.style.overflow = "auto"
+  }
+
   const renderSocialIcon = (link: (typeof socialLinks)[0]) => {
     const IconComponent = iconMap[link.icon as keyof typeof iconMap]
     if (!IconComponent) return null
@@ -823,14 +944,14 @@ export default function Home() {
             />
           </Link>
           
-          {/* Desktop Navigation - unchanged */}
+          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
             {/* Social Icons */}
             <div className="flex items-center space-x-5">
               {socialLinks.map(renderSocialIcon)}
             </div>
             
-            {/* Desktop Build with Us Button */}
+            {/* Desktop Let's Build! Button */}
             <button
               onClick={openContactModal}
               className="relative overflow-hidden bg-[#EAEFFF] text-[#202020] px-6 py-2.5 rounded-full font-bold transition-all duration-300 hover:scale-105 group shadow-lg shadow-[#EAEFFF]/20 text-lg"
@@ -840,13 +961,13 @@ export default function Home() {
             >
               {/* Shine effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-              <span className="relative z-10 flex items-center justify-center h-full">Build with Us</span>
+              <span className="relative z-10 flex items-center justify-center h-full">Let's Build!</span>
             </button>
           </div>
           
-          {/* Mobile: Build with Us Button + Menu Button */}
+          {/* Mobile: Let's Build! Button + Menu Button */}
           <div className="md:hidden flex items-center space-x-3">
-            {/* Mobile Build with Us Button */}
+            {/* Mobile Let's Build! Button */}
             <button
               onClick={openContactModal}
               className="relative overflow-hidden bg-[#EAEFFF] text-[#202020] px-4 py-2 rounded-full font-bold transition-all duration-300 hover:scale-105 group shadow-lg text-sm"
@@ -856,7 +977,7 @@ export default function Home() {
             >
               {/* Shine effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-              <span className="relative z-10 flex items-center justify-center h-full">Build with Us</span>
+              <span className="relative z-10 flex items-center justify-center h-full">Let's Build!</span>
             </button>
             
             {/* Mobile Menu Button */}
@@ -954,7 +1075,7 @@ export default function Home() {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-center p-6 border-b border-[#252525]">
-                <h3 className="text-xl font-bold">Book a Call</h3>
+                <h3 className="text-xl font-bold">Let's Build!</h3>
                 <button onClick={closeCalModal} className="hover:opacity-70 transition-opacity" title="Close">
                   <X className="h-5 w-5" />
                 </button>
@@ -983,6 +1104,64 @@ export default function Home() {
                     padding: '2rem', 
                     textAlign: 'center',
                     minHeight: '400px'
+                  }}>
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#EAEFFF] mb-4"></div>
+                    <h3 style={{color: '#EAEFFF', marginBottom: '1rem'}}>Loading your booking calendar...</h3>
+                    <p style={{color: '#EAEFFF', opacity: 0.7}}>This will just take a moment</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Connect Modal */}
+      <AnimatePresence>
+        {showConnectModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={closeConnectModal}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-[#151515] rounded-3xl w-full max-w-4xl overflow-hidden"
+              style={{ height: '80vh' }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex justify-between items-center p-6 border-b border-[#252525]">
+                <h3 className="text-xl font-bold">Let's Connect!</h3>
+                <button onClick={closeConnectModal} className="hover:opacity-70 transition-opacity" title="Close">
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              <div style={{ height: 'calc(100% - 88px)', overflow: 'hidden' }}>
+                <div 
+                  style={{
+                    width:'100%', 
+                    height:'100%', 
+                    overflow:'hidden',
+                    position: 'relative',
+                    backgroundColor: '#151515'
+                  }} 
+                  id="my-cal-connect-inline"
+                >
+                  <div style={{
+                    display: 'flex', 
+                    flexDirection: 'column', 
+                    alignItems: 'center', 
+                    justifyContent: 'center', 
+                    height: '100%', 
+                    padding: '2rem', 
+                    textAlign: 'center',
+                    minHeight: '400px',
+                    backgroundColor: '#151515'
                   }}>
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#EAEFFF] mb-4"></div>
                     <h3 style={{color: '#EAEFFF', marginBottom: '1rem'}}>Loading your booking calendar...</h3>
@@ -1099,29 +1278,28 @@ export default function Home() {
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* Project Image */}
-        {/* Project Image */}
-<div className="relative">
-  <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-yellow-400 via-orange-400 to-red-400">
-    {reversedProjects[0]?.image ? (
-      <img 
-        src={reversedProjects[0].image} 
-        alt={reversedProjects[0].title}
-        className="w-full h-full object-cover"
-      />
-    ) : (
-      <div className="w-full h-full flex items-center justify-center p-8">
-        <div className="text-center">
-          <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mb-4 mx-auto">
-            <span className="text-2xl font-bold text-white">
-              {reversedProjects[0]?.title?.charAt(0) || 'F'}
-            </span>
+        <div className="relative">
+          <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-yellow-400 via-orange-400 to-red-400">
+            {reversedProjects[0]?.image ? (
+              <img 
+                src={reversedProjects[0].image} 
+                alt={reversedProjects[0].title}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center p-8">
+                <div className="text-center">
+                  <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mb-4 mx-auto">
+                    <span className="text-2xl font-bold text-white">
+                      {reversedProjects[0]?.title?.charAt(0) || 'F'}
+                    </span>
+                  </div>
+                  <h3 className="text-white text-xl font-bold">{reversedProjects[0]?.title || 'Funutrition'}</h3>
+                </div>
+              </div>
+            )}
           </div>
-          <h3 className="text-white text-xl font-bold">{reversedProjects[0]?.title || 'Funutrition'}</h3>
         </div>
-      </div>
-    )}
-  </div>
-</div>
 
         {/* Project Info */}
         <div className="space-y-6">
@@ -1369,7 +1547,7 @@ export default function Home() {
                 onClick={openContactModal}
                 className="inline-flex items-center justify-center border border-[#EAEFFF] px-8 py-4 rounded-full hover:bg-[#EAEFFF] hover:text-[#101010] transition-colors text-lg font-medium"
               >
-                Get Started
+                Let's Build!
               </button>
             </div>
           </div>
@@ -1380,13 +1558,35 @@ export default function Home() {
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
           <div className="mb-6 md:mb-0">
             <Link href="/" className="block">
-            <div className="text-xl font-bold tracking-tighter text-[#EAEFFF]">
-  {siteConfig.name}
-</div>
+              <div className="text-xl font-bold tracking-tighter text-[#EAEFFF]">
+                {siteConfig.name}
+              </div>
             </Link>
             <p className="mt-4 text-sm opacity-70">
               © {new Date().getFullYear()} {siteConfig.company.name} All rights reserved.
             </p>
+          </div>
+          
+          {/* New footer section */}
+          <div className="text-center md:text-right">
+            <p 
+              className="text-3xl md:text-4xl mb-2" 
+              style={{ 
+                color: '#EAEFFF', 
+                opacity: 0.7,
+                fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+                fontWeight: 'bold'
+              }}
+            >
+              See how you can provide us value
+            </p>
+            <button
+              onClick={openConnectModal}
+              className="text-lg underline hover:opacity-100 transition-opacity"
+              style={{ color: '#EAEFFF', opacity: 0.5 }}
+            >
+              Let's Connect!
+            </button>
           </div>
         </div>
       </footer>
