@@ -44,6 +44,20 @@ html {
   scroll-behavior: smooth;
 }
 
+* {
+  letter-spacing: -0.07em;
+}
+
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
 body {
   font-feature-settings: "rlig" 1, "calt" 1;
   background-color: #101010;

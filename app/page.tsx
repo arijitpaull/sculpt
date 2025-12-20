@@ -53,6 +53,7 @@ function EmbeddedMultiStepForm({ onComplete }: { onComplete?: () => void }) {
   const [showToast, setShowToast] = useState(false)
   const [toastMessage, setToastMessage] = useState("")
 
+
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -510,38 +511,6 @@ ${formData.details}
 }
 
 export default function Home() {
-
-  function useTypewriter(words: string[], typeSpeed = 100, deleteSpeed = 50, delayBetweenWords = 2000) {
-    const [currentWordIndex, setCurrentWordIndex] = useState(0)
-    const [currentText, setCurrentText] = useState("")
-    const [isDeleting, setIsDeleting] = useState(false)
-
-    useEffect(() => {
-      const currentWord = words[currentWordIndex]
-
-      const timer = setTimeout(() => {
-        if (!isDeleting) {
-          if (currentText.length < currentWord.length) {
-            setCurrentText(currentWord.slice(0, currentText.length + 1))
-          } else {
-            setTimeout(() => setIsDeleting(true), delayBetweenWords)
-          }
-        } else {
-          if (currentText.length > 0) {
-            setCurrentText(currentText.slice(0, -1))
-          } else {
-            setIsDeleting(false)
-            setCurrentWordIndex((prev) => (prev + 1) % words.length)
-          }
-        }
-      }, isDeleting ? deleteSpeed : typeSpeed)
-
-      return () => clearTimeout(timer)
-    }, [currentText, isDeleting, currentWordIndex, words, typeSpeed, deleteSpeed, delayBetweenWords])
-
-    return currentText
-  }
-
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [videoError, setVideoError] = useState(false)
   const [showContactModal, setShowContactModal] = useState(false)
@@ -550,23 +519,29 @@ export default function Home() {
   const [showConnectModal, setShowConnectModal] = useState(false)
   const [currentProjectPage, setCurrentProjectPage] = useState(0)
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
-  const typewriterWords = ["An App", "An AI Model", "A Website", "A Chatbot", "An AI Automation"]
-  const dynamicText = useTypewriter(typewriterWords, 150, 100, 2000)
-
-  
+  const [currentHeroImage, setCurrentHeroImage] = useState(0)
+  const [currentFlowStep, setCurrentFlowStep] = useState('kickoff')
   const { scrollYProgress } = useScroll()
   const headerRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0])
   const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.95])
+
+  // Hero image carousel
+  const heroImages = ['/images/heroimage_1.png', '/images/heroimage_2.png']
   
-  // Add arrow opacity control based on scroll
-  const arrowOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0])
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentHeroImage((prev) => (prev + 1) % heroImages.length)
+    }, 10000) // Change every 10 seconds
+    
+    return () => clearInterval(interval)
+  }, [])
 
   // Projects pagination logic
   const PROJECTS_PER_PAGE = 4
   
-  // Reverse the projects array to show newest first (latest added project shows first)
+  // Reverse the projects array to show newest first
   const reversedProjects = [...projects].reverse()
   const totalPages = Math.ceil(reversedProjects.length / PROJECTS_PER_PAGE)
   const startIndex = currentProjectPage * PROJECTS_PER_PAGE
@@ -633,18 +608,14 @@ export default function Home() {
     setShowContactModal(false)
     setShowCalModal(true)
     
-    // Initialize Cal.com embed after modal opens
     setTimeout(() => {
       if (typeof window !== 'undefined') {
-        // Clear any existing content
         const embedContainer = document.getElementById('my-cal-inline')
         if (embedContainer) {
           embedContainer.innerHTML = ''
         }
 
-        // Initialize Cal.com with the exact code you provided
         const initCalEmbed = () => {
-          // Your Cal.com embed script
           const script = document.createElement('script')
           script.innerHTML = `
             (function (C, A, L) { 
@@ -699,7 +670,6 @@ export default function Home() {
               }
             });
 
-            // Additional CSS to ensure all Cal.com elements are scrollable
             setTimeout(() => {
               const style = document.createElement('style');
               style.textContent = \`
@@ -720,13 +690,11 @@ export default function Home() {
                   min-height: 100% !important;
                   overflow: visible !important;
                 }
-                /* Ensure confirm details and all modals are contained */
                 [data-cal-embed] {
                   position: relative !important;
                   height: 100% !important;
                   overflow: visible !important;
                 }
-                /* Make sure booking flow steps are scrollable */
                 .cal-booking-form,
                 .cal-confirm-details,
                 .cal-event-details {
@@ -738,12 +706,10 @@ export default function Home() {
             }, 1000);
           `
           
-          // Execute the script
           try {
             eval(script.innerHTML)
           } catch (error) {
             console.error('Cal.com embed error:', error)
-            // Show fallback
             if (embedContainer) {
               embedContainer.innerHTML = `
                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 2rem; text-align: center;">
@@ -758,10 +724,9 @@ export default function Home() {
           }
         }
 
-        // Initialize the embed
         initCalEmbed()
       }
-    }, 500) // Give modal time to render
+    }, 500)
   }
 
   const closeCalModal = () => {
@@ -773,7 +738,6 @@ export default function Home() {
     setShowConnectModal(true)
     document.body.style.overflow = "hidden"
     
-    // Initialize Cal.com embed after modal opens
     setTimeout(() => {
       if (typeof window !== 'undefined') {
         const embedContainer = document.getElementById('my-cal-connect-inline')
@@ -935,7 +899,6 @@ export default function Home() {
         transition={{ duration: 0.8, delay: 0.2 }}
       >
         <div className="bg-[#202020]/50 backdrop-blur-md rounded-full px-6 py-3 flex items-center space-x-8 border border-[#303030]/30 shadow-2xl">
-          {/* Logo */}
           <Link href="/" className="flex items-center">
             <img 
               src="/images/sculpt_logo.png" 
@@ -944,14 +907,11 @@ export default function Home() {
             />
           </Link>
           
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
-            {/* Social Icons */}
             <div className="flex items-center space-x-5">
               {socialLinks.map(renderSocialIcon)}
             </div>
             
-            {/* Desktop Let's Build! Button */}
             <button
               onClick={openContactModal}
               className="relative overflow-hidden bg-[#EAEFFF] text-[#202020] px-6 py-2.5 rounded-full font-bold transition-all duration-300 hover:scale-105 group shadow-lg shadow-[#EAEFFF]/20 text-lg"
@@ -959,15 +919,12 @@ export default function Home() {
                 boxShadow: '0 0 20px rgba(234, 239, 255, 0.3), 0 4px 14px rgba(234, 239, 255, 0.15)'
               }}
             >
-              {/* Shine effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
               <span className="relative z-10 flex items-center justify-center h-full">Let's Build!</span>
             </button>
           </div>
           
-          {/* Mobile: Let's Build! Button + Menu Button */}
           <div className="md:hidden flex items-center space-x-3">
-            {/* Mobile Let's Build! Button */}
             <button
               onClick={openContactModal}
               className="relative overflow-hidden bg-[#EAEFFF] text-[#202020] px-4 py-2 rounded-full font-bold transition-all duration-300 hover:scale-105 group shadow-lg text-sm"
@@ -975,12 +932,10 @@ export default function Home() {
                 boxShadow: '0 0 15px rgba(234, 239, 255, 0.3), 0 4px 10px rgba(234, 239, 255, 0.15)'
               }}
             >
-              {/* Shine effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
               <span className="relative z-10 flex items-center justify-center h-full">Let's Build!</span>
             </button>
             
-            {/* Mobile Menu Button */}
             <button 
               className="text-[#EAEFFF]" 
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -1001,7 +956,6 @@ export default function Home() {
           onClick={() => setIsMenuOpen(false)}
         >
           <div className="flex flex-col items-center space-y-8 text-2xl">
-            {/* Mobile Social Icons Only */}
             <div className="flex items-center space-x-6">
               {socialLinks.map(renderMobileSocialIcon)}
             </div>
@@ -1034,7 +988,6 @@ export default function Home() {
               </div>
 
               <div className="p-6 space-y-4">
-                {/* Book a Call Option */}
                 <button
                   onClick={openCalModal}
                   className="w-full bg-[#EAEFFF] text-[#101010] p-4 rounded-2xl font-bold transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-3"
@@ -1043,7 +996,6 @@ export default function Home() {
                   <span>Book a Call</span>
                 </button>
 
-                {/* Request Services Option */}
                 <button
                   onClick={openServiceForm}
                   className="w-full border border-[#EAEFFF] text-[#EAEFFF] p-4 rounded-2xl font-bold transition-all duration-300 hover:bg-[#EAEFFF] hover:text-[#101010] flex items-center justify-center space-x-3"
@@ -1192,8 +1144,10 @@ export default function Home() {
       )}
 
       <main>
-        <section className="relative h-screen overflow-hidden" ref={headerRef}>
-          <motion.div className="absolute inset-0 z-0" style={{ opacity, scale }}>
+        {/* Hero Section */}
+        <section className="relative min-h-screen overflow-hidden flex flex-col items-center justify-center px-6 py-32" ref={headerRef}>
+          {/* Background video */}
+          <div className="absolute inset-0 z-0">
             {!videoError ? (
               <video
                 ref={videoRef}
@@ -1201,419 +1155,743 @@ export default function Home() {
                 muted
                 loop
                 playsInline
-                className="w-full h-full object-cover opacity-40"
+                className="w-full h-full object-cover opacity-30"
                 onError={() => setVideoError(true)}
               >
                 <source src={siteConfig.heroVideo} type="video/mp4" />
-                Your browser does not support the video tag.
               </video>
             ) : (
-              <div className={`w-full h-full ${siteConfig.heroVideoFallback} opacity-40`} />
+              <div className={`w-full h-full ${siteConfig.heroVideoFallback} opacity-30`} />
             )}
-          </motion.div>
+          </div>
 
-          {/* Updated gradient overlay - moved down and made more subtle */}
-          <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#101010] via-[#101010]/60 to-transparent z-10" />
+          {/* Hero Content */}
+          <div className="relative z-10 w-full max-w-7xl mx-auto space-y-8 md:space-y-12">
+            {/* Hero Text */}
+<motion.div
+  initial={{ opacity: 0, y: -20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.3, duration: 0.8 }}
+  className="text-center relative mt-12 md:mt-16"
+>
+  <h1 
+    className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter leading-tight relative inline-block"
+    style={{
+      color: '#EAEFFF',
+    }}
+  >
+    Build <span className="relative inline-block px-3">
+      premium
+      <img 
+        src="/images/circle_p.png" 
+        alt=""
+        className="absolute inset-0 w-full h-full object-contain pointer-events-none"
+        style={{ 
+          top: '50%', 
+          left: '50%', 
+          transform: 'translate(-50%, -50%)',
+          width: '300%',
+          height: '300%'
+        }}
+      />
+    </span> AI apps<br />that print <span className="relative inline-block">
+      money
+      <img 
+        src="/images/line_mo.png" 
+        alt=""
+        className="absolute bottom-0 left-0 w-full pointer-events-none"
+        style={{ 
+          transform: 'translateY(-1px)'
+        }}
+      />
+    </span>.
+  </h1>
+</motion.div>
 
-          <div className="relative z-20 h-full flex flex-col items-center justify-center px-4">
+            {/* Hero Image Carousel */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.8 }}
-              className="text-center max-w-4xl mx-auto"
+              transition={{ delay: 0.6, duration: 0.8 }}
+              className="relative w-full"
             >
-              <h1 
-                className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter mb-6"
-                style={{
-                  textShadow: '0 0 20px rgba(234, 239, 255, 0.6), 0 0 40px rgba(234, 239, 255, 0.4), 0 0 60px rgba(234, 239, 255, 0.2)'
-                }}
-              >
-  Build{" "}
-  <span 
-    className="text-[#EAEFFF]"
-    style={{
-      textShadow: '0 0 20px rgba(234, 239, 255, 0.6), 0 0 40px rgba(234, 239, 255, 0.4), 0 0 60px rgba(234, 239, 255, 0.2)'
-    }}
-  >
-    {dynamicText}
-    <span className="animate-pulse">|</span>
-  </span>
-</h1>
-              <p className="text-lg md:text-xl opacity-80 mb-8 max-w-2xl mx-auto">{siteConfig.description}</p>
+              <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl">
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={currentHeroImage}
+                    src={heroImages[currentHeroImage]}
+                    alt="Hero showcase"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.25, ease: "easeInOut" }}
+                    className="w-full h-full object-contain absolute inset-0"
+                    style={{ transform: 'scale(1.28)' }}
+                  />
+                </AnimatePresence>
+              </div>
             </motion.div>
           </div>
 
-          {/* Updated scroll arrow - now disappears on scroll */}
-          <motion.div 
-            className="absolute bottom-10 left-0 right-0 flex justify-center z-20"
-            style={{ opacity: arrowOpacity }}
-          >
-            <motion.div animate={{ y: [0, 10, 0] }} transition={{ repeat: Number.POSITIVE_INFINITY, duration: 1.5 }}>
-              <ArrowRight className="h-6 w-6 rotate-90" />
-            </motion.div>
-          </motion.div>
+          {/* Gradient overlay */}
+          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#101010] via-[#101010]/80 to-transparent z-5" />
         </section>
 
-        <section id="projects" className="relative py-32 px-6 -mt-16">
-  <div className="max-w-7xl mx-auto relative z-10">
-    {/* Section Header */}
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
-      viewport={{ once: true }}
-      className="mb-16"
-    >
-      <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4">Our Projects</h2>
-      <p className="text-lg opacity-70">Some of our work for your reference.</p>
-    </motion.div>
-
-    {/* Featured Project - Most Recent */}
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 0.2 }}
-      viewport={{ once: true }}
-      className="mb-16"
-    >
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        {/* Project Image */}
-        <div className="relative">
-          <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-yellow-400 via-orange-400 to-red-400">
-            {reversedProjects[0]?.image ? (
-              <img 
-                src={reversedProjects[0].image} 
-                alt={reversedProjects[0].title}
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center p-8">
-                <div className="text-center">
-                  <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mb-4 mx-auto">
-                    <span className="text-2xl font-bold text-white">
-                      {reversedProjects[0]?.title?.charAt(0) || 'F'}
-                    </span>
-                  </div>
-                  <h3 className="text-white text-xl font-bold">{reversedProjects[0]?.title || 'Funutrition'}</h3>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Project Info */}
-        <div className="space-y-6">
-          <div>
-            <h3 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4">
-              {reversedProjects[0]?.title || 'Funutrition'}
-            </h3>
-            <p className="text-lg opacity-80 leading-relaxed">
-              {reversedProjects[0]?.description || 
-               'Funutrition is a complete wellness and learning tracker designed for children. The app enables young users to log meals, water intake, moods, and physical activity in a playful, easy-to-use environment. Parents get access to a unified dashboard to monitor their child\'s progress, while admins can manage lessons, upload challenges, and send personalized wellness plans. The system supports image uploads for completed tasks and ensures secure data handling using robust backend architecture.'}
-            </p>
-          </div>
-          
-          <div className="flex flex-wrap gap-2 mb-6">
-            {(reversedProjects[0]?.technologies || ['React Native', 'Node.js', 'MongoDB', 'AWS']).map((tech: string, index: number) => (
-              <span 
-                key={index}
-                className="px-3 py-1 bg-[#252525] rounded-full text-sm opacity-80"
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
-          
-          <Link 
-            href={`/projects/${reversedProjects[0]?.slug}`}
-            className="inline-flex items-center px-6 py-3 border border-[#EAEFFF] rounded-full hover:bg-[#EAEFFF] hover:text-[#101010] transition-colors"
-          >
-            View Project Details
-          </Link>
-        </div>
-      </div>
-    </motion.div>
-
-    {/* Other Projects Thumbnails */}
-    {reversedProjects.slice(1).length > 0 && (
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.4 }}
-        viewport={{ once: true }}
-      >
-        {/* Navigation Header */}
-        <div className="flex justify-between items-center mb-8">
-          <h4 className="text-xl font-semibold opacity-80">More Projects</h4>
-          
-          {Math.ceil(reversedProjects.slice(1).length / 3) > 1 && (
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={() => setCurrentProjectPage(Math.max(0, currentProjectPage - 1))}
-                disabled={currentProjectPage === 0}
-                className={`p-2 rounded-full border transition-all duration-300 ${
-                  currentProjectPage === 0
-                    ? "border-[#252525] text-[#252525] cursor-not-allowed"
-                    : "border-[#EAEFFF] text-[#EAEFFF] hover:bg-[#EAEFFF] hover:text-[#101010]"
-                }`}
-                aria-label="Previous projects"
-              >
-                <ChevronLeft className="h-4 w-4" />
-              </button>
-              
-              <div className="flex items-center space-x-2">
-                {Array.from({ length: Math.ceil(reversedProjects.slice(1).length / 3) }, (_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setCurrentProjectPage(i)}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      i === currentProjectPage ? "bg-[#EAEFFF]" : "bg-[#252525] hover:bg-[#EAEFFF]/50"
-                    }`}
-                    aria-label={`Go to page ${i + 1}`}
-                  />
-                ))}
-              </div>
-              
-              <button
-                onClick={() => setCurrentProjectPage(Math.min(Math.ceil(reversedProjects.slice(1).length / 3) - 1, currentProjectPage + 1))}
-                disabled={currentProjectPage === Math.ceil(reversedProjects.slice(1).length / 3) - 1}
-                className={`p-2 rounded-full border transition-all duration-300 ${
-                  currentProjectPage === Math.ceil(reversedProjects.slice(1).length / 3) - 1
-                    ? "border-[#252525] text-[#252525] cursor-not-allowed"
-                    : "border-[#EAEFFF] text-[#EAEFFF] hover:bg-[#EAEFFF] hover:text-[#101010]"
-                }`}
-                aria-label="Next projects"
-              >
-                <ChevronRight className="h-4 w-4" />
-              </button>
-            </div>
-          )}
-        </div>
-
-        {/* Thumbnails Grid */}
-        <AnimatePresence mode="wait">
+        {/* Animated Divider - SERVICES */}
+        <div className="relative py-12 overflow-hidden">
           <motion.div
-            key={currentProjectPage}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.3 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-6"
+            animate={{ x: [0, -1000] }}
+            transition={{
+              x: {
+                repeat: Infinity,
+                repeatType: "loop",
+                duration: 20,
+                ease: "linear",
+              },
+            }}
+            className="whitespace-nowrap text-[80px] md:text-[120px] font-bold opacity-10"
           >
-            {reversedProjects.slice(1).slice(currentProjectPage * 3, (currentProjectPage + 1) * 3).map((project: Project, index: number) => (
-              <motion.div
-                key={project.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="cursor-pointer group"
-                onClick={() => setSelectedProject(project)}
-              >
-                <div className="aspect-[4/3] rounded-xl overflow-hidden bg-gradient-to-br from-gray-700 to-gray-800 border border-[#252525] group-hover:border-[#EAEFFF]/50 transition-all duration-300 group-hover:scale-105">
-                  {project.image ? (
-                    <img 
-                      src={project.image} 
-                      alt={project.title}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center p-6">
-                      <div className="text-center">
-                        <div className="w-12 h-12 bg-[#EAEFFF]/20 rounded-full flex items-center justify-center mb-3 mx-auto">
-                          <span className="text-lg font-bold text-[#EAEFFF]">
-                            {project.title?.charAt(0) || 'P'}
-                          </span>
-                        </div>
-                        <h4 className="text-[#EAEFFF] font-medium text-sm">{project.title}</h4>
-                      </div>
-                    </div>
-                  )}
-                </div>
-                <div className="mt-3 text-center">
-                  <h4 className="font-medium group-hover:text-[#EAEFFF] transition-colors">
-                    {project.title}
-                  </h4>
-                  <p className="text-sm opacity-60 mt-1 line-clamp-2">
-                    {project.description?.substring(0, 80)}...
-                  </p>
-                </div>
-              </motion.div>
-            ))}
+            SERVICESSERVICESSERVICESSERVICESSERVICESSERVICESSERVICESSERVICESSERVICESSERVICES
           </motion.div>
-        </AnimatePresence>
-      </motion.div>
-    )}
+        </div>
 
-    {/* Project Modal */}
-    <AnimatePresence>
-      {selectedProject && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-          onClick={() => setSelectedProject(null)}
-        >
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-            className="bg-[#151515] rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="p-8">
-              <div className="flex justify-between items-start mb-6">
-                <h3 className="text-2xl font-bold">{selectedProject.title}</h3>
-                <button 
-                  onClick={() => setSelectedProject(null)}
-                  className="text-[#EAEFFF]/60 hover:text-[#EAEFFF] transition-colors text-2xl"
-                >
-                  ×
-                </button>
-              </div>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div className="aspect-[3/4] rounded-xl overflow-hidden bg-gradient-to-br from-gray-700 to-gray-800">
-                  {selectedProject.image ? (
+        {/* Services Section */}
+        <section id="services" className="py-0 px-6 relative">
+          <div className="max-w-9xl mx-auto">
+            {/* Desktop: Grid Layout */}
+            <div className="hidden md:block space-y-6">
+              {/* First Row */}
+              <div className="flex gap-6 justify-center">
+                {/* First image - 760x396 */}
+                <div className="w-[760px] h-[396px]">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0 }}
+                    viewport={{ once: true }}
+                    whileHover={{ scale: 1.05, y: -10 }}
+                    className="relative rounded-2xl overflow-hidden w-full h-full cursor-pointer"
+                  >
                     <img 
-                      src={selectedProject.image} 
-                      alt={selectedProject.title}
+                      src="/images/apps_serv.png"
+                      alt="App Development"
                       className="w-full h-full object-cover"
                     />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <div className="text-center">
-                        <div className="w-20 h-20 bg-[#EAEFFF]/20 rounded-full flex items-center justify-center mb-4 mx-auto">
-                          <span className="text-2xl font-bold text-[#EAEFFF]">
-                            {selectedProject.title?.charAt(0)}
-                          </span>
-                        </div>
-                        <h4 className="text-[#EAEFFF] text-xl font-bold">{selectedProject.title}</h4>
-                      </div>
-                    </div>
-                  )}
+                  </motion.div>
                 </div>
-                
-                <div className="space-y-6">
-                  <p className="text-[#EAEFFF]/80 leading-relaxed">
-                    {selectedProject.description}
-                  </p>
-                  
-                  {selectedProject.technologies && selectedProject.technologies.length > 0 && (
-                    <div>
-                      <h4 className="font-semibold mb-3">Technologies Used</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {selectedProject.technologies.map((tech: string, index: number) => (
-                          <span 
-                            key={index}
-                            className="px-3 py-1 bg-[#252525] rounded-full text-sm"
-                          >
-                            {tech}
-                          </span>
-                        ))}
+
+                {/* Second image - 570x396 */}
+                <div className="w-[570px] h-[396px]">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                    viewport={{ once: true }}
+                    whileHover={{ scale: 1.05, y: -10 }}
+                    className="relative rounded-2xl overflow-hidden w-full h-full cursor-pointer"
+                  >
+                    <img 
+                      src="/images/web_serv.png"
+                      alt="Web Development"
+                      className="w-full h-full object-cover"
+                    />
+                  </motion.div>
+                </div>
+              </div>
+
+              {/* Second Row */}
+              <div className="flex gap-6 justify-center">
+                {/* Third image - 570x396 */}
+                <div className="w-[570px] h-[396px]">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    viewport={{ once: true }}
+                    whileHover={{ scale: 1.05, y: -10 }}
+                    className="relative rounded-2xl overflow-hidden w-full h-full cursor-pointer"
+                  >
+                    <img 
+                      src="/images/depl_serv.png"
+                      alt="Deployment & Maintenance"
+                      className="w-full h-full object-cover"
+                    />
+                  </motion.div>
+                </div>
+
+                {/* Fourth image - 760x396 */}
+                <div className="w-[760px] h-[396px]">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                    viewport={{ once: true }}
+                    whileHover={{ scale: 1.05, y: -10 }}
+                    className="relative rounded-2xl overflow-hidden w-full h-full cursor-pointer"
+                  >
+                    <img 
+                      src="/images/aiml_serv.png"
+                      alt="AI/ML Integration"
+                      className="w-full h-full object-cover"
+                    />
+                  </motion.div>
+                </div>
+              </div>
+            </div>
+
+            {/* Mobile: Column Layout */}
+            <div className="md:hidden flex flex-col space-y-6">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0 }}
+                viewport={{ once: true }}
+                className="relative w-full aspect-[16/9] cursor-pointer"
+              >
+                <img 
+                  src="/images/apps_serv.png"
+                  alt="App Development"
+                  className="w-full h-full object-contain"
+                />
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                viewport={{ once: true }}
+                className="relative w-full aspect-[16/9] cursor-pointer"
+              >
+                <img 
+                  src="/images/web_serv.png"
+                  alt="Web Development"
+                  className="w-full h-full object-contain"
+                />
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                viewport={{ once: true }}
+                className="relative w-full aspect-[16/9] cursor-pointer"
+              >
+                <img 
+                  src="/images/depl_serv.png"
+                  alt="Deployment & Maintenance"
+                  className="w-full h-full object-contain"
+                />
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                viewport={{ once: true }}
+                className="relative w-full aspect-[16/9] cursor-pointer"
+              >
+                <img 
+                  src="/images/aiml_serv.png"
+                  alt="AI/ML Integration"
+                  className="w-full h-full object-contain"
+                />
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* Animated Divider - FLOW */}
+        <div className="relative py-12 overflow-hidden">
+          <motion.div
+            animate={{ x: [-1000, 0] }}
+            transition={{
+              x: {
+                repeat: Infinity,
+                repeatType: "loop",
+                duration: 20,
+                ease: "linear",
+              },
+            }}
+            className="whitespace-nowrap text-[80px] md:text-[120px] font-bold opacity-10"
+          >
+            FLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOW
+          </motion.div>
+        </div>
+
+        {/* Flow Section */}
+        <section id="flow" className="py-0 px-6 relative">
+          <div className="max-w-7xl mx-auto">
+            {/* Flow Navigation Buttons */}
+            <div className="relative mb-12">
+              {/* Buttons - Scrollable on mobile */}
+              <div className="overflow-x-auto pb-4 -mx-6 px-6 md:mx-0 md:px-0 scrollbar-hide">
+                <div className="flex md:justify-center gap-3 md:gap-5 min-w-max md:min-w-0">
+                  {[
+                    { id: 'kickoff', label: 'Kickoff', img: '/images/kickoff.png' },
+                    { id: 'advtrn', label: 'Advance transfer', img: '/images/advtrn.png' },
+                    { id: 'uxdes', label: 'UX design', img: '/images/uxdes.png' },
+                    { id: 'dev', label: 'Development', img: '/images/devlop.png' },
+                    { id: 'dep', label: 'Deployment & Maintenance', img: '/images/dep.png' },
+                    { id: 'handoff', label: 'Final payment & handoff', img: '/images/handoff.png' },
+                  ].map((step, index) => (
+                    <button
+                      key={step.id}
+                      onClick={() => setCurrentFlowStep(step.id)}
+                      className={`relative px-4 py-2 font-medium transition-all duration-300 whitespace-nowrap ${
+                        currentFlowStep === step.id
+                          ? 'text-[#EAEFFF]'
+                          : 'text-[#EAEFFF]/50 hover:text-[#EAEFFF]/80'
+                      }`}
+                    >
+                      {step.label}
+                      {/* Individual button underline */}
+                      {currentFlowStep === step.id && (
+                        <motion.div
+                          layoutId="flowUnderline"
+                          className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#EAEFFF]"
+                          style={{
+                            boxShadow: '0 0 10px rgba(234, 239, 255, 0.8), 0 0 20px rgba(234, 239, 255, 0.4)'
+                          }}
+                        />
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Grey line under all buttons */}
+              <div className="absolute bottom-0 left-0 right-0 h-[0px] bg-[#454545]" />
+            </div>
+
+            {/* Flow Image Display */}
+            <motion.div
+              key={currentFlowStep}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="relative w-full max-w-5xl mx-auto rounded-2xl overflow-hidden"
+            >
+              <img 
+                src={
+                  currentFlowStep === 'kickoff' ? '/images/kickoff.png' :
+                  currentFlowStep === 'advtrn' ? '/images/advtrn.png' :
+                  currentFlowStep === 'uxdes' ? '/images/uxdes.png' :
+                  currentFlowStep === 'dev' ? '/images/dev.png' :
+                  currentFlowStep === 'dep' ? '/images/dep.png' :
+                  '/images/handoff.png'
+                }
+                alt="Flow step"
+                className="w-full h-auto object-contain"
+              />
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Animated Divider - TESTIMONIALS */}
+        <div className="relative py-1 overflow-hidden">
+          <motion.div
+            animate={{ x: [0, -1000] }}
+            transition={{
+              x: {
+                repeat: Infinity,
+                repeatType: "loop",
+                duration: 25,
+                ease: "linear",
+              },
+            }}
+            className="whitespace-nowrap text-[80px] md:text-[120px] font-bold opacity-10"
+          >
+            TESTIMONIALSTESTIMONIALSTESTIMONIALSTESTIMONIALSTESTIMONIALSTESTIMONIALSTESTIMONIALS
+          </motion.div>
+        </div>
+
+        {/* Testimonials Section */}
+        <section id="testimonials" className="py-0 relative">
+          <InfiniteTestimonialCarousel />
+        </section>
+
+        {/* Animated Divider - PROJECTS */}
+        <div className="relative py-10 overflow-hidden">
+          <motion.div
+            animate={{ x: [-1000, 0] }}
+            transition={{
+              x: {
+                repeat: Infinity,
+                repeatType: "loop",
+                duration: 25,
+                ease: "linear",
+              },
+            }}
+            className="whitespace-nowrap text-[80px] md:text-[120px] font-bold opacity-10"
+          >
+            PROJECTSPROJECTSPROJECTSPROJECTSPROJECTSPROJECTSPROJECTSPROJECTSPROJECTSPROJECTS
+          </motion.div>
+        </div>
+
+        {/* Projects Section */}
+        <section id="projects" className="relative py-0 px-6">
+          <div className="max-w-7xl mx-auto relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="mb-16"
+            >
+            </motion.div>
+
+            {/* Featured Project */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="mb-16"
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div className="relative">
+                  <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-yellow-400 via-orange-400 to-red-400">
+                    {reversedProjects[0]?.image ? (
+                      <img 
+                        src={reversedProjects[0].image} 
+                        alt={reversedProjects[0].title}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center p-8">
+                        <div className="text-center">
+                          <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mb-4 mx-auto">
+                            <span className="text-2xl font-bold text-white">
+                              {reversedProjects[0]?.title?.charAt(0) || 'F'}
+                            </span>
+                          </div>
+                          <h3 className="text-white text-xl font-bold">{reversedProjects[0]?.title || 'Funutrition'}</h3>
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4">
+                      {reversedProjects[0]?.title || 'Funutrition'}
+                    </h3>
+                    <p className="text-lg opacity-80 leading-relaxed">
+                      {reversedProjects[0]?.description || 
+                       'Funutrition is a complete wellness and learning tracker designed for children.'}
+                    </p>
+                  </div>
+                  
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {(reversedProjects[0]?.technologies || ['React Native', 'Node.js', 'MongoDB', 'AWS']).map((tech: string, index: number) => (
+                      <span 
+                        key={index}
+                        className="px-3 py-1 bg-[#252525] rounded-full text-sm opacity-80"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
                   
                   <Link 
-                    href={`/projects/${selectedProject.slug}`}
-                    onClick={() => setSelectedProject(null)}
-                    className="inline-flex items-center px-6 py-3 bg-[#EAEFFF] text-[#101010] rounded-full hover:bg-[#EAEFFF]/90 transition-colors font-medium"
+                    href={`/projects/${reversedProjects[0]?.slug}`}
+                    className="inline-flex items-center px-6 py-3 border border-[#EAEFFF] rounded-full hover:bg-[#EAEFFF] hover:text-[#101010] transition-colors"
                   >
                     View Project Details
                   </Link>
                 </div>
               </div>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  </div>
-</section>
+            </motion.div>
 
-        <section id="testimonials" className="py-24 relative">
-          <InfiniteTestimonialCarousel />
+            {/* Other Projects */}
+            {reversedProjects.slice(1).length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                viewport={{ once: true }}
+              >
+                <div className="flex justify-between items-center mb-8">
+                  <h4 className="text-xl font-semibold opacity-80">More Projects</h4>
+                  
+                  {Math.ceil(reversedProjects.slice(1).length / 3) > 1 && (
+                    <div className="flex items-center space-x-4">
+                      <button
+                        title="Previous projects page"
+                        onClick={() => setCurrentProjectPage(Math.max(0, currentProjectPage - 1))}
+                        disabled={currentProjectPage === 0}
+                        className={`p-2 rounded-full border transition-all duration-300 ${
+                          currentProjectPage === 0
+                            ? "border-[#252525] text-[#252525] cursor-not-allowed"
+                            : "border-[#EAEFFF] text-[#EAEFFF] hover:bg-[#EAEFFF] hover:text-[#101010]"
+                        }`}
+                      >
+                        <ChevronLeft className="h-4 w-4" />
+                      </button>
+                      
+                      <div className="flex items-center space-x-2">
+                        {Array.from({ length: Math.ceil(reversedProjects.slice(1).length / 3) }, (_, i) => (
+                          <button
+  key={i}
+  type="button"
+  onClick={() => setCurrentProjectPage(i)}
+  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+    i === currentProjectPage ? "bg-[#EAEFFF]" : "bg-[#252525] hover:bg-[#EAEFFF]/50"
+  }`}
+  aria-label={`Go to page ${i + 1}`}
+/>
+                        ))}
+                      </div>
+                      
+                      <button
+                        title="Next projects page"
+                        onClick={() => setCurrentProjectPage(Math.min(Math.ceil(reversedProjects.slice(1).length / 3) - 1, currentProjectPage + 1))}
+                        disabled={currentProjectPage === Math.ceil(reversedProjects.slice(1).length / 3) - 1}
+                        className={`p-2 rounded-full border transition-all duration-300 ${
+                          currentProjectPage === Math.ceil(reversedProjects.slice(1).length / 3) - 1
+                            ? "border-[#252525] text-[#252525] cursor-not-allowed"
+                            : "border-[#EAEFFF] text-[#EAEFFF] hover:bg-[#EAEFFF] hover:text-[#101010]"
+                        }`}
+                      >
+                        <ChevronRight className="h-4 w-4" />
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentProjectPage}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3 }}
+                    className="grid grid-cols-1 md:grid-cols-3 gap-6"
+                  >
+                    {reversedProjects.slice(1).slice(currentProjectPage * 3, (currentProjectPage + 1) * 3).map((project: Project, index: number) => (
+                      <motion.div
+                        key={project.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                        className="cursor-pointer group"
+                        onClick={() => setSelectedProject(project)}
+                      >
+                        <div className="aspect-[4/3] rounded-xl overflow-hidden bg-gradient-to-br from-gray-700 to-gray-800 border border-[#252525] group-hover:border-[#EAEFFF]/50 transition-all duration-300 group-hover:scale-105">
+                          {project.image ? (
+                            <img 
+                              src={project.image} 
+                              alt={project.title}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center p-6">
+                              <div className="text-center">
+                                <div className="w-12 h-12 bg-[#EAEFFF]/20 rounded-full flex items-center justify-center mb-3 mx-auto">
+                                  <span className="text-lg font-bold text-[#EAEFFF]">
+                                    {project.title?.charAt(0) || 'P'}
+                                  </span>
+                                </div>
+                                <h4 className="text-[#EAEFFF] font-medium text-sm">{project.title}</h4>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                        <div className="mt-3 text-center">
+                          <h4 className="font-medium group-hover:text-[#EAEFFF] transition-colors">
+                            {project.title}
+                          </h4>
+                          <p className="text-sm opacity-60 mt-1 line-clamp-2">
+                            {project.description?.substring(0, 80)}...
+                          </p>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                </AnimatePresence>
+              </motion.div>
+            )}
+
+            {/* Project Modal */}
+            <AnimatePresence>
+              {selectedProject && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+                  onClick={() => setSelectedProject(null)}
+                >
+                  <motion.div
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.9, opacity: 0 }}
+                    className="bg-[#151515] rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <div className="p-8">
+                      <div className="flex justify-between items-start mb-6">
+                        <h3 className="text-2xl font-bold">{selectedProject.title}</h3>
+                        <button 
+                          onClick={() => setSelectedProject(null)}
+                          className="text-[#EAEFFF]/60 hover:text-[#EAEFFF] transition-colors text-2xl"
+                        >
+                          ×
+                        </button>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div className="aspect-[3/4] rounded-xl overflow-hidden bg-gradient-to-br from-gray-700 to-gray-800">
+                          {selectedProject.image ? (
+                            <img 
+                              src={selectedProject.image} 
+                              alt={selectedProject.title}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center">
+                              <div className="text-center">
+                                <div className="w-20 h-20 bg-[#EAEFFF]/20 rounded-full flex items-center justify-center mb-4 mx-auto">
+                                  <span className="text-2xl font-bold text-[#EAEFFF]">
+                                    {selectedProject.title?.charAt(0)}
+                                  </span>
+                                </div>
+                                <h4 className="text-[#EAEFFF] text-xl font-bold">{selectedProject.title}</h4>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                        
+                        <div className="space-y-6">
+                          <p className="text-[#EAEFFF]/80 leading-relaxed">
+                            {selectedProject.description}
+                          </p>
+                          
+                          {selectedProject.technologies && selectedProject.technologies.length > 0 && (
+                            <div>
+                              <h4 className="font-semibold mb-3">Technologies Used</h4>
+                              <div className="flex flex-wrap gap-2">
+                                {selectedProject.technologies.map((tech: string, index: number) => (
+                                  <span 
+                                    key={index}
+                                    className="px-3 py-1 bg-[#252525] rounded-full text-sm"
+                                  >
+                                    {tech}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                          
+                          <Link 
+                            href={`/projects/${selectedProject.slug}`}
+                            onClick={() => setSelectedProject(null)}
+                            className="inline-flex items-center px-6 py-3 bg-[#EAEFFF] text-[#101010] rounded-full hover:bg-[#EAEFFF]/90 transition-colors font-medium"
+                          >
+                            View Project Details
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </section>
 
-        <section id="contact" className="py-24 px-6 relative">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center">
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-6">Let's Create Something Amazing</h2>
-              <p className="text-lg opacity-70 mb-12">
-                Have a project in mind? We'd love to hear about it. Get in touch with us and let's start a conversation.
+        {/* Build With Us Section */}
+        <section id="contact" className="py-32 px-6 relative">
+          <div className="max-w-4xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-4xl md:text-9xl font-bold tracking-tighter mb-6 opacity-30">
+                BUILD WITH US
+              </h2>
+              <h3 className="text-2xl md:text-4xl font-regular mb-8 opacity-90">
+                Have an app idea that should be making you money?
+              </h3>
+              <p className="text-lg md:text-xl opacity-70 mb-12 max-w-2xl mx-auto">
+                Tell SCULPT about your idea, target users, and revenue goal — and get a clear build plan with timeline and budget.
               </p>
               <button
                 onClick={openContactModal}
-                className="inline-flex items-center justify-center border border-[#EAEFFF] px-8 py-4 rounded-full hover:bg-[#EAEFFF] hover:text-[#101010] transition-colors text-lg font-medium"
+                className="relative overflow-hidden border-2 border-[#EAEFFF] text-[#EAEFFF] px-8 py-4 rounded-full font-bold transition-all duration-300 hover:scale-105 group text-lg hover:text-[#101010]"
               >
-                Let's Build!
+                <div className="absolute inset-0 bg-[#EAEFFF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></div>
+                <span className="relative z-10">Let's Build!</span>
               </button>
-            </div>
+            </motion.div>
           </div>
         </section>
       </main>
 
+      {/* Footer */}
       <footer className="py-12 px-6 relative overflow-visible">
-  {/* Footer background image - BEHIND everything */}
-  <div 
-    className="absolute bottom-0 left-0 right-0 pointer-events-none"
-    style={{
-      backgroundImage: 'url(/images/footer_img.png)',
-      backgroundPosition: 'bottom center',
-      backgroundSize: 'cover',
-      backgroundRepeat: 'no-repeat',
-      height: '1000px',
-      transform: 'translateY(0)',
-      zIndex: -2
-    }}
-  />
-  
-  {/* Gradient overlay - also BEHIND everything */}
-  <div 
-    className="absolute bottom-0 left-0 right-0 pointer-events-none"
-    style={{
-      height: '1000px',
-      background: 'linear-gradient(to bottom, #101010 0%, transparent 100%)',
-      zIndex: -1
-    }}
-  />
+        <div 
+          className="absolute bottom-0 left-0 right-0 pointer-events-none"
+          style={{
+            backgroundImage: 'url(/images/footer_img.png)',
+            backgroundPosition: 'bottom center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            height: '1000px',
+            transform: 'translateY(0)',
+            zIndex: -2
+          }}
+        />
+        
+        <div 
+          className="absolute bottom-0 left-0 right-0 pointer-events-none"
+          style={{
+            height: '1000px',
+            background: 'linear-gradient(to bottom, #101010 0%, transparent 100%)',
+            zIndex: -1
+          }}
+        />
 
-  <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center relative z-10">
-    <div className="mb-6 md:mb-0">
-      <Link href="/" className="block">
-        <div className="text-xl font-bold tracking-tighter text-[#EAEFFF]">
-          {siteConfig.name}
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center relative z-10">
+          <div className="mb-6 md:mb-0">
+            <Link href="/" className="block">
+              <div className="text-xl font-bold tracking-tighter text-[#EAEFFF]">
+                {siteConfig.name}
+              </div>
+            </Link>
+            <p className="mt-4 text-sm opacity-70">
+              © {new Date().getFullYear()} {siteConfig.company.name} All rights reserved.
+            </p>
+          </div>
+          
+          <div className="text-center md:text-right">
+            <p 
+              className="text-3xl md:text-5xl mb-2" 
+              style={{ 
+                color: '#EAEFFF', 
+                opacity: 0.7,
+                fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+                fontWeight: 'bold'
+              }}
+            >
+              See how you can provide us value
+            </p>
+            <button
+              onClick={openConnectModal}
+              className="text-2xl underline hover:opacity-100 transition-all duration-300 relative inline-block group"
+              style={{ color: '#EAEFFF', opacity: 0.5 }}
+            >
+              <span className="inline-block group-hover:scale-110 group-active:scale-95 transition-transform duration-200">
+                Let's Connect!
+              </span>
+              <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#EAEFFF] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
+            </button>
+          </div>
         </div>
-      </Link>
-      <p className="mt-4 text-sm opacity-70">
-        © {new Date().getFullYear()} {siteConfig.company.name} All rights reserved.
-      </p>
-    </div>
-    
-    {/* New footer section */}
-    <div className="text-center md:text-right">
-      <p 
-        className="text-3xl md:text-4xl mb-2" 
-        style={{ 
-          color: '#EAEFFF', 
-          opacity: 0.7,
-          fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
-          fontWeight: 'bold'
-        }}
-      >
-        See how you can provide us value
-      </p>
-      <button
-        onClick={openConnectModal}
-        className="text-lg underline hover:opacity-100 transition-opacity"
-        style={{ color: '#EAEFFF', opacity: 0.5, fontWeight: 'bold' }}
-      >
-        Let's Connect!
-      </button>
-    </div>
-  </div>
-</footer>
+      </footer>
     </>
   )
 }

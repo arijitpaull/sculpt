@@ -127,8 +127,6 @@ const InfiniteTestimonialCarousel = () => {
       <div className="max-w-7xl mx-auto px-6 mb-12">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between">
           <div className="mb-6 md:mb-0">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4 text-[#EAEFFF]">Client Testimonials</h2>
-            <p className="text-lg opacity-70 text-[#EAEFFF]">What our clients say about working with us.</p>
           </div>
           <div className="flex-shrink-0">
             <a
