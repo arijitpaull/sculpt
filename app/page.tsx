@@ -1476,7 +1476,7 @@ export default function Home() {
                   currentFlowStep === 'kickoff' ? '/images/kickoff.png' :
                   currentFlowStep === 'advtrn' ? '/images/advtrn.png' :
                   currentFlowStep === 'uxdes' ? '/images/uxdes.png' :
-                  currentFlowStep === 'dev' ? '/images/dev.png' :
+                  currentFlowStep === 'dev' ? '/images/devlopment.png' :
                   currentFlowStep === 'dep' ? '/images/dep.png' :
                   '/images/handoff.png'
                 }
