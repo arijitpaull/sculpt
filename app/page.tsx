@@ -1262,7 +1262,7 @@ export default function Home() {
             <div className="hidden md:block space-y-6">
               {/* First Row */}
               <div className="flex gap-6 justify-center">
-                {/* First image - 760x396 */}
+                {/* First image - 760x396 - Apps */}
                 <div className="w-[760px] h-[396px]">
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -1270,17 +1270,22 @@ export default function Home() {
                     transition={{ duration: 0.5, delay: 0 }}
                     viewport={{ once: true }}
                     whileHover={{ scale: 1.05, y: -10 }}
-                    className="relative rounded-2xl overflow-hidden w-full h-full cursor-pointer"
+                    className="relative rounded-2xl overflow-hidden w-full h-full cursor-pointer group"
                   >
                     <img 
                       src="/images/apps_serv.png"
                       alt="App Development"
                       className="w-full h-full object-cover"
                     />
+                    <div className="absolute inset-0 p-6 md:p-8 lg:p-10 flex items-start">
+                      <h3 className="text-[#EAEFFF] font-light text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-tight max-w-md">
+                        Cross-platform apps that earn on day one
+                      </h3>
+                    </div>
                   </motion.div>
                 </div>
 
-                {/* Second image - 570x396 */}
+                {/* Second image - 570x396 - Web */}
                 <div className="w-[570px] h-[396px]">
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -1288,20 +1293,25 @@ export default function Home() {
                     transition={{ duration: 0.5, delay: 0.1 }}
                     viewport={{ once: true }}
                     whileHover={{ scale: 1.05, y: -10 }}
-                    className="relative rounded-2xl overflow-hidden w-full h-full cursor-pointer"
+                    className="relative rounded-2xl overflow-hidden w-full h-full cursor-pointer group"
                   >
                     <img 
                       src="/images/web_serv.png"
                       alt="Web Development"
                       className="w-full h-full object-cover"
                     />
+                    <div className="absolute inset-0 p-6 md:p-8 lg:p-10 flex items-start">
+                      <h3 className="text-[#EAEFFF] font-light text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-tight max-w-xs">
+                        Landing pages that sell your app
+                      </h3>
+                    </div>
                   </motion.div>
                 </div>
               </div>
 
               {/* Second Row */}
               <div className="flex gap-6 justify-center">
-                {/* Third image - 570x396 */}
+                {/* Third image - 570x396 - Deployment */}
                 <div className="w-[570px] h-[396px]">
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -1309,17 +1319,22 @@ export default function Home() {
                     transition={{ duration: 0.5, delay: 0.2 }}
                     viewport={{ once: true }}
                     whileHover={{ scale: 1.05, y: -10 }}
-                    className="relative rounded-2xl overflow-hidden w-full h-full cursor-pointer"
+                    className="relative rounded-2xl overflow-hidden w-full h-full cursor-pointer group"
                   >
                     <img 
                       src="/images/depl_serv.png"
                       alt="Deployment & Maintenance"
                       className="w-full h-full object-cover"
                     />
+                    <div className="absolute inset-0 p-6 md:p-8 lg:p-10 flex items-start">
+                      <h3 className="text-[#EAEFFF] font-light text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-tight max-w-sm">
+                        Deployment & maintenance that protect your MRR
+                      </h3>
+                    </div>
                   </motion.div>
                 </div>
 
-                {/* Fourth image - 760x396 */}
+                {/* Fourth image - 760x396 - AI */}
                 <div className="w-[760px] h-[396px]">
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -1327,13 +1342,18 @@ export default function Home() {
                     transition={{ duration: 0.5, delay: 0.3 }}
                     viewport={{ once: true }}
                     whileHover={{ scale: 1.05, y: -10 }}
-                    className="relative rounded-2xl overflow-hidden w-full h-full cursor-pointer"
+                    className="relative rounded-2xl overflow-hidden w-full h-full cursor-pointer group"
                   >
                     <img 
                       src="/images/aiml_serv.png"
                       alt="AI/ML Integration"
                       className="w-full h-full object-cover"
                     />
+                    <div className="absolute inset-0 p-6 md:p-8 lg:p-10 flex items-start">
+                      <h3 className="text-[#EAEFFF] font-light text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-tight max-w-md">
+                        AI brains that power your product
+                      </h3>
+                    </div>
                   </motion.div>
                 </div>
               </div>
@@ -1341,60 +1361,84 @@ export default function Home() {
 
             {/* Mobile: Column Layout */}
             <div className="md:hidden flex flex-col space-y-6">
+              {/* Apps Service */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0 }}
                 viewport={{ once: true }}
-                className="relative w-full aspect-[16/9] cursor-pointer"
+                className="relative w-full aspect-[16/9] cursor-pointer rounded-2xl overflow-hidden"
               >
                 <img 
                   src="/images/apps_serv.png"
                   alt="App Development"
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-cover"
                 />
+                <div className="absolute inset-0 p-4 sm:p-6 flex items-start">
+                  <h3 className="text-[#EAEFFF] font-light text-xl sm:text-2xl leading-tight">
+                    Cross-platform apps that earn on day one
+                  </h3>
+                </div>
               </motion.div>
 
+              {/* Web Service */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
                 viewport={{ once: true }}
-                className="relative w-full aspect-[16/9] cursor-pointer"
+                className="relative w-full aspect-[16/9] cursor-pointer rounded-2xl overflow-hidden"
               >
                 <img 
                   src="/images/web_serv.png"
                   alt="Web Development"
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-cover"
                 />
+                <div className="absolute inset-0 p-4 sm:p-6 flex items-start">
+                  <h3 className="text-[#EAEFFF] font-light text-xl sm:text-2xl leading-tight">
+                    Landing pages that sell your app
+                  </h3>
+                </div>
               </motion.div>
 
+              {/* Deployment Service */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
                 viewport={{ once: true }}
-                className="relative w-full aspect-[16/9] cursor-pointer"
+                className="relative w-full aspect-[16/9] cursor-pointer rounded-2xl overflow-hidden"
               >
                 <img 
                   src="/images/depl_serv.png"
                   alt="Deployment & Maintenance"
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-cover"
                 />
+                <div className="absolute inset-0 p-4 sm:p-6 flex items-start">
+                  <h3 className="text-[#EAEFFF] font-light text-xl sm:text-2xl leading-tight">
+                    Deployment & maintenance that protect your MRR
+                  </h3>
+                </div>
               </motion.div>
 
+              {/* AI Service */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
                 viewport={{ once: true }}
-                className="relative w-full aspect-[16/9] cursor-pointer"
+                className="relative w-full aspect-[16/9] cursor-pointer rounded-2xl overflow-hidden"
               >
                 <img 
                   src="/images/aiml_serv.png"
                   alt="AI/ML Integration"
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-cover"
                 />
+                <div className="absolute inset-0 p-4 sm:p-6 flex items-start">
+                  <h3 className="text-[#EAEFFF] font-light text-xl sm:text-2xl leading-tight">
+                    AI brains that power your product
+                  </h3>
+                </div>
               </motion.div>
             </div>
           </div>
