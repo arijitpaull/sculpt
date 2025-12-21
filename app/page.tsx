@@ -1273,7 +1273,7 @@ export default function Home() {
                     className="relative rounded-2xl overflow-hidden w-full h-full cursor-pointer group"
                   >
                     <img 
-                      src="/images/apps_serv.png"
+                      src="/images/apps_service.png"
                       alt="App Development"
                       className="w-full h-full object-cover"
                     />
@@ -1296,7 +1296,7 @@ export default function Home() {
                     className="relative rounded-2xl overflow-hidden w-full h-full cursor-pointer group"
                   >
                     <img 
-                      src="/images/web_serv.png"
+                      src="/images/web_service.png"
                       alt="Web Development"
                       className="w-full h-full object-cover"
                     />
@@ -1322,7 +1322,7 @@ export default function Home() {
                     className="relative rounded-2xl overflow-hidden w-full h-full cursor-pointer group"
                   >
                     <img 
-                      src="/images/depl_serv.png"
+                      src="/images/depl_service.png"
                       alt="Deployment & Maintenance"
                       className="w-full h-full object-cover"
                     />
@@ -1345,7 +1345,7 @@ export default function Home() {
                     className="relative rounded-2xl overflow-hidden w-full h-full cursor-pointer group"
                   >
                     <img 
-                      src="/images/aiml_serv.png"
+                      src="/images/aiml_service.png"
                       alt="AI/ML Integration"
                       className="w-full h-full object-cover"
                     />
@@ -1370,7 +1370,7 @@ export default function Home() {
                 className="relative w-full aspect-[16/9] cursor-pointer rounded-2xl overflow-hidden"
               >
                 <img 
-                  src="/images/apps_serv.png"
+                  src="/images/apps_service.png"
                   alt="App Development"
                   className="w-full h-full object-cover"
                 />
@@ -1390,7 +1390,7 @@ export default function Home() {
                 className="relative w-full aspect-[16/9] cursor-pointer rounded-2xl overflow-hidden"
               >
                 <img 
-                  src="/images/web_serv.png"
+                  src="/images/web_service.png"
                   alt="Web Development"
                   className="w-full h-full object-cover"
                 />
@@ -1410,7 +1410,7 @@ export default function Home() {
                 className="relative w-full aspect-[16/9] cursor-pointer rounded-2xl overflow-hidden"
               >
                 <img 
-                  src="/images/depl_serv.png"
+                  src="/images/depl_service.png"
                   alt="Deployment & Maintenance"
                   className="w-full h-full object-cover"
                 />
@@ -1430,7 +1430,7 @@ export default function Home() {
                 className="relative w-full aspect-[16/9] cursor-pointer rounded-2xl overflow-hidden"
               >
                 <img 
-                  src="/images/aiml_serv.png"
+                  src="/images/aiml_service.png"
                   alt="AI/ML Integration"
                   className="w-full h-full object-cover"
                 />
