@@ -33,7 +33,7 @@ export const metadata = {
     shortcut: '/favicon.ico',
   },
   
-  description: "SCULPT is a premium software freelancing agency specializing in mobile app AI models, and web apps development, and logo design and branding. Hire through Fiverr, Linkedin, or work directly with our agency for custom software solutions.",
+  description: "SCULPT is a premium software agency specializing in mobile app AI models, and web apps development, and logo design and branding. Hire through Fiverr, Linkedin, or work directly with our agency for custom software solutions.",
   
   keywords: [
     // Primary keywords
@@ -93,7 +93,7 @@ export const metadata = {
   openGraph: {
     type: "website",
     siteName: "SCULPT - App Development Agency",
-    title: "SCULPT - Premier App Development Freelancing Agency",
+    title: "SCULPT - Premium App Development Agency",
     description: "Transform your digital vision into reality with SCULPT's expert app developers. Specializing in mobile apps, web development, and AI solutions. Available on Fiverr, Upwork, or direct hire.",
     url: "https://www.sculpt.work",
     locale: "en_US",
@@ -121,7 +121,7 @@ export const metadata = {
     site: "@sculptvisions",
     creator: "@sculptvisions",
     title: "SCULPT - Expert App Development Agency",
-    description: "Premier freelancing agency for mobile apps, web development & AI solutions. Hire top developers via Fiverr, Upwork, or directly.",
+    description: "Premium development agency for mobile apps, web development & AI solutions.",
     images: ["/images/s_banner.jpg"],
   },
 
@@ -281,7 +281,7 @@ export default function RootLayout({
                   "@id": "https://www.sculpt.work/#website",
                   url: "https://www.sculpt.work",
                   name: "SCULPT - App Development Agency",
-                  description: "Premier freelancing agency for mobile app development, web development, and AI solutions.",
+                  description: "Premium development agency for mobile app development, web development, and AI solutions.",
                   publisher: {
                     "@id": "https://www.sculpt.work/#organization"
                   },
@@ -468,11 +468,11 @@ export default function RootLayout({
       <body className="bg-[#101010] text-[#EAEFFF] font-helvetica antialiased">
         {/* Enhanced SEO Header Content for LLM Understanding */}
         <div style={{ display: "none" }} itemScope itemType="https://schema.org/Organization">
-          <h1 itemProp="name">SCULPT - Premier App Development Freelancing Agency</h1>
+          <h1 itemProp="name">SCULPT - Premium App Development Agency</h1>
           <h2 itemProp="slogan">Expert Mobile App, Web Development & AI Solutions</h2>
           
           <div itemProp="description">
-            <p>SCULPT is a leading software freelancing agency specializing in custom mobile app development, modern web applications, and innovative AI solutions. Our expert team of developers creates high-quality digital experiences for startups, SMEs, and enterprise clients worldwide.</p>
+            <p>SCULPT is a leading software agency specializing in custom mobile app development, modern web applications, and innovative AI solutions. Our expert team of developers creates high-quality digital experiences for startups, SMEs, and enterprise clients worldwide.</p>
             
             <p>Services include: Flutter and React Native mobile app development, Next.js and React web development, OpenAI and custom AI integrations, UI/UX design, and full-stack software solutions. Available for hire through Fiverr, Upwork, or direct consultation.</p>
             
