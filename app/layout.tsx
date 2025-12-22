@@ -99,7 +99,7 @@ export const metadata = {
     locale: "en_US",
     images: [
       {
-        url: "/images/s_banner.png",
+        url: "/images/s_banner.jpg",
         width: 1200,
         height: 630,
         alt: "SCULPT - Expert App Development and Digital Solutions",
@@ -122,7 +122,7 @@ export const metadata = {
     creator: "@sculptvisions",
     title: "SCULPT - Expert App Development Agency",
     description: "Premier freelancing agency for mobile apps, web development & AI solutions. Hire top developers via Fiverr, Upwork, or directly.",
-    images: ["/images/s_banner.png"],
+    images: ["/images/s_banner.jpg"],
   },
 
   // Enhanced robots
@@ -223,8 +223,8 @@ export default function RootLayout({
                   image: {
                     "@type": "ImageObject",
                     "@id": "https://www.sculpt.work/#image",
-                    url: "https://www.sculpt.work/images/s_banner.png",
-                    contentUrl: "https://www.sculpt.work/images/s_banner.png",
+                    url: "https://www.sculpt.work/images/s_banner.jpg",
+                    contentUrl: "https://www.sculpt.work/images/s_banner.jpg",
                     width: 1200,
                     height: 630,
                     caption: "SCULPT - App Development Agency"
@@ -351,7 +351,7 @@ export default function RootLayout({
                   "@type": "ProfessionalService",
                   "@id": "https://www.sculpt.work/#professional-service",
                   name: "SCULPT Development Agency",
-                  image: "https://www.sculpt.work/images/s_banner.png",
+                  image: "https://www.sculpt.work/images/s_banner.jpg",
                   description: "Expert app development agency providing custom software solutions, mobile apps, and AI tools for businesses worldwide.",
                   priceRange: "$500-$50000",
                   address: {
