@@ -1890,20 +1890,9 @@ export default function Home() {
             zIndex: -1
           }}
         />
-
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center relative z-10">
-          <div className="mb-6 md:mb-0">
-            <Link href="/" className="block">
-              <div className="text-xl font-bold tracking-tighter text-[#EAEFFF]">
-                {siteConfig.name}
-              </div>
-            </Link>
-            <p className="mt-4 text-sm opacity-70">
-              © {new Date().getFullYear()} {siteConfig.company.name} All rights reserved.
-            </p>
-          </div>
           
-          <div className="text-center md:text-right">
+          <div className="text-center md:text-right mb-10 md:mb-1">
+
             <p 
               className="text-3xl md:text-5xl mb-2" 
               style={{ 
@@ -1926,6 +1915,18 @@ export default function Home() {
               <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#EAEFFF] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
             </button>
           </div>
+          <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center relative z-10">
+          <div className="mb-6 md:mb-0">
+            <Link href="/" className="block">
+              <div className="text-xl font-bold tracking-tighter text-[#EAEFFF]">
+                {siteConfig.name}
+              </div>
+            </Link>
+            <p className="mt-4 text-sm opacity-70">
+              © {new Date().getFullYear()} {siteConfig.company.name} All rights reserved.
+            </p>
+          </div>
+
         </div>
       </footer>
     </>
