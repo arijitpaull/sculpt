@@ -15,6 +15,7 @@ import { Project, projects } from "@/data/projects"
 import { socialLinks } from "@/data/social-links"
 import { siteConfig } from "@/data/site-config"
 import InfiniteTestimonialCarousel from "@/components/infinite-testimonial-carousel"
+import CountryCodeDropdown from "@/components/country-code-dropdown"
 
 
 // Icon mapping for dynamic icon rendering
@@ -270,7 +271,7 @@ ${formData.details}
                   <div
                     key={service}
                     onClick={() => toggleService(service)}
-                    className={`p-4 rounded-lg border cursor-pointer transition-all ${
+                    className={`p-4 rounded-xl border cursor-pointer transition-all ${
                       formData.services.includes(service)
                         ? "border-[#EAEFFF] bg-[#EAEFFF]/10"
                         : "border-[#252525] hover:border-[#EAEFFF]/50"
@@ -314,7 +315,7 @@ ${formData.details}
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-[#101010] border border-[#252525] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#EAEFFF] focus:border-transparent transition-colors"
+                  className="w-full px-4 py-3 bg-[#101010] border border-[#252525] rounded-xl focus: outline-none focus:ring-2 focus:ring-[#EAEFFF] focus:border-transparent transition-colors"
                 />
               </div>
 
@@ -333,40 +334,31 @@ ${formData.details}
                 />
               </div>
 
-              <div className="grid grid-cols-3 gap-4">
-                <div>
-                  <label htmlFor="countryCode" className="block text-sm font-medium mb-2">
-                    Country Code
-                  </label>
-                  <select
-                    id="countryCode"
-                    name="countryCode"
-                    value={formData.countryCode}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 bg-[#101010] border border-[#252525] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#EAEFFF] focus:border-transparent transition-colors"
-                  >
-                    {countryCodes.map((item) => (
-                      <option key={item.code} value={item.code}>
-                        {item.code} ({item.country})
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="col-span-2">
-                  <label htmlFor="phone" className="block text-sm font-medium mb-2">
-                    Phone Number <span className="text-red-400">*</span>
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 bg-[#101010] border border-[#252525] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#EAEFFF] focus:border-transparent transition-colors"
-                  />
-                </div>
-              </div>
+              <div className="grid grid-cols-5 gap-4">
+  <div className="col-span-2">
+    <label htmlFor="countryCode" className="block text-sm font-medium mb-2">
+      Country Code
+    </label>
+    <CountryCodeDropdown
+      value={formData.countryCode}
+      onChange={(code) => setFormData((prev) => ({ ...prev, countryCode: code }))}
+    />
+  </div>
+  <div className="col-span-3">
+    <label htmlFor="phone" className="block text-sm font-medium mb-2">
+      Phone Number <span className="text-red-400">*</span>
+    </label>
+    <input
+      type="tel"
+      id="phone"
+      name="phone"
+      value={formData.phone}
+      onChange={handleChange}
+      required
+      className="w-full px-4 py-3 bg-[#101010] border border-[#252525] rounded-xl focus: outline-none focus:ring-2 focus:ring-[#EAEFFF] focus:border-transparent transition-colors"
+    />
+  </div>
+</div>
 
               <div>
                 <label htmlFor="details" className="block text-sm font-medium mb-2">
@@ -429,7 +421,7 @@ ${formData.details}
                 </div>
               </div>
 
-              <div className="bg-[#101010] p-4 rounded-lg mb-6">
+              <div className="bg-[#101010] p-4 rounded-xl mb-6">
                 <h4 className="font-medium mb-2">Review Your Information</h4>
                 <div className="space-y-2 text-sm">
                   <p>
@@ -455,7 +447,7 @@ ${formData.details}
 
         {formStatus.type && (
           <div
-            className={`p-4 rounded-lg mb-6 ${
+          className={`p-4 rounded-xl mb-6 ${
               formStatus.type === "success" ? "bg-green-900/20 text-green-400" : "bg-red-900/20 text-red-400"
             }`}
           >

@@ -177,29 +177,55 @@ export default function ClientProjectPage({ project }: ClientProjectPageProps) {
             </div>
           </section>
 
-          {/* Project Gallery with Enhanced Alt Text */}
+          {/* Project Gallery with Horizontal Scroll */}
           <section className="py-16 px-6">
             <div className="max-w-7xl mx-auto">
               <h2 className="text-2xl font-bold mb-8">Project Gallery</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {project.gallery.slice(1).map((image: string, index: number) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 * index, duration: 0.8 }}
-                  >
-                    <Image
-                      src={image || "/placeholder.svg"}
-                      width={600}
-                      height={400}
-                      alt={`${project.title} ${project.category} app screenshot ${index + 2} showing ${project.technologies[index % project.technologies.length]} implementation`}
-                      className="w-full h-auto rounded-lg object-cover"
-                      loading="lazy"
-                    />
-                  </motion.div>
-                ))}
+              <div className="overflow-x-auto pb-4 -mx-6 px-6 scrollbar-custom">
+                <div className="flex gap-6">
+                  {project.gallery.slice(1).map((image: string, index: number) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 * index, duration: 0.8 }}
+                      className="flex-shrink-0"
+                      style={{ height: '600px' }}
+                    >
+                      <Image
+                        src={image || "/placeholder.svg"}
+                        width={800}
+                        height={600}
+                        alt={`${project.title} ${project.category} app screenshot ${index + 2} showing ${project.technologies[index % project.technologies.length]} implementation`}
+                        className="h-full w-auto rounded-lg object-contain"
+                        loading="lazy"
+                      />
+                    </motion.div>
+                  ))}
+                </div>
               </div>
+              
+              {/* Custom Scrollbar Styles */}
+              <style jsx>{`
+                .scrollbar-custom {
+                  scrollbar-width: thin;
+                  scrollbar-color: #252525 #151515;
+                }
+                .scrollbar-custom::-webkit-scrollbar {
+                  height: 10px;
+                }
+                .scrollbar-custom::-webkit-scrollbar-track {
+                  background: #151515;
+                  border-radius: 5px;
+                }
+                .scrollbar-custom::-webkit-scrollbar-thumb {
+                  background: #252525;
+                  border-radius: 5px;
+                }
+                .scrollbar-custom::-webkit-scrollbar-thumb:hover {
+                  background: #353535;
+                }
+              `}</style>
             </div>
           </section>
 

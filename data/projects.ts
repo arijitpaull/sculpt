@@ -252,5 +252,34 @@ export const projects: Project[] = [
       "/images/ma_ss2.png",
       "/images/ma_ss3.png"
     ]
+  },
+  {
+    id: "9",
+    title: "ACENAVI",
+    slug: "acenavi",
+    category: "SaaS & Marketing",
+    description: "Complete marketing website and brand identity for an AI-powered HR support platform integrated with Slack and Teams.",
+    fullDescription:
+      "ACENAVI is an AI-powered people intelligence platform that brings HR support directly into Slack and Microsoft Teams. We built their complete digital presence from the ground up—including a modern landing page, custom demo booking system, full brand identity, and product overview video. The project focused on creating a professional, trustworthy presence for a B2B SaaS product targeting HR teams and enterprises.",
+    image: "/images/acenavi-thumbnail.png",
+    challenge:
+      "The client needed a complete digital identity and online presence to launch their product. The challenge was threefold: first, design a logo that represented 'adaptation' (the core value of their AI assistant); second, build a conversion-focused landing page with smooth animations and intuitive booking flow; and third, create a compelling product video that explained their complex HR tech in under 60 seconds. All deliverables needed to feel premium, trustworthy, and aligned with enterprise HR standards.",
+    solution:
+      "We started with brand identity—designing a logo system that symbolized adaptation through fluid, interconnected shapes. The logo was delivered in multiple formats: full horizontal lockup, compact symbol for mobile/favicon, and variations for different backgrounds. Next, we built a sleek Next.js landing page with sections for hero, problem-solution toggle, employee lifecycle visualization, integration partner showcase, pricing, and FAQ. We implemented smooth scroll animations using Framer Motion and Intersection Observer, plus an infinite-scrolling logo carousel for 24 integration partners. For bookings, we created a custom timezone-aware form with dual email notifications via Resend SMTP (team + customer confirmations) instead of embedding Calendly—giving the client full control over branding and data collection. Finally, we produced a 50-60 second product overview video using Figma, Jitter, and After Effects, showcasing the platform's core value in a visually engaging format.",
+    results:
+      "The client launched with a complete, production-ready digital presence. The landing page successfully converted visitors to demo requests, with the custom booking system providing a seamless, on-brand experience. The logo identity was praised for its clean representation of adaptation and flexibility. The product video became a key asset in sales conversations and was featured prominently on the homepage. The website's smooth animations and professional design helped establish ACENAVI as a credible enterprise solution. All code was delivered with comprehensive documentation for easy handover and maintenance.",
+    technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion", "Resend SMTP", "Vercel", "Figma", "After Effects", "Jitter"],
+    testimonial: {
+      quote:
+        "",
+      author: ""
+    },
+    websiteUrl: "https://acenavi.in",
+    gallery: [
+      "/images/an_banner.png",
+      "/images/an_ss1.png",
+      "/images/an_ss2.png",
+      "/images/an_ss3.png"
+    ]
   }
 ]
