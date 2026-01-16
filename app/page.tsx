@@ -1166,12 +1166,10 @@ export default function Home() {
   transition={{ delay: 0.3, duration: 0.8 }}
   className="text-center relative mt-12 md:mt-16"
 >
-  <h1 
-    className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter leading-tight relative inline-block"
-    style={{
-      color: '#EAEFFF',
-    }}
-  >
+<h1 
+  className="text-5xl md:text-7xl lg:text-8xl xl:text-[5.5rem] font-bold tracking-tighter leading-tight relative inline-block"
+  style={{ color: '#EAEFFF' }}
+>
     Build <span className="relative inline-block px-3">
       premium
       <img 
@@ -1207,7 +1205,7 @@ export default function Home() {
               transition={{ delay: 0.6, duration: 0.8 }}
               className="relative w-full"
             >
-              <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl">
+              <div className="relative w-full max-w-5xl mx-auto aspect-video rounded-2xl overflow-hidden shadow-2xl">
                 <AnimatePresence mode="wait">
                   <motion.img
                     key={currentHeroImage}
