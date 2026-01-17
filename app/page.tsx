@@ -40,6 +40,152 @@ interface FormData {
   services: Service[]
 }
 
+// Currency Dropdown Component (matching CountryCodeDropdown style)
+function CurrencyDropdown({ value, onChange }: { value: string; onChange: (currency: string) => void }) {
+  const [isOpen, setIsOpen] = useState(false)
+  const [buttonRect, setButtonRect] = useState<DOMRect | null>(null)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
+
+  const currencies = [
+    { code: "USD", name: "US Dollar", symbol: "$" },
+    { code: "EUR", name: "Euro", symbol: "€" },
+    { code: "GBP", name: "British Pound", symbol: "£" },
+    { code: "JPY", name: "Japanese Yen", symbol: "¥" },
+    { code: "AUD", name: "Australian Dollar", symbol: "A$" },
+    { code: "CAD", name: "Canadian Dollar", symbol: "C$" },
+    { code: "INR", name: "Indian Rupee", symbol: "₹" },
+    { code: "CNY", name: "Chinese Yuan", symbol: "¥" },
+    { code: "AED", name: "UAE Dirham", symbol: "د.إ" },
+  ]
+
+  const selectedCurrency = currencies.find((c) => c.code === value)
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  useEffect(() => {
+    if (isOpen && buttonRef.current) {
+      setButtonRect(buttonRef.current.getBoundingClientRect())
+    }
+  }, [isOpen])
+
+  const handleSelect = (code: string) => {
+    onChange(code)
+    setIsOpen(false)
+  }
+
+  return (
+    <div ref={dropdownRef} className="relative">
+      <button
+        ref={buttonRef}
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full px-4 py-3 bg-[#151515] border border-[#252525] rounded-xl text-[#EAEFFF] text-left flex items-center justify-between hover:border-[#353535] transition-colors focus:outline-none focus:ring-2 focus:ring-[#EAEFFF]/20"
+      >
+        <span className="flex items-center gap-2">
+          {selectedCurrency ? (
+            <>
+              <span className="font-medium">{selectedCurrency.symbol}</span>
+              <span className="text-[#EAEFFF]/80">{selectedCurrency.code}</span>
+            </>
+          ) : (
+            <span className="text-[#EAEFFF]/60">Select currency</span>
+          )}
+        </span>
+        <motion.svg
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.2 }}
+          className="w-5 h-5 text-[#EAEFFF]/60"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </motion.svg>
+      </button>
+
+      {isOpen && buttonRect && typeof window !== 'undefined' && (
+        <AnimatePresence>
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            style={{
+              position: 'fixed',
+              top: `${buttonRect.bottom + 8}px`,
+              left: `${buttonRect.left}px`,
+              width: `${buttonRect.width}px`,
+              zIndex: 9999,
+              maxHeight: '320px',
+            }}
+            className="bg-[#151515] border border-[#252525] rounded-xl shadow-2xl overflow-hidden"
+          >
+            <div className="max-h-64 overflow-y-auto custom-scrollbar">
+              {currencies.map((currency) => (
+                <button
+                  key={currency.code}
+                  type="button"
+                  onClick={() => handleSelect(currency.code)}
+                  className={`w-full px-4 py-3 text-left hover:bg-[#1a1a1a] transition-colors flex items-center gap-3 ${
+                    value === currency.code ? 'bg-[#1a1a1a]' : ''
+                  }`}
+                >
+                  <span className="text-xl font-medium">{currency.symbol}</span>
+                  <div className="flex-1">
+                    <div className="text-[#EAEFFF] font-medium">{currency.name}</div>
+                    <div className="text-[#EAEFFF]/60 text-sm">{currency.code}</div>
+                  </div>
+                  {value === currency.code && (
+                    <svg
+                      className="w-5 h-5 text-[#EAEFFF]"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                  )}
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      )}
+
+      <style jsx>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: #151515;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #252525;
+          border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: #353535;
+        }
+      `}</style>
+    </div>
+  )
+}
+
 // Embedded MultiStepForm component
 function EmbeddedMultiStepForm({ onComplete }: { onComplete?: () => void }) {
   const [step, setStep] = useState(1)
@@ -205,22 +351,6 @@ ${formData.details}
     setStep(step - 1)
   }
 
-  const countryCodes = [
-    { code: "+1", country: "US/CA" },
-    { code: "+44", country: "UK" },
-    { code: "+91", country: "IN" },
-    { code: "+61", country: "AU" },
-    { code: "+33", country: "FR" },
-    { code: "+49", country: "DE" },
-    { code: "+81", country: "JP" },
-    { code: "+86", country: "CN" },
-    { code: "+31", country: "NL" },
-    { code: "+30", country: "GR" },
-    { code: "+971", country: "AE" },
-  ]
-
-  const currencies = ["USD", "EUR", "GBP", "JPY", "AUD", "CAD", "INR", "CNY", "AED"]
-
   return (
     <>
       <div className="flex items-center justify-between mb-8">
@@ -315,7 +445,7 @@ ${formData.details}
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-[#101010] border border-[#252525] rounded-xl focus: outline-none focus:ring-2 focus:ring-[#EAEFFF] focus:border-transparent transition-colors"
+                  className="w-full px-4 py-3 bg-[#151515] border border-[#252525] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#EAEFFF]/20 focus:border-[#353535] transition-colors text-[#EAEFFF]"
                 />
               </div>
 
@@ -330,35 +460,37 @@ ${formData.details}
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-[#101010] border border-[#252525] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#EAEFFF] focus:border-transparent transition-colors"
+                  className="w-full px-4 py-3 bg-[#151515] border border-[#252525] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#EAEFFF]/20 focus:border-[#353535] transition-colors text-[#EAEFFF]"
                 />
               </div>
 
               <div className="grid grid-cols-5 gap-4">
-  <div className="col-span-2">
-    <label htmlFor="countryCode" className="block text-sm font-medium mb-2">
-      Country Code
-    </label>
-    <CountryCodeDropdown
-      value={formData.countryCode}
-      onChange={(code) => setFormData((prev) => ({ ...prev, countryCode: code }))}
-    />
-  </div>
-  <div className="col-span-3">
-    <label htmlFor="phone" className="block text-sm font-medium mb-2">
-      Phone Number <span className="text-red-400">*</span>
-    </label>
-    <input
-      type="tel"
-      id="phone"
-      name="phone"
-      value={formData.phone}
-      onChange={handleChange}
-      required
-      className="w-full px-4 py-3 bg-[#101010] border border-[#252525] rounded-xl focus: outline-none focus:ring-2 focus:ring-[#EAEFFF] focus:border-transparent transition-colors"
-    />
-  </div>
-</div>
+                <div className="col-span-2">
+                  <label htmlFor="countryCode" className="block text-sm font-medium mb-2">
+                    Country Code
+                  </label>
+                  <CountryCodeDropdown
+                    value={formData.countryCode}
+                    onChange={(code) => setFormData((prev) => ({ ...prev, countryCode: code }))}
+                  />
+                </div>
+                <div className="col-span-3">
+                  <label htmlFor="phone" className="block text-sm font-medium mb-2">
+                    Phone Number <span className="text-red-400">*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    required
+                    pattern="[0-9]*"  
+                    inputMode="numeric"
+                    className="w-full px-4 py-3 bg-[#151515] border border-[#252525] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#EAEFFF]/20 focus:border-[#353535] transition-colors text-[#EAEFFF]"
+                  />
+                </div>
+              </div>
 
               <div>
                 <label htmlFor="details" className="block text-sm font-medium mb-2">
@@ -371,7 +503,7 @@ ${formData.details}
                   onChange={handleChange}
                   required
                   rows={4}
-                  className="w-full px-4 py-3 bg-[#101010] border border-[#252525] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#EAEFFF] focus:border-transparent transition-colors resize-none"
+                  className="w-full px-4 py-3 bg-[#151515] border border-[#252525] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#EAEFFF]/20 focus:border-[#353535] transition-colors resize-none text-[#EAEFFF]"
                 />
               </div>
             </motion.div>
@@ -390,19 +522,10 @@ ${formData.details}
                   <label htmlFor="currency" className="block text-sm font-medium mb-2">
                     Currency
                   </label>
-                  <select
-                    id="currency"
-                    name="currency"
+                  <CurrencyDropdown
                     value={formData.currency}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 bg-[#101010] border border-[#252525] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#EAEFFF] focus:border-transparent transition-colors"
-                  >
-                    {currencies.map((currency) => (
-                      <option key={currency} value={currency}>
-                        {currency}
-                      </option>
-                    ))}
-                  </select>
+                    onChange={(currency) => setFormData((prev) => ({ ...prev, currency }))}
+                  />
                 </div>
                 <div>
                   <label htmlFor="budget" className="block text-sm font-medium mb-2">
@@ -415,8 +538,10 @@ ${formData.details}
                     value={formData.budget}
                     onChange={handleChange}
                     required
-                    placeholder="5,000"
-                    className="w-full px-4 py-3 bg-[#101010] border border-[#252525] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#EAEFFF] focus:border-transparent transition-colors"
+                    pattern="[0-9,]*" 
+                    inputMode="numeric"
+                    placeholder="2,000"
+                    className="w-full px-4 py-3 bg-[#151515] border border-[#252525] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#EAEFFF]/20 focus:border-[#353535] transition-colors text-[#EAEFFF]"
                   />
                 </div>
               </div>

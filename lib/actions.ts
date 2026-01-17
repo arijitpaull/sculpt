@@ -59,9 +59,9 @@ export async function sendEmail(data: EmailData) {
 
     // Auto-reply email to the user using verified domain
     const autoReplyEmail = await resend.emails.send({
-      from: "SCULPT. <noreply@sculpt.work>",
+      from: "SCULPT Team <noreply@sculpt.work>",
       to: email, // This sends to the user's email address
-      subject: "Thank you for reaching out to SCULPT.",
+      subject: "Hey! SCULPT received your idea 👍🏼",
       html: `
         <!DOCTYPE html>
         <html lang="en">
