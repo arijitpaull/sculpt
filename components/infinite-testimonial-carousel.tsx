@@ -32,7 +32,7 @@ const testimonials: Testimonial[] = [
     id: "4",
     name: "Anurag Sharma 🇬🇧",
     role: "Marketing manager, Arctic Bee",
-    content: "Looks promising ! Great work so far man.",
+    content: "Looks promising ! Great work man.",
   },
   {
     id: "5",
@@ -48,6 +48,12 @@ const testimonials: Testimonial[] = [
   },
   {
     id: "7",
+    name: "Meenakshi Reddy 🇮🇳",
+    role: "Client, ACENAVI",
+    content: "We had a great experience working with Sculpt on the ACENAVI website. All interactions were professional, responsive, and they understood our vision quickly.",
+  },
+  {
+    id: "8",
     name: "Tanya Singh 🇮🇳",
     role: "Client",
     content: "Great experience! Fixed all bugs quickly and gave the app a clean, modern design. Very professional and responsive. Highly recommend!",

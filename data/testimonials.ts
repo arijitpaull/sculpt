@@ -29,7 +29,7 @@ export const testimonials: Testimonial[] = [
     id: "4",
     name: "Anurag Sharma 🇬🇧",
     role: "Marketing manager, Arctic Bee",
-    content: "Looks promising ! Great work so far man.",
+    content: "Looks promising ! Great work.",
   },
   {
     id: "5",
