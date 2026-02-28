@@ -1285,17 +1285,18 @@ export default function Home() {
           {/* Hero Content */}
           <div className="relative z-10 w-full max-w-7xl mx-auto space-y-8 md:space-y-12">
             {/* Hero Text */}
-<motion.div
+            <motion.div
   initial={{ opacity: 0, y: -20 }}
   animate={{ opacity: 1, y: 0 }}
   transition={{ delay: 0.3, duration: 0.8 }}
   className="text-center relative mt-12 md:mt-16"
 >
 <h1 
-  className="text-5xl md:text-7xl lg:text-8xl xl:text-[5.5rem] font-bold tracking-tighter leading-tight relative inline-block"
+  className="text-5xl md:text-7xl lg:text-8xl xl:text-[5.5rem] font-bold tracking-tighter leading-[1.15] relative inline-block"
   style={{ color: '#EAEFFF' }}
 >
-    Build <span className="relative inline-block px-3">
+  <span className="block">
+    We build <span className="relative inline-block px-3">
       premium
       <img 
         src="/images/circle_p.png" 
@@ -1309,8 +1310,11 @@ export default function Home() {
           height: '300%'
         }}
       />
-    </span> AI apps<br />that print <span className="relative inline-block">
-      money
+    </span>
+  </span>
+  <span className="block mt-4 md:mt-6">
+    AI apps in <span className="relative inline-block">
+      60 days
       <img 
         src="/images/line_mo.png" 
         alt=""
@@ -1320,7 +1324,8 @@ export default function Home() {
         }}
       />
     </span>.
-  </h1>
+  </span>
+</h1>
 </motion.div>
 
             {/* Hero Image Carousel */}
