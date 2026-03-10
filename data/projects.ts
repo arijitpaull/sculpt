@@ -23,63 +23,6 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: "1",
-    title: "Mynd",
-    slug: "mynd",
-    category: "Health and mindfulness",
-    description: "AI-powered therapy and journaling to support emotional wellbeing.",
-    fullDescription:
-      "Mynd is a mental health companion that combines AI therapy conversations, private journaling, and mood tracking in one secure app. Our goal was to offer a safe, accessible, and consistent form of emotional support to users who may not have access to traditional therapy.",
-    image: "/images/mynd-thumbnail.png",
-    challenge:
-      "We aimed to make emotional support more accessible and judgment-free. Users often hesitate to seek therapy or don’t have the time or means. The challenge was to create something that felt safe, private, and emotionally responsive.",
-    solution:
-      "We built Mynd with a secure backend using Supabase and Hive for private storage. The app lets users journal and talk to a GPT-powered AI therapist. Emotional summaries and monthly insights help users understand their mood patterns. All interactions are encrypted and designed to feel supportive, not robotic.",
-    results:
-      "Users said Mynd helped them feel supported without the pressure of in-person therapy. Many found the AI conversations therapeutic and used the app daily to reflect. The insights led to a deeper understanding of their emotions and helped build a consistent journaling habit.",
-    technologies: ["Flutter", "OpenAI API", "Supabase", "Hive", "Dart"],
-    testimonial: {
-      quote:
-        "",
-      author: ""
-    },
-    playStoreUrl:"https://play.google.com/store/apps/details?id=com.mycompany.mynd&ref=producthunt" ,
-    gallery: [
-      "/images/my_banner.png",
-      "/images/my_ss1.png",
-      "/images/my_ss2.png",
-      "/images/my_ss3.png"
-    ]
-  },
-  {
-    id: "2",
-    title: "Medi Hydrate",
-    slug: "medi-hydrate",
-    category: "Health and Lifestyle",
-    description: "Smart medicine and hydration tracker for better daily wellness.",
-    fullDescription:
-      "Medi Hydrate is a health companion designed to keep users consistent with their medication and hydration habits. With a focus on simplicity and precision, the app helps users track medicine doses and water intake while offering intelligent reminders.",
-    image: "/images/medihydrate-thumbnail.png",
-    challenge:
-      "We observed that users often forget to take their medicine or drink enough water—especially with busy routines. Building an app that handled both needs seamlessly, without clutter or stress, was the main goal.",
-    solution:
-      "We built Medi Hydrate with a dual-focus dashboard. Users can add medications, configure custom reminders, and log doses. A water tracking module calculates ideal hydration based on health data and offers timely nudges. Notifications were handled using a custom plugin for reliability across devices.",
-    results:
-      "Users found Medi Hydrate to be a major productivity booster for health. It helped build consistent wellness habits, and clients reported fewer missed doses and improved hydration within the first few weeks of use.",
-    technologies: ["Flutter", "Hive", "Firebase", "Dart", "Notifications Plugin"],
-    testimonial: {
-      quote:
-        "Really helpful app! It's easy to use and a great reminder to stay hydrated, especially during busy days.",
-      author: "Abhay S., User"
-    },
-    gallery: [
-      "/images/mh_banner.png",
-      "/images/mh_ss1.png",
-      "/images/mh_ss2.png",
-      "/images/mh_ss3.png"
-    ]
-  },
-  {
-    id: "3",
     title: "Charmify",
     slug: "charmify",
     category: "Dating",
@@ -100,7 +43,6 @@ export const projects: Project[] = [
       author: ""
     },
     appStoreUrl:"https://apps.apple.com/in/app/charmify-dating-coach/id6743173949" ,
-    playStoreUrl:"https://play.google.com/store/apps/details?id=com.sculpt.charmify&ref=producthunt" ,
     gallery: [
       "/images/ch_banner.png",
       "/images/ch_ss1.png",
@@ -109,7 +51,7 @@ export const projects: Project[] = [
     ]
   },
   {
-    id: "4",
+    id: "2",
     title: "Woque",
     slug: "woque",
     category: "Lifestyle",
@@ -139,7 +81,7 @@ export const projects: Project[] = [
   },
   
   {
-    id: "5",
+    id: "3",
     title: "IoT Weather Integration with Thinger.io",
     slug: "thinger-weather-iot",
     category: "IoT & Automation",
@@ -167,7 +109,7 @@ export const projects: Project[] = [
     ]
   },
   {
-    id: "6",
+    id: "4",
     title: "Dakkapel Offerte",
     slug: "dakkapel-offerte",
     category: "Utilities",
@@ -195,7 +137,7 @@ export const projects: Project[] = [
     ]
   },
   {
-    id: "7",
+    id: "5",
     title: "Funutrition",
     slug: "funutrition",
     category: "Education",
@@ -225,7 +167,7 @@ export const projects: Project[] = [
     ]
   },
   {
-    id: "8",
+    id: "6",
     title: "MelodAI",
     slug: "melodai",
     category: "Music",
@@ -254,7 +196,7 @@ export const projects: Project[] = [
     ]
   },
   {
-    id: "9",
+    id: "7",
     title: "ACENAVI",
     slug: "acenavi",
     category: "SaaS & Marketing",

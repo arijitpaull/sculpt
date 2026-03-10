@@ -21,13 +21,7 @@ export const socialLinks: SocialLink[] = [
     icon: "Linkedin",
     ariaLabel: "Connect with us on LinkedIn",
   },
-  {
-    id: "fiverr",
-    name: "Fiverr",
-    url: "https://www.fiverr.com/arijitpaulll",
-    icon: "FiverrLogo",
-    ariaLabel: "Hire us on Fiverr",
-  },
+  
   {
     id: "email",
     name: "Email",

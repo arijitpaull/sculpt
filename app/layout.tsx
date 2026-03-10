@@ -21,7 +21,7 @@ export const metadata = {
   
   // Enhanced basic meta tags
   title: {
-    default: "SCULPT - Software Development Agency | Full-Stack Development & AI Solutions",
+    default: "SCULPT - App Development Agency | Full-Stack Development & AI Solutions",
     template: "%s | SCULPT - Expert App & AI Development"
   },
   icons: {

@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from "react"
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowRight, Menu, X, Instagram, Linkedin, Mail, Calendar, FileText, Check, ChevronLeft, ChevronRight } from "lucide-react"
+import { ArrowRight, Menu, X, Instagram, Linkedin, Mail, Calendar, FileText, Check, ChevronLeft, ChevronRight, ArrowDown } from "lucide-react"
 import ProjectCard from "@/components/project-card"
 
 import FiverrLogo from "@/components/fiverr-logo"
@@ -16,6 +16,9 @@ import { socialLinks } from "@/data/social-links"
 import { siteConfig } from "@/data/site-config"
 import InfiniteTestimonialCarousel from "@/components/infinite-testimonial-carousel"
 import CountryCodeDropdown from "@/components/country-code-dropdown"
+import { Timeline } from "@/components/timeline"
+import ProjectGallery from "@/components/project-gallery"
+import ServicesSection from "@/components/services-bento"
 
 
 // Icon mapping for dynamic icon rendering
@@ -1262,394 +1265,170 @@ export default function Home() {
 
       <main>
         {/* Hero Section */}
-        <section className="relative min-h-screen overflow-hidden flex flex-col items-center justify-center px-6 py-32" ref={headerRef}>
-          {/* Background video */}
-          <div className="absolute inset-0 z-0">
-            {!videoError ? (
-              <video
-                ref={videoRef}
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="w-full h-full object-cover opacity-30"
-                onError={() => setVideoError(true)}
-              >
-                <source src={siteConfig.heroVideo} type="video/mp4" />
-              </video>
-            ) : (
-              <div className={`w-full h-full ${siteConfig.heroVideoFallback} opacity-30`} />
-            )}
-          </div>
+<section className="relative overflow-hidden flex flex-col items-center justify-center px-6 pt-32 pb-20 md:pt-48 md:pb-32" ref={headerRef}>
+  
+  {/* Background video */}
+  <div className="absolute inset-0 z-0">
+    {!videoError ? (
+      <video
+        ref={videoRef}
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="w-full h-full object-cover opacity-30"
+        onError={() => setVideoError(true)}
+      >
+        <source src={siteConfig.heroVideo} type="video/mp4" />
+      </video>
+    ) : (
+      <div className={`w-full h-full ${siteConfig.heroVideoFallback} opacity-30`} />
+    )}
+  </div>
 
-          {/* Hero Content */}
-          <div className="relative z-10 w-full max-w-7xl mx-auto space-y-8 md:space-y-12">
-            {/* Hero Text */}
-            <motion.div
-  initial={{ opacity: 0, y: -20 }}
+  {/* ── TEXT BLOCK ── */}
+  <div className="relative z-10 w-full max-w-4xl mx-auto flex flex-col items-center text-center space-y-8">
+
+    {/* Badge */}
+<motion.div
+  initial={{ opacity: 0, y: -16 }}
   animate={{ opacity: 1, y: 0 }}
-  transition={{ delay: 0.3, duration: 0.8 }}
-  className="text-center relative mt-12 md:mt-16"
+  transition={{ delay: 0.2, duration: 0.6 }}
+  className="inline-flex items-center gap-2 rounded-full border border-[#EAEFFF]/15 bg-[#EAEFFF]/5 px-3 py-1.5 text-sm text-[#EAEFFF]/70 backdrop-blur-sm"
 >
-<h1 
-  className="text-5xl md:text-7xl lg:text-8xl xl:text-[5.5rem] font-bold tracking-tighter leading-[1.15] relative inline-block"
-  style={{ color: '#EAEFFF' }}
->
-  <span className="block">
-    We build <span className="relative inline-block px-3">
-      premium
-      <img 
-        src="/images/circle_p.png" 
-        alt=""
-        className="absolute inset-0 w-full h-full object-contain pointer-events-none"
-        style={{ 
-          top: '50%', 
-          left: '50%', 
-          transform: 'translate(-50%, -50%)',
-          width: '300%',
-          height: '300%'
-        }}
-      />
-    </span>
+  <span
+    style={{
+      display: 'inline-block',
+      width: '8px',
+      height: '8px',
+      minWidth: '8px',
+      minHeight: '8px',
+      borderRadius: '50%',
+      background: '#EAEFFF',
+      boxShadow: '0 0 6px rgba(234,239,255,0.8)',
+      verticalAlign: 'middle',
+      position: 'relative',
+      top: '-1.5px',
+    }}
+  />
+  <span style={{ lineHeight: '1', verticalAlign: 'middle' }}>
+    Trusted by founders in 🇳🇱 🇬🇷 🇦🇺 🇮🇳 🇬🇧
   </span>
-  <span className="block mt-4 md:mt-6">
-    AI apps in <span className="relative inline-block">
-      60 days
-      <img 
-        src="/images/line_mo.png" 
-        alt=""
-        className="absolute bottom-0 left-0 w-full pointer-events-none"
-        style={{ 
-          transform: 'translateY(-1px)'
-        }}
-      />
-    </span>.
-  </span>
-</h1>
 </motion.div>
 
-            {/* Hero Image Carousel */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
-              className="relative w-full"
-            >
-              <div className="relative w-full max-w-5xl mx-auto aspect-video rounded-2xl overflow-hidden shadow-2xl">
-                <AnimatePresence mode="wait">
-                  <motion.img
-                    key={currentHeroImage}
-                    src={heroImages[currentHeroImage]}
-                    alt="Hero showcase"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.25, ease: "easeInOut" }}
-                    className="w-full h-full object-contain absolute inset-0"
-                    style={{ transform: 'scale(1.28)' }}
-                  />
-                </AnimatePresence>
-              </div>
-            </motion.div>
-          </div>
+    {/* Headline */}
+    <motion.h1
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.35, duration: 0.8 }}
+      className="text-5xl font-medium tracking-tight sm:text-7xl md:text-8xl leading-[1.1]"
+      style={{ color: '#EAEFFF' }}
+    >
+      Your app idea,{" "}
+      <span style={{ color: '#EAEFFF', opacity: 0.4 }}>launch-ready</span>
+      <br />
+      in 60 days.
+    </motion.h1>
 
-          {/* Gradient overlay */}
-          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#101010] via-[#101010]/80 to-transparent z-5" />
-        </section>
+    {/* Subheadline */}
+    <motion.p
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.5, duration: 0.7 }}
+      className="mx-auto max-w-2xl text-lg text-[#EAEFFF]/60 md:text-xl leading-relaxed"
+    >
+      We design, build, and ship production-ready mobile apps and SaaS products — so you can start acquiring users, not managing developers.
+    </motion.p>
 
-        {/* Animated Divider - SERVICES */}
-        <div className="relative py-12 overflow-hidden">
-          <motion.div
-            animate={{ x: [0, -1000] }}
-            transition={{
-              x: {
-                repeat: Infinity,
-                repeatType: "loop",
-                duration: 20,
-                ease: "linear",
-              },
-            }}
-            className="whitespace-nowrap text-[80px] md:text-[120px] font-bold opacity-10"
-          >
-            SERVICESSERVICESSERVICESSERVICESSERVICESSERVICESSERVICESSERVICESSERVICESSERVICES
-          </motion.div>
-        </div>
+    {/* CTAs */}
+<motion.div
+  initial={{ opacity: 0, y: 16 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.65, duration: 0.7 }}
+  className="flex flex-col sm:flex-row items-center justify-center gap-7"
+>
+  {/* Book a Call — outlined, fills on hover */}
+  <button
+    onClick={openCalModal}
+    className="relative overflow-hidden border-2 border-[#EAEFFF] text-[#EAEFFF] px-8 py-4 rounded-full font-bold text-base hover:text-[#101010] group w-full sm:w-auto cursor-pointer transition-all duration-300 hover:scale-105"
+  >
+    <div className="absolute inset-0 bg-[#EAEFFF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out" />
+    <span className="relative z-10 flex items-center justify-center gap-2">
+      Book a Free Strategy Call
+    </span>
+  </button>
 
-        {/* Services Section */}
-        <section id="services" className="py-0 px-6 relative">
-          <div className="max-w-9xl mx-auto">
-            {/* Desktop: Grid Layout */}
-            <div className="hidden md:block space-y-6">
-              {/* First Row */}
-              <div className="flex gap-6 justify-center">
-                {/* First image - 760x396 - Apps */}
-                <div className="w-[760px] h-[396px]">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0 }}
-                    viewport={{ once: true }}
-                    whileHover={{ scale: 1.05, y: -10 }}
-                    className="relative rounded-2xl overflow-hidden w-full h-full cursor-pointer group"
-                  >
-                    <img 
-                      src="/images/apps_service.png"
-                      alt="App Development"
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 p-6 md:p-8 lg:p-10 flex items-start">
-                      <h3 className="text-[#EAEFFF] font-light text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-tight max-w-md">
-                        Cross-platform apps that earn on day one
-                      </h3>
-                    </div>
-                  </motion.div>
-                </div>
 
-                {/* Second image - 570x396 - Web */}
-                <div className="w-[570px] h-[396px]">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.1 }}
-                    viewport={{ once: true }}
-                    whileHover={{ scale: 1.05, y: -10 }}
-                    className="relative rounded-2xl overflow-hidden w-full h-full cursor-pointer group"
-                  >
-                    <img 
-                      src="/images/web_service.png"
-                      alt="Web Development"
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 p-6 md:p-8 lg:p-10 flex items-start">
-                      <h3 className="text-[#EAEFFF] font-light text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-tight max-w-xs">
-                        Landing pages that sell your app
-                      </h3>
-                    </div>
-                  </motion.div>
-                </div>
-              </div>
+  {/* See How We Build — pre-filled, dims on hover */}
+  <button
+  onClick={() => document.getElementById("flow")?.scrollIntoView({ behavior: "smooth" })}
+  className="group relative inline-flex items-center gap-1 text-xl font-medium text-[#EAEFFF]/60 hover:text-[#EAEFFF] transition-colors duration-200"
+>
+  See How We Build
+  <ArrowDown className="h-6 w-26"/>
+  <span className="absolute bottom-0 left-0 h-px w-0 bg-[#EAEFFF]/60 transition-all duration-300 group-hover:w-full" />
+</button>
+</motion.div>
+  </div>
 
-              {/* Second Row */}
-              <div className="flex gap-6 justify-center">
-                {/* Third image - 570x396 - Deployment */}
-                <div className="w-[570px] h-[396px]">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
-                    viewport={{ once: true }}
-                    whileHover={{ scale: 1.05, y: -10 }}
-                    className="relative rounded-2xl overflow-hidden w-full h-full cursor-pointer group"
-                  >
-                    <img 
-                      src="/images/depl_service.png"
-                      alt="Deployment & Maintenance"
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 p-6 md:p-8 lg:p-10 flex items-start">
-                      <h3 className="text-[#EAEFFF] font-light text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-tight max-w-sm">
-                        Deployment & maintenance that protect your MRR
-                      </h3>
-                    </div>
-                  </motion.div>
-                </div>
+  {/* ── FLOATING MOCKUPS ── */}
+  <motion.div
+  initial={{ opacity: 0, y: 30 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.85, duration: 0.9 }}
+  className="hidden sm:block relative z-10 mt-32 md:mt-40 w-full max-w-5xl mx-auto px-4"
+>
+  <div className="relative mx-auto w-full" style={{ height: '420px' }}>
 
-                {/* Fourth image - 760x396 - AI */}
-                <div className="w-[760px] h-[396px]">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.3 }}
-                    viewport={{ once: true }}
-                    whileHover={{ scale: 1.05, y: -10 }}
-                    className="relative rounded-2xl overflow-hidden w-full h-full cursor-pointer group"
-                  >
-                    <img 
-                      src="/images/aiml_service.png"
-                      alt="AI/ML Integration"
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 p-6 md:p-8 lg:p-10 flex items-start">
-                      <h3 className="text-[#EAEFFF] font-light text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-tight max-w-md">
-                        AI brains that power your product
-                      </h3>
-                    </div>
-                  </motion.div>
-                </div>
-              </div>
-            </div>
+    {/* Left — Tab mockup */}
+    <motion.div
+      className="hidden sm:block absolute bottom-20 left-0 z-30"
+      style={{ width: '38%' }}
+      animate={{ y: [8, -4, 8] }}
+      transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 0.5 }}
+    >
+      <img
+        src="/images/tab_mockup.png"
+        alt="Tablet app mockup"
+        className="w-full h-auto object-contain drop-shadow-2xl"
+      />
+    </motion.div>
 
-            {/* Mobile: Column Layout */}
-            <div className="md:hidden flex flex-col space-y-6">
-              {/* Apps Service */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0 }}
-                viewport={{ once: true }}
-                className="relative w-full aspect-[16/9] cursor-pointer rounded-2xl overflow-hidden"
-              >
-                <img 
-                  src="/images/apps_service.png"
-                  alt="App Development"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 p-4 sm:p-6 flex items-start">
-                  <h3 className="text-[#EAEFFF] font-light text-xl sm:text-2xl leading-tight">
-                    Cross-platform apps that earn on day one
-                  </h3>
-                </div>
-              </motion.div>
+    {/* Center — Desktop mockup (dominant, centered) */}
+    <motion.div
+      className="absolute bottom-0 left-0 z-20"
+      style={{ width: '100%', transform: 'translateX(-50%)' }}
+      animate={{ y: [0, -10, 0] }}
+      transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+    >
+      <img
+        src="/images/laptop_mockup.png"
+        alt="Desktop app mockup"
+        className="w-full h-auto object-contain drop-shadow-2xl"
+      />
+    </motion.div>
 
-              {/* Web Service */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                viewport={{ once: true }}
-                className="relative w-full aspect-[16/9] cursor-pointer rounded-2xl overflow-hidden"
-              >
-                <img 
-                  src="/images/web_service.png"
-                  alt="Web Development"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 p-4 sm:p-6 flex items-start">
-                  <h3 className="text-[#EAEFFF] font-light text-xl sm:text-2xl leading-tight">
-                    Landing pages that sell your app
-                  </h3>
-                </div>
-              </motion.div>
+    {/* Right — Phone mockup */}
+    <motion.div
+      className="hidden sm:block absolute bottom-0 right-0 z-30"
+      style={{ width: '22%' }}
+      animate={{ y: [-12, 8, -12] }}
+      transition={{ repeat: Infinity, duration: 8, ease: "easeInOut", delay: 1 }}
+    >
+      <img
+        src="/images/mobile_mockup.png"
+        alt="Mobile app mockup"
+        className="w-full h-auto object-contain drop-shadow-2xl"
+      />
+    </motion.div>
 
-              {/* Deployment Service */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                viewport={{ once: true }}
-                className="relative w-full aspect-[16/9] cursor-pointer rounded-2xl overflow-hidden"
-              >
-                <img 
-                  src="/images/depl_service.png"
-                  alt="Deployment & Maintenance"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 p-4 sm:p-6 flex items-start">
-                  <h3 className="text-[#EAEFFF] font-light text-xl sm:text-2xl leading-tight">
-                    Deployment & maintenance that protect your MRR
-                  </h3>
-                </div>
-              </motion.div>
+  </div>
+</motion.div>
 
-              {/* AI Service */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                viewport={{ once: true }}
-                className="relative w-full aspect-[16/9] cursor-pointer rounded-2xl overflow-hidden"
-              >
-                <img 
-                  src="/images/aiml_service.png"
-                  alt="AI/ML Integration"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 p-4 sm:p-6 flex items-start">
-                  <h3 className="text-[#EAEFFF] font-light text-xl sm:text-2xl leading-tight">
-                    AI brains that power your product
-                  </h3>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
+  {/* Gradient overlay */}
+  <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#101010] via-[#101010]/80 to-transparent z-20" />
 
-        {/* Animated Divider - FLOW */}
-        <div className="relative py-12 overflow-hidden">
-          <motion.div
-            animate={{ x: [-1000, 0] }}
-            transition={{
-              x: {
-                repeat: Infinity,
-                repeatType: "loop",
-                duration: 20,
-                ease: "linear",
-              },
-            }}
-            className="whitespace-nowrap text-[80px] md:text-[120px] font-bold opacity-10"
-          >
-            FLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOW
-          </motion.div>
-        </div>
-
-        {/* Flow Section */}
-        <section id="flow" className="py-0 px-6 relative">
-          <div className="max-w-7xl mx-auto">
-            {/* Flow Navigation Buttons */}
-            <div className="relative mb-12">
-              {/* Buttons - Scrollable on mobile */}
-              <div className="overflow-x-auto pb-4 -mx-6 px-6 md:mx-0 md:px-0 scrollbar-hide">
-                <div className="flex md:justify-center gap-3 md:gap-5 min-w-max md:min-w-0">
-                  {[
-                    { id: 'kickoff', label: 'Kickoff', img: '/images/kickoff.png' },
-                    { id: 'advtrn', label: 'Advance transfer', img: '/images/advtrn.png' },
-                    { id: 'uxdes', label: 'UX design', img: '/images/uxdes.png' },
-                    { id: 'dev', label: 'Development', img: '/images/devlop.png' },
-                    { id: 'dep', label: 'Deployment & Maintenance', img: '/images/dep.png' },
-                    { id: 'handoff', label: 'Final payment & handoff', img: '/images/handoff.png' },
-                  ].map((step, index) => (
-                    <button
-                      key={step.id}
-                      onClick={() => setCurrentFlowStep(step.id)}
-                      className={`relative px-4 py-2 font-medium transition-all duration-300 whitespace-nowrap ${
-                        currentFlowStep === step.id
-                          ? 'text-[#EAEFFF]'
-                          : 'text-[#EAEFFF]/50 hover:text-[#EAEFFF]/80'
-                      }`}
-                    >
-                      {step.label}
-                      {/* Individual button underline */}
-                      {currentFlowStep === step.id && (
-                        <motion.div
-                          layoutId="flowUnderline"
-                          className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#EAEFFF]"
-                          style={{
-                            boxShadow: '0 0 10px rgba(234, 239, 255, 0.8), 0 0 20px rgba(234, 239, 255, 0.4)'
-                          }}
-                        />
-                      )}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              
-              {/* Grey line under all buttons */}
-              <div className="absolute bottom-0 left-0 right-0 h-[0px] bg-[#454545]" />
-            </div>
-
-            {/* Flow Image Display */}
-            <motion.div
-              key={currentFlowStep}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="relative w-full max-w-5xl mx-auto rounded-2xl overflow-hidden"
-            >
-              <img 
-                src={
-                  currentFlowStep === 'kickoff' ? '/images/kickoff.png' :
-                  currentFlowStep === 'advtrn' ? '/images/advtrn.png' :
-                  currentFlowStep === 'uxdes' ? '/images/uxdes.png' :
-                  currentFlowStep === 'dev' ? '/images/devlop.png' :
-                  currentFlowStep === 'dep' ? '/images/dep.png' :
-                  '/images/handoff.png'
-                }
-                alt="Flow step"
-                className="w-full h-auto object-contain"
-              />
-            </motion.div>
-          </div>
-        </section>
+</section>
 
         {/* Animated Divider - TESTIMONIALS */}
         <div className="relative py-1 overflow-hidden">
@@ -1668,14 +1447,17 @@ export default function Home() {
             TESTIMONIALSTESTIMONIALSTESTIMONIALSTESTIMONIALSTESTIMONIALSTESTIMONIALSTESTIMONIALS
           </motion.div>
         </div>
-
+        <div className="text-center pb-8 -mt-4">
+  <p className="text-[#EAEFFF]/50 text-3xl md:text-xxl font-medium">What our clients say.</p>
+</div>
         {/* Testimonials Section */}
         <section id="testimonials" className="py-0 relative">
           <InfiniteTestimonialCarousel />
         </section>
 
-        {/* Animated Divider - PROJECTS */}
-        <div className="relative py-10 overflow-hidden">
+
+                {/* Animated Divider - PROJECTS */}
+                <div className="relative py-10 overflow-hidden">
           <motion.div
             animate={{ x: [-1000, 0] }}
             transition={{
@@ -1691,279 +1473,159 @@ export default function Home() {
             PROJECTSPROJECTSPROJECTSPROJECTSPROJECTSPROJECTSPROJECTSPROJECTSPROJECTSPROJECTS
           </motion.div>
         </div>
-
+        <div className="text-center pb-8 -mt-4">
+  <p className="text-[#EAEFFF]/50 text-3xl md:text-xxl font-medium">Some of our best work.</p>
+</div>
         {/* Projects Section */}
-        <section id="projects" className="relative py-0 px-6">
-          <div className="max-w-7xl mx-auto relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="mb-16"
-            >
-            </motion.div>
+        <ProjectGallery />
 
-            {/* Featured Project */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="mb-16"
-            >
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div className="relative">
-                  <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-yellow-400 via-orange-400 to-red-400">
-                    {reversedProjects[0]?.image ? (
-                      <img 
-                        src={reversedProjects[0].image} 
-                        alt={reversedProjects[0].title}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center p-8">
-                        <div className="text-center">
-                          <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mb-4 mx-auto">
-                            <span className="text-2xl font-bold text-white">
-                              {reversedProjects[0]?.title?.charAt(0) || 'F'}
-                            </span>
-                          </div>
-                          <h3 className="text-white text-xl font-bold">{reversedProjects[0]?.title || 'Funutrition'}</h3>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
+        {/* Animated Divider - FLOW */}
+        <div className="relative py-12 overflow-hidden">
+  <motion.div
+    animate={{ x: [-1000, 0] }}
+    transition={{
+      x: {
+        repeat: Infinity,
+        repeatType: "loop",
+        duration: 20,
+        ease: "linear",
+      },
+    }}
+    className="whitespace-nowrap text-[80px] md:text-[120px] font-bold opacity-10"
+  >
+    FLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOW
+  </motion.div>
+</div>
+<div className="text-center pb-8 -mt-4">
+  <p className="text-[#EAEFFF]/50 text-3xl md:text-xxl font-medium">What happens when you choose us.</p>
+</div>
+{/* Flow Section — Timeline */}
+<section id="flow" className="py-0 px-6 relative">
 
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4">
-                      {reversedProjects[0]?.title || 'Funutrition'}
-                    </h3>
-                    <p className="text-lg opacity-80 leading-relaxed">
-                      {reversedProjects[0]?.description || 
-                       'Funutrition is a complete wellness and learning tracker designed for children.'}
-                    </p>
-                  </div>
-                  
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {(reversedProjects[0]?.technologies || ['React Native', 'Node.js', 'MongoDB', 'AWS']).map((tech: string, index: number) => (
-                      <span 
-                        key={index}
-                        className="px-3 py-1 bg-[#252525] rounded-full text-sm opacity-80"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                  
-                  <Link 
-                    href={`/projects/${reversedProjects[0]?.slug}`}
-                    className="inline-flex items-center px-6 py-3 border border-[#EAEFFF] rounded-full hover:bg-[#EAEFFF] hover:text-[#101010] transition-colors"
-                  >
-                    View Project Details
-                  </Link>
-                </div>
-              </div>
-            </motion.div>
+  <Timeline data={[
+  {
+    title: "Kickoff",
+    content: (
+      <div className="space-y-6 pb-4">
+        <p className="text-[#EAEFFF]/70 text-2xl md:text-4xl leading-relaxed max-w-xl">
+          We align on your vision, target users, core features, and revenue model. You get a clear scope document and project timeline before a single line of code is written.
+        </p>
+        <div className="flex flex-wrap gap-3 mt-6">
+          {["Discovery call", "Scope doc", "Timeline", "Tech stack decision"].map((tag) => (
+            <span key={tag} className="px-4 py-2 bg-[#EAEFFF]/5 border border-[#EAEFFF]/10 rounded-full text-[#EAEFFF]/50 text-base">
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    ),
+  },
+  {
+    title: "Advance Transfer",
+    content: (
+      <div className="space-y-6 pb-4">
+        <p className="text-[#EAEFFF]/70 text-2xl md:text-4xl leading-relaxed max-w-xl">
+          A 50% advance secures your slot in our build queue. Projects start from $999 — you'll know the full cost upfront with no hidden fees, ever.
+        </p>
+        <div className="flex flex-wrap gap-3 mt-6">
+          {["50% advance", "Fixed pricing", "Slot confirmed", "No hidden costs"].map((tag) => (
+            <span key={tag} className="px-4 py-2 bg-[#EAEFFF]/5 border border-[#EAEFFF]/10 rounded-full text-[#EAEFFF]/50 text-base">
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    ),
+  },
+  {
+    title: "UX Design",
+    content: (
+      <div className="space-y-6 pb-4">
+        <p className="text-[#EAEFFF]/70 text-2xl md:text-4xl leading-relaxed max-w-xl">
+          We design every screen in Figma — flows, components, and a full design system. You review and approve before development begins. No surprises in the build phase.
+        </p>
+        <div className="flex flex-wrap gap-3 mt-6">
+          {["Figma designs", "User flows", "Component system", "Your approval"].map((tag) => (
+            <span key={tag} className="px-4 py-2 bg-[#EAEFFF]/5 border border-[#EAEFFF]/10 rounded-full text-[#EAEFFF]/50 text-base">
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    ),
+  },
+  {
+    title: "Development",
+    content: (
+      <div className="space-y-6 pb-4">
+        <p className="text-[#EAEFFF]/70 text-2xl md:text-4xl leading-relaxed max-w-xl">
+          We build with Flutter, Next.js, Supabase, and custom AI integrations. Weekly progress updates keep you in the loop. Production-ready code from day one.
+        </p>
+        <div className="flex flex-wrap gap-3 mt-6">
+          {["Flutter", "Next.js", "Supabase", "AI integrations", "Weekly updates"].map((tag) => (
+            <span key={tag} className="px-4 py-2 bg-[#EAEFFF]/5 border border-[#EAEFFF]/10 rounded-full text-[#EAEFFF]/50 text-base">
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    ),
+  },
+  {
+    title: "Deployment",
+    content: (
+      <div className="space-y-6 pb-4">
+        <p className="text-[#EAEFFF]/70 text-2xl md:text-4xl leading-relaxed max-w-xl">
+          We handle App Store and Play Store submissions, web hosting setup, domain configuration, and go-live support. Your product ships ready to acquire users.
+        </p>
+        <div className="flex flex-wrap gap-3 mt-6">
+          {["App Store", "Play Store", "Web hosting", "Go-live support"].map((tag) => (
+            <span key={tag} className="px-4 py-2 bg-[#EAEFFF]/5 border border-[#EAEFFF]/10 rounded-full text-[#EAEFFF]/50 text-base">
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    ),
+  },
+  {
+    title: "Handoff",
+    content: (
+      <div className="space-y-6 pb-4">
+        <p className="text-[#EAEFFF]/70 text-2xl md:text-4xl leading-relaxed max-w-xl">
+          Final payment, full code ownership transferred to you. Includes 30 days of free post-launch support and a 1-year maintenance contract option.
+        </p>
+        <div className="flex flex-wrap gap-3 mt-6">
+          {["Full ownership", "Code handoff", "30-day support", "1-year maintenance"].map((tag) => (
+            <span key={tag} className="px-4 py-2 bg-[#EAEFFF]/5 border border-[#EAEFFF]/10 rounded-full text-[#EAEFFF]/50 text-base">
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    ),
+  },
+]} />
+</section>
 
-            {/* Other Projects */}
-            {reversedProjects.slice(1).length > 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                viewport={{ once: true }}
-              >
-                <div className="flex justify-between items-center mb-8">
-                  <h4 className="text-xl font-semibold opacity-80">More Projects</h4>
-                  
-                  {Math.ceil(reversedProjects.slice(1).length / 3) > 1 && (
-                    <div className="flex items-center space-x-4">
-                      <button
-                        title="Previous projects page"
-                        onClick={() => setCurrentProjectPage(Math.max(0, currentProjectPage - 1))}
-                        disabled={currentProjectPage === 0}
-                        className={`p-2 rounded-full border transition-all duration-300 ${
-                          currentProjectPage === 0
-                            ? "border-[#252525] text-[#252525] cursor-not-allowed"
-                            : "border-[#EAEFFF] text-[#EAEFFF] hover:bg-[#EAEFFF] hover:text-[#101010]"
-                        }`}
-                      >
-                        <ChevronLeft className="h-4 w-4" />
-                      </button>
-                      
-                      <div className="flex items-center space-x-2">
-                        {Array.from({ length: Math.ceil(reversedProjects.slice(1).length / 3) }, (_, i) => (
-                          <button
-  key={i}
-  type="button"
-  onClick={() => setCurrentProjectPage(i)}
-  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-    i === currentProjectPage ? "bg-[#EAEFFF]" : "bg-[#252525] hover:bg-[#EAEFFF]/50"
-  }`}
-  aria-label={`Go to page ${i + 1}`}
-/>
-                        ))}
-                      </div>
-                      
-                      <button
-                        title="Next projects page"
-                        onClick={() => setCurrentProjectPage(Math.min(Math.ceil(reversedProjects.slice(1).length / 3) - 1, currentProjectPage + 1))}
-                        disabled={currentProjectPage === Math.ceil(reversedProjects.slice(1).length / 3) - 1}
-                        className={`p-2 rounded-full border transition-all duration-300 ${
-                          currentProjectPage === Math.ceil(reversedProjects.slice(1).length / 3) - 1
-                            ? "border-[#252525] text-[#252525] cursor-not-allowed"
-                            : "border-[#EAEFFF] text-[#EAEFFF] hover:bg-[#EAEFFF] hover:text-[#101010]"
-                        }`}
-                      >
-                        <ChevronRight className="h-4 w-4" />
-                      </button>
-                    </div>
-                  )}
-                </div>
 
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={currentProjectPage}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.3 }}
-                    className="grid grid-cols-1 md:grid-cols-3 gap-6"
-                  >
-                    {reversedProjects.slice(1).slice(currentProjectPage * 3, (currentProjectPage + 1) * 3).map((project: Project, index: number) => (
-                      <motion.div
-                        key={project.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: index * 0.1 }}
-                        className="cursor-pointer group"
-                        onClick={() => setSelectedProject(project)}
-                      >
-                        <div className="aspect-[4/3] rounded-xl overflow-hidden bg-gradient-to-br from-gray-700 to-gray-800 border border-[#252525] group-hover:border-[#EAEFFF]/50 transition-all duration-300 group-hover:scale-105">
-                          {project.image ? (
-                            <img 
-                              src={project.image} 
-                              alt={project.title}
-                              className="w-full h-full object-cover"
-                            />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center p-6">
-                              <div className="text-center">
-                                <div className="w-12 h-12 bg-[#EAEFFF]/20 rounded-full flex items-center justify-center mb-3 mx-auto">
-                                  <span className="text-lg font-bold text-[#EAEFFF]">
-                                    {project.title?.charAt(0) || 'P'}
-                                  </span>
-                                </div>
-                                <h4 className="text-[#EAEFFF] font-medium text-sm">{project.title}</h4>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                        <div className="mt-3 text-center">
-                          <h4 className="font-medium group-hover:text-[#EAEFFF] transition-colors">
-                            {project.title}
-                          </h4>
-                          <p className="text-sm opacity-60 mt-1 line-clamp-2">
-                            {project.description?.substring(0, 80)}...
-                          </p>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </motion.div>
-                </AnimatePresence>
-              </motion.div>
-            )}
+        {/* Animated Divider - SERVICES */}
+<div className="relative py-12 overflow-hidden">
+  <motion.div
+    animate={{ x: [0, -1000] }}
+    transition={{ x: { repeat: Infinity, repeatType: "loop", duration: 20, ease: "linear" } }}
+    className="whitespace-nowrap text-[80px] md:text-[120px] font-bold opacity-10"
+  >
+    SERVICESSERVICESSERVICESSERVICESSERVICESSERVICESSERVICES
+  </motion.div>
+</div>
+<div className="text-center pb-8 -mt-4">
+  <p className="text-[#EAEFFF]/50 text-3xl md:text-xxl font-medium">What we offer.</p>
+</div>
+{/* Services Section */}
+<ServicesSection />
 
-            {/* Project Modal */}
-            <AnimatePresence>
-              {selectedProject && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-                  onClick={() => setSelectedProject(null)}
-                >
-                  <motion.div
-                    initial={{ scale: 0.9, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    exit={{ scale: 0.9, opacity: 0 }}
-                    className="bg-[#151515] rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <div className="p-8">
-                      <div className="flex justify-between items-start mb-6">
-                        <h3 className="text-2xl font-bold">{selectedProject.title}</h3>
-                        <button 
-                          onClick={() => setSelectedProject(null)}
-                          className="text-[#EAEFFF]/60 hover:text-[#EAEFFF] transition-colors text-2xl"
-                        >
-                          ×
-                        </button>
-                      </div>
-                      
-                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div className="aspect-[3/4] rounded-xl overflow-hidden bg-gradient-to-br from-gray-700 to-gray-800">
-                          {selectedProject.image ? (
-                            <img 
-                              src={selectedProject.image} 
-                              alt={selectedProject.title}
-                              className="w-full h-full object-cover"
-                            />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center">
-                              <div className="text-center">
-                                <div className="w-20 h-20 bg-[#EAEFFF]/20 rounded-full flex items-center justify-center mb-4 mx-auto">
-                                  <span className="text-2xl font-bold text-[#EAEFFF]">
-                                    {selectedProject.title?.charAt(0)}
-                                  </span>
-                                </div>
-                                <h4 className="text-[#EAEFFF] text-xl font-bold">{selectedProject.title}</h4>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                        
-                        <div className="space-y-6">
-                          <p className="text-[#EAEFFF]/80 leading-relaxed">
-                            {selectedProject.description}
-                          </p>
-                          
-                          {selectedProject.technologies && selectedProject.technologies.length > 0 && (
-                            <div>
-                              <h4 className="font-semibold mb-3">Technologies Used</h4>
-                              <div className="flex flex-wrap gap-2">
-                                {selectedProject.technologies.map((tech: string, index: number) => (
-                                  <span 
-                                    key={index}
-                                    className="px-3 py-1 bg-[#252525] rounded-full text-sm"
-                                  >
-                                    {tech}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-                          
-                          <Link 
-                            href={`/projects/${selectedProject.slug}`}
-                            onClick={() => setSelectedProject(null)}
-                            className="inline-flex items-center px-6 py-3 bg-[#EAEFFF] text-[#101010] rounded-full hover:bg-[#EAEFFF]/90 transition-colors font-medium"
-                          >
-                            View Project Details
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        </section>
+
 
         {/* Build With Us Section */}
         <section id="contact" className="py-32 px-6 relative">
