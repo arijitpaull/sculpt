@@ -14,11 +14,26 @@ import { Project, projects } from "@/data/projects"
 
 import { socialLinks } from "@/data/social-links"
 import { siteConfig } from "@/data/site-config"
-import InfiniteTestimonialCarousel from "@/components/infinite-testimonial-carousel"
+import dynamic from "next/dynamic"
 import CountryCodeDropdown from "@/components/country-code-dropdown"
-import { Timeline } from "@/components/timeline"
-import ProjectGallery from "@/components/project-gallery"
-import ServicesSection from "@/components/services-bento"
+
+// Below-fold components — dynamically imported to reduce initial bundle
+const InfiniteTestimonialCarousel = dynamic(
+  () => import("@/components/infinite-testimonial-carousel"),
+  { loading: () => <div className="h-48" />, ssr: false }
+)
+const Timeline = dynamic(
+  () => import("@/components/timeline").then((m) => ({ default: m.Timeline })),
+  { loading: () => <div className="h-48" />, ssr: false }
+)
+const ProjectGallery = dynamic(
+  () => import("@/components/project-gallery"),
+  { loading: () => <div className="h-48" />, ssr: false }
+)
+const ServicesSection = dynamic(
+  () => import("@/components/services-bento"),
+  { loading: () => <div className="h-48" />, ssr: false }
+)
 
 
 // Icon mapping for dynamic icon rendering
@@ -1020,10 +1035,13 @@ export default function Home() {
       >
         <div className="bg-[#202020]/50 backdrop-blur-md rounded-full px-6 py-3 flex items-center space-x-8 border border-[#303030]/30 shadow-2xl">
           <Link href="/" className="flex items-center">
-            <img 
-              src="/images/sculpt_logo.png" 
+            <Image
+              src="/images/sculpt_logo.png"
               alt={siteConfig.name}
+              width={120}
+              height={40}
               className="h-10 w-auto"
+              priority
             />
           </Link>
           
@@ -1056,9 +1074,10 @@ export default function Home() {
               <span className="relative z-10 flex items-center justify-center h-full">Let's Build!</span>
             </button>
             
-            <button 
-              className="text-[#EAEFFF]" 
+            <button
+              className="text-[#EAEFFF]"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
             >
               {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -1280,6 +1299,7 @@ export default function Home() {
         onError={() => setVideoError(true)}
       >
         <source src={siteConfig.heroVideo} type="video/mp4" />
+        <track kind="captions" srcLang="en" label="English" default />
       </video>
     ) : (
       <div className={`w-full h-full ${siteConfig.heroVideoFallback} opacity-30`} />
@@ -1387,10 +1407,14 @@ export default function Home() {
       animate={{ y: [8, -4, 8] }}
       transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 0.5 }}
     >
-      <img
+      <Image
         src="/images/tab_mockup.png"
         alt="Tablet app mockup"
+        width={600}
+        height={450}
         className="w-full h-auto object-contain drop-shadow-2xl"
+        priority
+        quality={85}
       />
     </motion.div>
 
@@ -1401,10 +1425,14 @@ export default function Home() {
       animate={{ y: [0, -10, 0] }}
       transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
     >
-      <img
+      <Image
         src="/images/laptop_mockup.png"
         alt="Desktop app mockup"
+        width={1200}
+        height={750}
         className="w-full h-auto object-contain drop-shadow-2xl"
+        priority
+        quality={85}
       />
     </motion.div>
 
@@ -1415,10 +1443,14 @@ export default function Home() {
       animate={{ y: [-12, 8, -12] }}
       transition={{ repeat: Infinity, duration: 8, ease: "easeInOut", delay: 1 }}
     >
-      <img
+      <Image
         src="/images/mobile_mockup.png"
         alt="Mobile app mockup"
+        width={300}
+        height={600}
         className="w-full h-auto object-contain drop-shadow-2xl"
+        priority
+        quality={85}
       />
     </motion.div>
 
@@ -1448,7 +1480,7 @@ export default function Home() {
           </motion.div>
         </div>
         <div className="text-center pb-8 -mt-4">
-  <p className="text-[#EAEFFF]/50 text-3xl md:text-xxl font-medium">What our clients say.</p>
+  <h2 className="text-[#EAEFFF]/50 text-3xl md:text-xxl font-medium">Real clients. Real results.</h2>
 </div>
         {/* Testimonials Section */}
         <section id="testimonials" className="py-0 relative">
@@ -1474,7 +1506,7 @@ export default function Home() {
           </motion.div>
         </div>
         <div className="text-center pb-8 -mt-4">
-  <p className="text-[#EAEFFF]/50 text-3xl md:text-xxl font-medium">Some of our best work.</p>
+  <h2 className="text-[#EAEFFF]/50 text-3xl md:text-xxl font-medium">Our best work. Shipped and live.</h2>
 </div>
         {/* Projects Section */}
         <ProjectGallery />
@@ -1497,7 +1529,7 @@ export default function Home() {
   </motion.div>
 </div>
 <div className="text-center pb-8 -mt-4">
-  <p className="text-[#EAEFFF]/50 text-3xl md:text-xxl font-medium">What happens when you choose us.</p>
+  <h2 className="text-[#EAEFFF]/50 text-3xl md:text-xxl font-medium">From idea to App Store. Our exact process.</h2>
 </div>
 {/* Flow Section — Timeline */}
 <section id="flow" className="py-0 px-6 relative">
@@ -1620,7 +1652,7 @@ export default function Home() {
   </motion.div>
 </div>
 <div className="text-center pb-8 -mt-4">
-  <p className="text-[#EAEFFF]/50 text-3xl md:text-xxl font-medium">What we offer.</p>
+  <h2 className="text-[#EAEFFF]/50 text-3xl md:text-xxl font-medium">One team. The full stack. Zero handoffs.</h2>
 </div>
 {/* Services Section */}
 <ServicesSection />
@@ -1640,10 +1672,10 @@ export default function Home() {
                 BUILD WITH US
               </h2>
               <h3 className="text-2xl md:text-4xl font-regular mb-8 opacity-90">
-                Have an app idea that should be making you money?
+                Your idea is good. Let's make sure it gets built right.
               </h3>
               <p className="text-lg md:text-xl opacity-70 mb-12 max-w-2xl mx-auto">
-                Tell SCULPT about your idea, target users, and revenue goal — and get a clear build plan with timeline and budget.
+                Most app ideas die in a Notion doc. Share yours — and get a clear scope, timeline, and quote in 24 hours. Free, no pressure.
               </p>
               <button
                 onClick={openContactModal}
@@ -1692,7 +1724,7 @@ export default function Home() {
                 fontWeight: 'bold'
               }}
             >
-              See how you can provide us value
+              Want to work together?
             </p>
             <button
               onClick={openConnectModal}

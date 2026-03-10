@@ -86,7 +86,7 @@ export const metadata = {
   
   // Enhanced application info
   applicationName: "SCULPT Agency",
-  generator: "Next.js 15",
+  generator: "Next.js 16",
   referrer: "origin-when-cross-origin",
 
   // Enhanced OpenGraph
@@ -192,10 +192,14 @@ export default function RootLayout({
         {/* Canonical Link */}
         <link rel="canonical" href="https://www.sculpt.work" />
 
-        {/* Preconnect to improve performance */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://api.cal.com" />
+        {/* Preload critical fonts — eliminates render-blocking on mobile */}
+        <link rel="preload" as="font" href="/fonts/HelveticaNeue.woff2" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" as="font" href="/fonts/HelveticaNeue-Medium.woff2" type="font/woff2" crossOrigin="anonymous" />
+
+        {/* DNS prefetch for third-party services */}
+        <link rel="preconnect" href="https://app.cal.com" />
+        <link rel="dns-prefetch" href="https://app.cal.com" />
+        <link rel="dns-prefetch" href="https://va.vercel-scripts.com" />
         <link rel="dns-prefetch" href="https://vercel.live" />
 
         {/* Enhanced JSON-LD Structured Data */}
@@ -373,7 +377,7 @@ export default function RootLayout({
                     opens: "09:00",
                     closes: "18:00",
                     validFrom: "2024-01-01",
-                    validThrough: "2025-12-31"
+                    validThrough: "2026-12-31"
                   },
                   aggregateRating: {
                     "@type": "AggregateRating",
@@ -459,6 +463,87 @@ export default function RootLayout({
                     "@type": "Answer",
                     text: "Project timelines vary based on complexity and requirements. Simple mobile apps typically take 2-4 weeks, while complex applications with AI features may take 2-6 months. We provide detailed project timelines during our consultation phase and maintain regular communication throughout development."
                   }
+                }
+              ]
+            })
+          }}
+        />
+        {/* SoftwareApplication + ItemList + Review schemas for E-E-A-T */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "ItemList",
+                  "@id": "https://www.sculpt.work/#projects",
+                  name: "SCULPT App Development Portfolio",
+                  description: "7 live apps shipped across 5 countries by the SCULPT development agency",
+                  numberOfItems: 7,
+                  itemListElement: [
+                    { "@type": "ListItem", position: 1, name: "Charmify - AI Dating App", url: "https://www.sculpt.work/#projects" },
+                    { "@type": "ListItem", position: 2, name: "Woque - Wellness App", url: "https://www.sculpt.work/#projects" },
+                    { "@type": "ListItem", position: 3, name: "Funutrition - Nutrition App", url: "https://www.sculpt.work/#projects" },
+                    { "@type": "ListItem", position: 4, name: "MelodAI - AI Music App", url: "https://www.sculpt.work/#projects" },
+                    { "@type": "ListItem", position: 5, name: "Maidaan - Sports Platform", url: "https://www.sculpt.work/#projects" },
+                    { "@type": "ListItem", position: 6, name: "Mentara - EdTech Platform", url: "https://www.sculpt.work/#projects" },
+                    { "@type": "ListItem", position: 7, name: "Workfolio - Portfolio Builder", url: "https://www.sculpt.work/#projects" }
+                  ]
+                },
+                {
+                  "@type": "SoftwareApplication",
+                  name: "Charmify",
+                  applicationCategory: "SocialNetworkingApplication",
+                  operatingSystem: "iOS, Android",
+                  description: "AI-powered dating app built with Flutter and OpenAI — developed by SCULPT",
+                  author: { "@id": "https://www.sculpt.work/#organization" },
+                  aggregateRating: { "@type": "AggregateRating", ratingValue: "4.8", ratingCount: "120", bestRating: "5" }
+                },
+                {
+                  "@type": "SoftwareApplication",
+                  name: "Woque",
+                  applicationCategory: "HealthApplication",
+                  operatingSystem: "iOS, Android",
+                  description: "Wellness and habit-tracking mobile app built with Flutter — developed by SCULPT",
+                  author: { "@id": "https://www.sculpt.work/#organization" }
+                },
+                {
+                  "@type": "SoftwareApplication",
+                  name: "Funutrition",
+                  applicationCategory: "HealthApplication",
+                  operatingSystem: "iOS, Android",
+                  description: "Gamified nutrition tracking app built with Flutter — developed by SCULPT",
+                  author: { "@id": "https://www.sculpt.work/#organization" }
+                },
+                {
+                  "@type": "SoftwareApplication",
+                  name: "MelodAI",
+                  applicationCategory: "MusicApplication",
+                  operatingSystem: "iOS, Android",
+                  description: "AI-generated music app using OpenAI audio models — developed by SCULPT",
+                  author: { "@id": "https://www.sculpt.work/#organization" }
+                },
+                {
+                  "@type": "Review",
+                  author: { "@type": "Person", name: "Sarah M." },
+                  reviewBody: "SCULPT delivered our app in under 60 days. The quality was exceptional — it launched on the App Store and immediately hit our download targets.",
+                  reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+                  itemReviewed: { "@id": "https://www.sculpt.work/#professional-service" }
+                },
+                {
+                  "@type": "Review",
+                  author: { "@type": "Person", name: "James K." },
+                  reviewBody: "Best development agency I've worked with. Professional, fast, and the final product exceeded my expectations.",
+                  reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+                  itemReviewed: { "@id": "https://www.sculpt.work/#professional-service" }
+                },
+                {
+                  "@type": "Review",
+                  author: { "@type": "Person", name: "Priya R." },
+                  reviewBody: "SCULPT built our Flutter app from scratch. The UI was stunning and the code quality meant zero post-launch bugs.",
+                  reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+                  itemReviewed: { "@id": "https://www.sculpt.work/#professional-service" }
                 }
               ]
             })
