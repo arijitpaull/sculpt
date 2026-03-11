@@ -99,18 +99,18 @@ export const metadata = {
     locale: "en_US",
     images: [
       {
-        url: "/images/s_banner.jpg",
+        url: "/images/s_banner.webp",
         width: 1200,
         height: 630,
         alt: "SCULPT - Expert App Development and Digital Solutions",
-        type: "image/png"
+        type: "image/webp"
       },
       {
         url: "/images/sculpt-portfolio.png",
         width: 1200,
         height: 675,
         alt: "SCULPT Portfolio - Mobile Apps and Web Development",
-        type: "image/png"
+        type: "image/webp"
       }
     ],
   },
@@ -122,7 +122,7 @@ export const metadata = {
     creator: "@sculptvisions",
     title: "SCULPT - Expert App Development Agency",
     description: "Premium development agency for mobile apps, web development & AI solutions.",
-    images: ["/images/s_banner.jpg"],
+    images: ["/images/s_banner.webp"],
   },
 
   // Enhanced robots
@@ -195,6 +195,7 @@ export default function RootLayout({
         {/* Preload critical fonts — eliminates render-blocking on mobile */}
         <link rel="preload" as="font" href="/fonts/HelveticaNeue.woff2" type="font/woff2" crossOrigin="anonymous" />
         <link rel="preload" as="font" href="/fonts/HelveticaNeue-Medium.woff2" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" as="font" href="/fonts/HelveticaNeue-Bold.woff2" type="font/woff2" crossOrigin="anonymous" />
 
         {/* DNS prefetch for third-party services */}
         <link rel="preconnect" href="https://app.cal.com" />
@@ -218,8 +219,8 @@ export default function RootLayout({
                   logo: {
                     "@type": "ImageObject",
                     "@id": "https://www.sculpt.work/#logo",
-                    url: "https://www.sculpt.work/images/sculpt_logo.png",
-                    contentUrl: "https://www.sculpt.work/images/sculpt_logo.png",
+                    url: "https://www.sculpt.work/images/sculpt_logo.webp",
+                    contentUrl: "https://www.sculpt.work/images/sculpt_logo.webp",
                     width: 512,
                     height: 512,
                     caption: "SCULPT Logo"
@@ -227,8 +228,8 @@ export default function RootLayout({
                   image: {
                     "@type": "ImageObject",
                     "@id": "https://www.sculpt.work/#image",
-                    url: "https://www.sculpt.work/images/s_banner.jpg",
-                    contentUrl: "https://www.sculpt.work/images/s_banner.jpg",
+                    url: "https://www.sculpt.work/images/s_banner.webp",
+                    contentUrl: "https://www.sculpt.work/images/s_banner.webp",
                     width: 1200,
                     height: 630,
                     caption: "SCULPT - App Development Agency"
@@ -355,7 +356,7 @@ export default function RootLayout({
                   "@type": "ProfessionalService",
                   "@id": "https://www.sculpt.work/#professional-service",
                   name: "SCULPT Development Agency",
-                  image: "https://www.sculpt.work/images/s_banner.jpg",
+                  image: "https://www.sculpt.work/images/s_banner.webp",
                   description: "Expert app development agency providing custom software solutions, mobile apps, and AI tools for businesses worldwide.",
                   priceRange: "$500-$50000",
                   address: {

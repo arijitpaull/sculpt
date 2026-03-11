@@ -86,14 +86,14 @@ export default function Navbar({ onLetsBuildClick }: NavbarProps) {
           <Link href="/" className="relative flex items-center" style={{ width: "180px" }}>
             {/* Expanded: full wordmark */}
             <motion.img
-              src="/images/sculpt_logo_full.png"
+              src="/images/sculpt_logo_full.webp"
               alt={siteConfig.name}
               style={{ opacity: fullLogoOpacity }}
               className="absolute left-0 h-9 w-auto object-contain object-left"
             />
             {/* Compact: icon mark — slightly bigger */}
             <motion.img
-              src="/images/sculpt_logo.png"
+              src="/images/sculpt_logo.webp"
               alt={siteConfig.name}
               style={{ opacity: compactLogoOpacity }}
               className="absolute left-0 h-11 w-auto object-contain object-left"
@@ -155,7 +155,7 @@ export default function Navbar({ onLetsBuildClick }: NavbarProps) {
       >
         <Link href="/">
           <img
-            src="/images/sculpt_logo.png"
+            src="/images/sculpt_logo.webp"
             alt={siteConfig.name}
             className="h-10 w-auto object-contain"
           />

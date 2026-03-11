@@ -29,7 +29,7 @@ export const projects: Project[] = [
     description: "AI-powered texting assistant and dating coach to level up your dating game.",
     fullDescription:
       "Charmify is an AI-driven dating assistant designed to help users navigate the early stages of conversation and dating with confidence. The app suggests responses based on context, tone, and even profile screenshots, while also generating pickup lines and icebreakers tailored to unique personalities and scenarios.",
-    image: "/images/charmify-thumbnail.png",
+    image: "/images/charmify-thumbnail.webp",
     challenge:
       "We noticed that users often felt overwhelmed when texting during early dating stages—unsure what to say or how to keep the momentum going. Creating a system that could personalize replies while feeling human and timely was key.",
     solution:
@@ -44,10 +44,10 @@ export const projects: Project[] = [
     },
     appStoreUrl:"https://apps.apple.com/in/app/charmify-dating-coach/id6743173949" ,
     gallery: [
-      "/images/ch_banner.png",
-      "/images/ch_ss1.png",
-      "/images/ch_ss2.png",
-      "/images/ch_ss3.png"
+      "/images/ch_banner.webp",
+      "/images/ch_ss1.webp",
+      "/images/ch_ss2.webp",
+      "/images/ch_ss3.webp"
     ]
   },
   {
@@ -58,7 +58,7 @@ export const projects: Project[] = [
     description: "Daily journaling questions that help you reflect, grow, and track your emotional journey.",
     fullDescription:
       "Woque is a guided journaling and reflection app designed to help users grow through consistency and introspection. Each day, the app asks one thoughtful question. A year later, the same prompt resurfaces so users can compare how they've changed. It features Mistral AI-powered growth insights, mood tracking, and streak-based rewards.",
-    image: "/images/woque-thumbnail.png",
+    image: "/images/woque-thumbnail.webp",
     challenge:
       "Many people struggle with journaling consistency, and most apps don’t offer meaningful progression or self-comparison. We aimed to build something simple but emotionally intelligent—something that encourages growth.",
     solution:
@@ -73,10 +73,10 @@ export const projects: Project[] = [
     },
     appStoreUrl:"https://apps.apple.com/in/app/woque-know-yourself/id6745866800" ,
     gallery: [
-      "/images/wq_banner.png",
-      "/images/wq_ss1.png",
-      "/images/wq_ss2.png",
-      "/images/wq_ss3.png"
+      "/images/wq_banner.webp",
+      "/images/wq_ss1.webp",
+      "/images/wq_ss2.webp",
+      "/images/wq_ss3.webp"
     ]
   },
   
@@ -88,7 +88,7 @@ export const projects: Project[] = [
     description: "Real-time weather data delivery to 100+ IoT devices using Thinger.io, Python, and AWS.",
     fullDescription:
       "This project involved enabling seamless weather data delivery to ESP32-based IoT devices for a client in Greece. Initially, the devices were integrated with Thinger.io—a no-code IoT platform compatible with the hardware. Without prior experience on Thinger.io, a proof-of-concept was developed in under 15 days, where weather data from an external API was fetched using the platform’s endpoints and Postman testing. The second phase focused on scaling this setup to over 100 devices, each with unique IDs and location parameters. A Python script was built to fetch weather data from OpenWeatherMap every 30 minutes and send it to all active devices, with AWS hosting ensuring 24/7 uptime without interruptions.",
-    image: "/images/thinger-thumbnail.png",
+    image: "/images/thinger-thumbnail.webp",
     challenge:
       "The challenge was twofold: first, quickly learning and adapting to Thinger.io's limitations with a non-premium account, and second, scaling the weather delivery system to 100+ devices with unique location-based requests. The free deployment platforms tested—such as Render and GitHub Actions—caused interruptions or delays, resulting in inconsistent device data. Finding a hosting solution that could handle continuous execution without failure was crucial.",
     solution:
@@ -102,10 +102,10 @@ export const projects: Project[] = [
       author: "@lighthousesolar"
     },
     gallery: [
-      "/images/thng_banner.png",
-      "/images/thng_ss1.png",
-      "/images/thng_ss2.png",
-      "/images/thng_ss3.png"
+      "/images/thng_banner.webp",
+      "/images/thng_ss1.webp",
+      "/images/thng_ss2.webp",
+      "/images/thng_ss3.webp"
     ]
   },
   {
@@ -116,7 +116,7 @@ export const projects: Project[] = [
     description: "A precise roof angle measurement and renovation request app built for Dakkapel Fabriek in the Netherlands.",
     fullDescription:
       "Dakkapel Offerte is a utility app developed for Dakkapel Fabriek, a Dutch company specializing in roof renovations. The app leverages phone sensors to calculate the roof’s angle in real-time and lets users send a full renovation request—complete with project details, address, angle data (manual, normal, or AR mode), and attic images—to the company via email. It’s designed to streamline appointment booking and eliminate the need for initial site visits.",
-    image: "/images/dakkapel-thumbnail.png",
+    image: "/images/dakkapel-thumbnail.webp",
     challenge:
       "Capturing accurate roof angles using phone sensors proved to be a complex challenge. We had to ensure the angle readings remained stable and unaffected by unintended phone movements or shaking. Creating a real-time dynamic protractor and ensuring accurate calibration required extensive experimentation with various Flutter sensor packages.",
     solution:
@@ -130,10 +130,10 @@ export const projects: Project[] = [
       author: "Aria, Dakkapel Fabriek"
     },
     gallery: [
-      "/images/do_banner.png",
-      "/images/do_ss1.png",
-      "/images/do_ss2.png",
-      "/images/do_ss3.png"
+      "/images/do_banner.webp",
+      "/images/do_ss1.webp",
+      "/images/do_ss2.webp",
+      "/images/do_ss3.webp"
     ]
   },
   {
@@ -144,7 +144,7 @@ export const projects: Project[] = [
     description: "A child-friendly app to track food, water, mood, and daily activities with full parental and admin supervision.",
     fullDescription:
       "Funutrition is a complete wellness and learning tracker designed for children. The app enables young users to log meals, water intake, moods, and physical activity in a playful, easy-to-use environment. Parents get access to a unified dashboard to monitor their child’s progress, while admins can manage lessons, upload challenges, and send personalized wellness plans. The system supports image uploads for completed tasks and ensures secure data handling using robust backend architecture.",
-    image: "/images/funutrition-thumbnail.png",
+    image: "/images/funutrition-thumbnail.webp",
     challenge:
       "We had to design an interface that appealed to children while integrating complex backend functionality for multiple user roles (children, parents, admins). Managing secure authentication, role-based permissions, and real-time media uploads—while keeping the experience smooth—posed significant architectural challenges. Calibrating Supabase triggers and policies for this multi-flow environment required detailed attention.",
     solution:
@@ -160,10 +160,10 @@ export const projects: Project[] = [
     appStoreUrl:"https://apps.apple.com/in/app/funutrition-meals-learning/id6751509563" ,
     playStoreUrl:"https://play.google.com/store/apps/details?id=com.sculpt.funutrition" ,
     gallery: [
-      "/images/fn_banner.png",
-      "/images/fn_ss1.png",
-      "/images/fn_ss2.png",
-      "/images/fn_ss3.png"
+      "/images/fn_banner.webp",
+      "/images/fn_ss1.webp",
+      "/images/fn_ss2.webp",
+      "/images/fn_ss3.webp"
     ]
   },
   {
@@ -174,7 +174,7 @@ export const projects: Project[] = [
     description: "AI-powered music studio in your pocket—create original songs and covers with full control over emotion, genre, and voice.",
     fullDescription:
       "MelodAI is a comprehensive AI music creation platform that puts a full studio experience in users' hands. The app enables anyone to generate original AI songs from prompts or lyrics, create covers using preset voices, and customize every aspect of their music—from emotion and genre to voice type and recording style. Users can fetch any song via YouTube API for cover generation, select from random suggested lyrics, and fine-tune their creations with studio-quality controls.",
-    image: "/images/melodai-thumbnail.png",
+    image: "/images/melodai-thumbnail.webp",
     challenge:
       "The primary challenge was designing a premium, intuitive UI that could handle complex music generation features without overwhelming users. We needed to create an attractive paywall system, streamline the credit-based payment flow for weekly and annual subscriptions, and iterate through multiple design versions for App Store screenshots and walkthrough pages to meet the client's vision. Balancing powerful functionality with visual appeal while integrating YouTube API, managing subscription tiers, and building a flexible credit system required extensive UI/UX refinement.",
     solution:
@@ -189,10 +189,10 @@ export const projects: Project[] = [
     },
     appStoreUrl:"https://apps.apple.com/in/app/melodai-ai-music-generator/id6753100795",
     gallery: [
-      "/images/ma_banner.png",
-      "/images/ma_ss1.png",
-      "/images/ma_ss2.png",
-      "/images/ma_ss3.png"
+      "/images/ma_banner.webp",
+      "/images/ma_ss1.webp",
+      "/images/ma_ss2.webp",
+      "/images/ma_ss3.webp"
     ]
   },
   {
@@ -203,7 +203,7 @@ export const projects: Project[] = [
     description: "Complete marketing website and brand identity for an AI-powered HR support platform integrated with Slack and Teams.",
     fullDescription:
       "ACENAVI is an AI-powered people intelligence platform that brings HR support directly into Slack and Microsoft Teams. We built their complete digital presence from the ground up—including a modern landing page, custom demo booking system, full brand identity, and product overview video. The project focused on creating a professional, trustworthy presence for a B2B SaaS product targeting HR teams and enterprises.",
-    image: "/images/acenavi-thumbnail.png",
+    image: "/images/acenavi-thumbnail.webp",
     challenge:
       "The client needed a complete digital identity and online presence to launch their product. The challenge was threefold: first, design a logo that represented 'adaptation' (the core value of their AI assistant); second, build a conversion-focused landing page with smooth animations and intuitive booking flow; and third, create a compelling product video that explained their complex HR tech in under 60 seconds. All deliverables needed to feel premium, trustworthy, and aligned with enterprise HR standards.",
     solution:
@@ -218,10 +218,10 @@ export const projects: Project[] = [
     },
     websiteUrl: "https://acenavi.in",
     gallery: [
-      "/images/an_banner.png",
-      "/images/an_ss1.png",
-      "/images/an_ss2.png",
-      "/images/an_ss3.png"
+      "/images/an_banner.webp",
+      "/images/an_ss1.webp",
+      "/images/an_ss2.webp",
+      "/images/an_ss3.webp"
     ]
   }
 ]

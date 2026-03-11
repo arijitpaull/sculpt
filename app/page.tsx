@@ -699,15 +699,8 @@ export default function Home() {
   useEffect(() => {
     const video = videoRef.current
     if (video) {
-      const handleLoadedData = () => {
-        console.log("Video loaded successfully")
-        setVideoError(false)
-      }
-
-      const handleError = (e: any) => {
-        console.error("Video failed to load:", e)
-        setVideoError(true)
-      }
+      const handleLoadedData = () => setVideoError(false)
+      const handleError = () => setVideoError(true)
 
       video.addEventListener("loadeddata", handleLoadedData)
       video.addEventListener("error", handleError)
@@ -1240,8 +1233,8 @@ export default function Home() {
         loop
         playsInline
         className="w-full h-full object-cover opacity-30"
-        onError={() => setVideoError(true)}
       >
+        <source src="/videos/sculpt-hero.webm" type="video/webm" />
         <source src={siteConfig.heroVideo} type="video/mp4" />
         <track kind="captions" srcLang="en" label="English" default />
       </video>
@@ -1257,7 +1250,7 @@ export default function Home() {
 <motion.div
   initial={{ opacity: 0, y: -16 }}
   animate={{ opacity: 1, y: 0 }}
-  transition={{ delay: 0.2, duration: 0.6 }}
+  transition={{ delay: 0.05, duration: 0.5 }}
   className="inline-flex items-center gap-2 rounded-full border border-[#EAEFFF]/15 bg-[#EAEFFF]/5 px-3 py-1.5 text-sm text-[#EAEFFF]/70 backdrop-blur-sm"
 >
   <span
@@ -1284,7 +1277,7 @@ export default function Home() {
     <motion.h1
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.35, duration: 0.8 }}
+      transition={{ delay: 0.1, duration: 0.7 }}
       className="text-5xl font-medium tracking-tight sm:text-7xl md:text-8xl leading-[1.1]"
       style={{ color: '#EAEFFF' }}
     >
@@ -1298,7 +1291,7 @@ export default function Home() {
     <motion.p
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.5, duration: 0.7 }}
+      transition={{ delay: 0.2, duration: 0.6 }}
       className="mx-auto max-w-2xl text-lg text-[#EAEFFF]/60 md:text-xl leading-relaxed"
     >
       We design, build, and ship production-ready mobile apps and SaaS products — so you can start acquiring users, not managing developers.
@@ -1308,7 +1301,7 @@ export default function Home() {
 <motion.div
   initial={{ opacity: 0, y: 16 }}
   animate={{ opacity: 1, y: 0 }}
-  transition={{ delay: 0.65, duration: 0.7 }}
+  transition={{ delay: 0.3, duration: 0.6 }}
   className="flex flex-col sm:flex-row items-center justify-center gap-7"
 >
   {/* Book a Call — outlined, fills on hover */}
@@ -1339,7 +1332,7 @@ export default function Home() {
   <motion.div
   initial={{ opacity: 0, y: 30 }}
   animate={{ opacity: 1, y: 0 }}
-  transition={{ delay: 0.85, duration: 0.9 }}
+  transition={{ delay: 0.4, duration: 0.8 }}
   className="hidden sm:block relative z-10 mt-32 md:mt-40 w-full max-w-5xl mx-auto px-4"
 >
   <div className="relative mx-auto w-full" style={{ height: '420px' }}>
@@ -1352,12 +1345,12 @@ export default function Home() {
       transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 0.5 }}
     >
       <Image
-        src="/images/tab_mockup.png"
+        src="/images/tab_mockup.webp"
         alt="Tablet app mockup"
         width={600}
         height={450}
         className="w-full h-auto object-contain drop-shadow-2xl"
-        priority
+        sizes="(max-width: 640px) 0px, (max-width: 1024px) 35vw, 360px"
         quality={85}
       />
     </motion.div>
@@ -1370,12 +1363,13 @@ export default function Home() {
       transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
     >
       <Image
-        src="/images/laptop_mockup.png"
+        src="/images/laptop_mockup.webp"
         alt="Desktop app mockup"
         width={1200}
         height={750}
         className="w-full h-auto object-contain drop-shadow-2xl"
         priority
+        sizes="(max-width: 640px) 0px, (max-width: 1024px) 90vw, 900px"
         quality={85}
       />
     </motion.div>
@@ -1388,12 +1382,12 @@ export default function Home() {
       transition={{ repeat: Infinity, duration: 8, ease: "easeInOut", delay: 1 }}
     >
       <Image
-        src="/images/mobile_mockup.png"
+        src="/images/mobile_mockup.webp"
         alt="Mobile app mockup"
         width={300}
         height={600}
         className="w-full h-auto object-contain drop-shadow-2xl"
-        priority
+        sizes="(max-width: 640px) 0px, (max-width: 1024px) 20vw, 210px"
         quality={85}
       />
     </motion.div>
@@ -1635,18 +1629,20 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="py-12 px-6 relative overflow-visible">
-        <div 
-          className="absolute bottom-0 left-0 right-0 pointer-events-none"
-          style={{
-            backgroundImage: 'url(/images/footer_img.png)',
-            backgroundPosition: 'bottom center',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            height: '1000px',
-            transform: 'translateY(0)',
-            zIndex: -2
-          }}
-        />
+        <div
+          className="absolute bottom-0 left-0 right-0 pointer-events-none overflow-hidden"
+          style={{ height: '1000px', zIndex: -2 }}
+        >
+          <Image
+            src="/images/footer_img.webp"
+            alt=""
+            fill
+            className="object-cover object-bottom"
+            sizes="100vw"
+            quality={80}
+            aria-hidden="true"
+          />
+        </div>
         
         <div 
           className="absolute bottom-0 left-0 right-0 pointer-events-none"
