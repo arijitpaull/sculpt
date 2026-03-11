@@ -6,7 +6,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { ArrowRight, Menu, X, Instagram, Linkedin, Mail, Calendar, FileText, Check, ChevronLeft, ChevronRight, ArrowDown } from "lucide-react"
 import ProjectCard from "@/components/project-card"
-
+import Navbar from "@/components/navbar"
 import FiverrLogo from "@/components/fiverr-logo"
 import Toast from "@/components/toast"
 import { sendEmail } from "@/lib/actions"
@@ -1027,63 +1027,7 @@ export default function Home() {
   return (
     <>
       {/* Floating Header */}
-      <motion.header 
-        className="fixed top-4 left-0 right-0 z-50 flex justify-center"
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-      >
-        <div className="bg-[#202020]/50 backdrop-blur-md rounded-full px-6 py-3 flex items-center space-x-8 border border-[#303030]/30 shadow-2xl">
-          <Link href="/" className="flex items-center">
-            <Image
-              src="/images/sculpt_logo.png"
-              alt={siteConfig.name}
-              width={120}
-              height={40}
-              className="h-10 w-auto"
-              priority
-            />
-          </Link>
-          
-          <div className="hidden md:flex items-center space-x-6">
-            <div className="flex items-center space-x-5">
-              {socialLinks.map(renderSocialIcon)}
-            </div>
-            
-            <button
-              onClick={openContactModal}
-              className="relative overflow-hidden bg-[#EAEFFF] text-[#202020] px-6 py-2.5 rounded-full font-bold transition-all duration-300 hover:scale-105 group shadow-lg shadow-[#EAEFFF]/20 text-lg"
-              style={{
-                boxShadow: '0 0 20px rgba(234, 239, 255, 0.3), 0 4px 14px rgba(234, 239, 255, 0.15)'
-              }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-              <span className="relative z-10 flex items-center justify-center h-full">Let's Build!</span>
-            </button>
-          </div>
-          
-          <div className="md:hidden flex items-center space-x-3">
-            <button
-              onClick={openContactModal}
-              className="relative overflow-hidden bg-[#EAEFFF] text-[#202020] px-4 py-2 rounded-full font-bold transition-all duration-300 hover:scale-105 group shadow-lg text-sm"
-              style={{
-                boxShadow: '0 0 15px rgba(234, 239, 255, 0.3), 0 4px 10px rgba(234, 239, 255, 0.15)'
-              }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-              <span className="relative z-10 flex items-center justify-center h-full">Let's Build!</span>
-            </button>
-            
-            <button
-              className="text-[#EAEFFF]"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
-            >
-              {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
-          </div>
-        </div>
-      </motion.header>
+      <Navbar onLetsBuildClick={openContactModal} />
 
       {/* Mobile Menu Overlay */}
       {isMenuOpen && (
