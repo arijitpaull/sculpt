@@ -11,6 +11,7 @@ import FiverrLogo from "@/components/fiverr-logo"
 import Toast from "@/components/toast"
 import { sendEmail } from "@/lib/actions"
 import { Project, projects } from "@/data/projects"
+import ProjectAvailabilityCapsule from "@/components/project-availability-capsule"
 
 import { socialLinks } from "@/data/social-links"
 import { siteConfig } from "@/data/site-config"
@@ -657,7 +658,7 @@ export default function Home() {
   const [currentHeroImage, setCurrentHeroImage] = useState(0)
   const [currentFlowStep, setCurrentFlowStep] = useState('kickoff')
   const { scrollYProgress } = useScroll()
-  const headerRef = useRef<HTMLDivElement>(null)
+  const headerRef = useRef<HTMLElement | null>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0])
   const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.95])
@@ -1218,6 +1219,12 @@ export default function Home() {
           </div>
         </div>
       )}
+
+      <ProjectAvailabilityCapsule
+        config={siteConfig.availabilityCapsule}
+        heroRef={headerRef}
+        onClick={openCalModal}
+      />
 
       <main>
         {/* Hero Section */}
