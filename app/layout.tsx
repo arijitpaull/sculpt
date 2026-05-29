@@ -2,6 +2,7 @@ import type React from "react"
 import "./globals.css"
 import { Analytics } from "@vercel/analytics/react"
 import { Suspense } from "react"
+import Script from "next/script"
 
 // Separate viewport export (required in Next.js 15+)
 export const viewport = {
@@ -202,6 +203,7 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://app.cal.com" />
         <link rel="dns-prefetch" href="https://va.vercel-scripts.com" />
         <link rel="dns-prefetch" href="https://vercel.live" />
+        <link rel="dns-prefetch" href="https://snap.licdn.com" />
 
         {/* Enhanced JSON-LD Structured Data */}
         <script
@@ -581,10 +583,34 @@ export default function RootLayout({
           </div>
         </div>
 
+        <noscript>
+          <img height="1" width="1" style={{ display: "none" }} alt="" src="https://px.ads.linkedin.com/collect/?pid=9450204&fmt=gif" />
+        </noscript>
+
         <Suspense>
           {children}
           <Analytics />
         </Suspense>
+
+        <Script
+          id="linkedin-insight-tag"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              _linkedin_partner_id = "9450204";
+              window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+              window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+              (function(l) {
+                if (!l) { window.lintrk = function(a,b) { window.lintrk.q.push([a,b]) }; window.lintrk.q = []; }
+                var s = document.getElementsByTagName("script")[0];
+                var b = document.createElement("script");
+                b.type = "text/javascript"; b.async = true;
+                b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+                s.parentNode.insertBefore(b, s);
+              })(window.lintrk);
+            `,
+          }}
+        />
       </body>
     </html>
   )
