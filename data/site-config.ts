@@ -40,8 +40,8 @@ export const siteConfig: SiteConfig = {
     acceptingProjects: true,
     available: {
       label: "We are accepting projects!",
-      description: "We have 2 project slots remaining. Book a call now!",
-      highlight: "2 project slots remaining",
+      description: "We have 1 project slot remaining. Book a call now!",
+      highlight: "1 project slot remaining",
     },
     unavailable: {
       label: "We are all booked for 2 months.",

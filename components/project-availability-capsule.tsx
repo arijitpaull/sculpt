@@ -9,7 +9,6 @@ type CapsuleState = SiteConfig["availabilityCapsule"]["available"]
 interface ProjectAvailabilityCapsuleProps {
   config: SiteConfig["availabilityCapsule"]
   heroRef: RefObject<HTMLElement | null>
-  onClick: () => void
 }
 
 function HighlightedDescription({
@@ -37,11 +36,9 @@ function HighlightedDescription({
 export default function ProjectAvailabilityCapsule({
   config,
   heroRef,
-  onClick,
 }: ProjectAvailabilityCapsuleProps) {
   const [isHeroVisible, setIsHeroVisible] = useState(true)
   const [isExpanded, setIsExpanded] = useState(false)
-  const isClickable = config.acceptingProjects
 
   useEffect(() => {
     const heroElement = heroRef.current
@@ -73,39 +70,14 @@ export default function ProjectAvailabilityCapsule({
     <AnimatePresence>
       {isHeroVisible && (
         <motion.div
-          role={isClickable ? "button" : undefined}
-          tabIndex={isClickable ? 0 : undefined}
-          onClick={isClickable ? onClick : undefined}
-          onKeyDown={
-            isClickable
-              ? (event) => {
-                  if (event.key === "Enter" || event.key === " ") {
-                    event.preventDefault()
-                    onClick()
-                  }
-                }
-              : undefined
-          }
           onHoverStart={() => setIsExpanded(true)}
           onHoverEnd={() => setIsExpanded(false)}
-          onFocusCapture={() => {
-            if (isClickable) {
-              setIsExpanded(true)
-            }
-          }}
-          onBlurCapture={() => {
-            if (isClickable) {
-              setIsExpanded(false)
-            }
-          }}
           aria-label={`${currentState.label} ${currentState.description}`}
           initial={{ opacity: 0, y: 40, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 40, scale: 0.96 }}
           transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-          className={`group fixed bottom-5 right-4 z-40 flex w-[min(calc(100vw-2rem),22rem)] items-start rounded-full border-2 border-[#EAEFFF]/50 bg-[#101010] px-4 py-3 text-left shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-xl transition-[width,transform] duration-300 ease-out sm:bottom-7 sm:right-7 sm:w-[22rem] sm:hover:w-[30rem] ${
-            isClickable ? "cursor-pointer focus:outline-none focus-visible:sm:w-[30rem]" : "cursor-default"
-          }`}
+          className="group fixed bottom-5 right-4 z-40 flex w-[min(calc(100vw-2rem),22rem)] cursor-default items-start rounded-full bg-[#101010]/70 px-4 py-3 text-left opacity-70 shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-xl transition-[width,opacity,transform] duration-300 ease-out hover:opacity-90 sm:bottom-7 sm:right-7 sm:w-[22rem] sm:hover:w-[30rem]"
         >
           <motion.span
             initial={false}

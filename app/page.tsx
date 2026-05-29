@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from "react"
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowRight, Menu, X, Instagram, Linkedin, Mail, Calendar, FileText, Check, ChevronLeft, ChevronRight, ArrowDown } from "lucide-react"
+import { ArrowRight, Menu, X, Instagram, Linkedin, Mail, Check, ChevronLeft, ChevronRight, ArrowDown } from "lucide-react"
 import ProjectCard from "@/components/project-card"
 import Navbar from "@/components/navbar"
 import FiverrLogo from "@/components/fiverr-logo"
@@ -43,6 +43,26 @@ const iconMap = {
   Linkedin,
   Mail,
   FiverrLogo,
+}
+
+// Phone digit length ranges per country code [min, max]
+const phoneDigitRanges: Record<string, [number, number]> = {
+  "+1": [10, 10], "+44": [10, 10], "+91": [10, 10], "+86": [11, 11],
+  "+81": [10, 11], "+49": [10, 11], "+33": [9, 9], "+39": [9, 11],
+  "+34": [9, 9], "+61": [9, 9], "+7": [10, 10], "+82": [9, 10],
+  "+55": [10, 11], "+52": [10, 10], "+31": [9, 9], "+46": [7, 13],
+  "+47": [8, 8], "+41": [9, 9], "+48": [9, 9], "+27": [9, 9],
+  "+971": [9, 9], "+65": [8, 8], "+60": [9, 10], "+66": [9, 9],
+  "+62": [5, 12], "+63": [10, 10], "+84": [9, 10], "+64": [8, 10],
+  "+20": [10, 10],
+}
+
+const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())
+
+const isValidPhone = (phone: string, countryCode: string) => {
+  const digits = phone.replace(/\D/g, "")
+  const [min, max] = phoneDigitRanges[countryCode] ?? [7, 15]
+  return digits.length >= min && digits.length <= max
 }
 
 // Multi-step form types
@@ -241,9 +261,9 @@ function EmbeddedMultiStepForm({ onComplete }: { onComplete?: () => void }) {
   const isStep2Valid = () => {
     return (
       formData.name.trim() !== "" &&
-      formData.email.trim() !== "" &&
-      formData.phone.trim() !== "" &&
-      formData.details.trim() !== ""
+      isValidEmail(formData.email) &&
+      isValidPhone(formData.phone, formData.countryCode) &&
+      formData.details.trim().length >= 50
     )
   }
 
@@ -282,7 +302,11 @@ function EmbeddedMultiStepForm({ onComplete }: { onComplete?: () => void }) {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
+    if (name === "phone") {
+      setFormData((prev) => ({ ...prev, phone: value.replace(/\D/g, "") }))
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }))
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -347,9 +371,14 @@ ${formData.details}
         case 1:
           errorMessage = "Please select at least one service"
           break
-        case 2:
-          errorMessage = "Please fill in all required fields"
+        case 2: {
+          if (!formData.name.trim()) errorMessage = "Please enter your name"
+          else if (!isValidEmail(formData.email)) errorMessage = "Please enter a valid email address"
+          else if (!isValidPhone(formData.phone, formData.countryCode)) errorMessage = "Please enter a valid phone number for the selected country code"
+          else if (formData.details.trim().length < 50) errorMessage = `Project details must be at least 50 characters (${formData.details.trim().length}/50)`
+          else errorMessage = "Please fill in all required fields"
           break
+        }
         case 3:
           errorMessage = "Please enter your budget"
           break
@@ -522,8 +551,14 @@ ${formData.details}
                   onChange={handleChange}
                   required
                   rows={4}
+                  placeholder="Tell us about your project — what you're building, who it's for, and what you need from us."
                   className="w-full px-4 py-3 bg-[#151515] border border-[#252525] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#EAEFFF]/20 focus:border-[#353535] transition-colors resize-none text-[#EAEFFF]"
                 />
+                <div className="flex justify-end mt-1">
+                  <span className={`text-xs ${formData.details.trim().length < 50 ? "text-red-400/70" : "text-[#EAEFFF]/40"}`}>
+                    {formData.details.trim().length}/50 min
+                  </span>
+                </div>
               </div>
             </motion.div>
           )}
@@ -649,7 +684,6 @@ ${formData.details}
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [videoError, setVideoError] = useState(false)
-  const [showContactModal, setShowContactModal] = useState(false)
   const [showServiceForm, setShowServiceForm] = useState(false)
   const [showCalModal, setShowCalModal] = useState(false)
   const [showConnectModal, setShowConnectModal] = useState(false)
@@ -713,19 +747,9 @@ export default function Home() {
     }
   }, [])
 
-  const openContactModal = () => {
-    setShowContactModal(true)
-    document.body.style.overflow = "hidden"
-  }
-
-  const closeContactModal = () => {
-    setShowContactModal(false)
-    document.body.style.overflow = "auto"
-  }
-
   const openServiceForm = () => {
-    setShowContactModal(false)
     setShowServiceForm(true)
+    document.body.style.overflow = "hidden"
   }
 
   const closeServiceForm = () => {
@@ -734,8 +758,8 @@ export default function Home() {
   }
 
   const openCalModal = () => {
-    setShowContactModal(false)
     setShowCalModal(true)
+    document.body.style.overflow = "hidden"
     
     setTimeout(() => {
       if (typeof window !== 'undefined') {
@@ -982,6 +1006,14 @@ export default function Home() {
     document.body.style.overflow = "auto"
   }
 
+  const openLetsBuild = () => {
+    if (siteConfig.availabilityCapsule.acceptingProjects) {
+      openCalModal()
+    } else {
+      openServiceForm()
+    }
+  }
+
   const renderSocialIcon = (link: (typeof socialLinks)[0]) => {
     const IconComponent = iconMap[link.icon as keyof typeof iconMap]
     if (!IconComponent) return null
@@ -1021,7 +1053,7 @@ export default function Home() {
   return (
     <>
       {/* Floating Header */}
-      <Navbar onLetsBuildClick={openContactModal} />
+      <Navbar onLetsBuildClick={openLetsBuild} />
 
       {/* Mobile Menu Overlay */}
       {isMenuOpen && (
@@ -1039,52 +1071,6 @@ export default function Home() {
           </div>
         </motion.div>
       )}
-
-      {/* Contact Modal */}
-      <AnimatePresence>
-        {showContactModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-            onClick={closeContactModal}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-[#151515] rounded-3xl w-full max-w-md overflow-hidden"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="flex justify-between items-center p-6 border-b border-[#252525]">
-                <h3 className="text-xl font-bold">Choose how you'd like to get started with us.</h3>
-                <button onClick={closeContactModal} className="hover:opacity-70 transition-opacity" title="Close">
-                  <X className="h-5 w-5" />
-                </button>
-              </div>
-
-              <div className="p-6 space-y-4">
-                <button
-                  onClick={openCalModal}
-                  className="w-full bg-[#EAEFFF] text-[#101010] p-4 rounded-2xl font-bold transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-3"
-                >
-                  <Calendar className="h-5 w-5" />
-                  <span>Book a Call</span>
-                </button>
-
-                <button
-                  onClick={openServiceForm}
-                  className="w-full border border-[#EAEFFF] text-[#EAEFFF] p-4 rounded-2xl font-bold transition-all duration-300 hover:bg-[#EAEFFF] hover:text-[#101010] flex items-center justify-center space-x-3"
-                >
-                  <FileText className="h-5 w-5" />
-                  <span>Request Services</span>
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* Cal.com Modal */}
       <AnimatePresence>
@@ -1206,13 +1192,18 @@ export default function Home() {
       {/* Service Form Modal */}
       {showServiceForm && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#151515] rounded-xl w-full max-w-2xl overflow-hidden">
+          <div className="bg-[#151515] rounded-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center p-6 border-b border-[#252525]">
               <h3 className="text-xl font-bold">Request Services</h3>
               <button onClick={closeServiceForm} className="hover:opacity-70 transition-opacity" title="Close">
                 <X className="h-5 w-5" />
               </button>
             </div>
+            {!siteConfig.availabilityCapsule.acceptingProjects && (
+              <div className="mx-6 mt-6 p-4 bg-[#252525] rounded-xl text-sm text-[#EAEFFF]/70 leading-relaxed">
+                We're fully booked right now — but we'd love to hear about your project. Send us the details and we'll reach out as soon as a slot opens up.
+              </div>
+            )}
             <div className="p-6">
               <EmbeddedMultiStepForm onComplete={closeServiceForm} />
             </div>
@@ -1223,7 +1214,6 @@ export default function Home() {
       <ProjectAvailabilityCapsule
         config={siteConfig.availabilityCapsule}
         heroRef={headerRef}
-        onClick={openCalModal}
       />
 
       <main>
@@ -1623,7 +1613,7 @@ export default function Home() {
                 Most app ideas die in a Notion doc. Share yours — and get a clear scope, timeline, and quote in 24 hours. Free, no pressure.
               </p>
               <button
-                onClick={openContactModal}
+                onClick={openLetsBuild}
                 className="relative overflow-hidden border-2 border-[#EAEFFF] text-[#EAEFFF] px-8 py-4 rounded-full font-bold transition-all duration-300 hover:scale-105 group text-lg hover:text-[#101010]"
               >
                 <div className="absolute inset-0 bg-[#EAEFFF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></div>
