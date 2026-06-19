@@ -12,6 +12,10 @@ interface ClientProjectPageProps {
   project: Project
 }
 
+// Apps pulled from the App Store after their developer account was taken down.
+// Links are kept for portfolio proof, but flagged so visitors don't expect them to open.
+const LIMITED_AVAILABILITY_SLUGS = ["charmify", "woque", "melodai"]
+
 export default function ClientProjectPage({ project }: ClientProjectPageProps) {
   return (
     <>
@@ -87,8 +91,8 @@ export default function ClientProjectPage({ project }: ClientProjectPageProps) {
             </Link>
             
             {/* Back to Projects Button */}
-            <Link 
-              href="/" 
+            <Link
+              href="/#projects"
               className="relative overflow-hidden bg-[#EAEFFF] text-[#202020] px-6 py-2.5 rounded-full font-bold transition-all duration-300 hover:scale-105 group inline-flex items-center shadow-lg text-lg"
               style={{
                 boxShadow: '0 0 20px rgba(234, 239, 255, 0.3), 0 4px 14px rgba(234, 239, 255, 0.15)'
@@ -121,10 +125,15 @@ export default function ClientProjectPage({ project }: ClientProjectPageProps) {
                 <div className="inline-block bg-[#1a1a1a] px-3 py-1 rounded-full text-sm mb-4">{project.category}</div>
                 <div className="flex flex-wrap items-center gap-4 mb-6">
                   <h1 className="text-4xl md:text-6xl font-bold tracking-tighter">{project.title}</h1>
-                <ProjectLinks 
+                <ProjectLinks
                   appStoreUrl={project.appStoreUrl}
                   playStoreUrl={project.playStoreUrl}
                   websiteUrl={project.websiteUrl}
+                  availabilityNotice={
+                    LIMITED_AVAILABILITY_SLUGS.includes(project.slug)
+                      ? "Not available in all countries"
+                      : undefined
+                  }
                 />
                 </div>
 <p className="text-xl md:text-2xl opacity-80 max-w-3xl">{project.fullDescription}</p>
@@ -241,7 +250,7 @@ export default function ClientProjectPage({ project }: ClientProjectPageProps) {
       <blockquote className="border-l-2 border-[#EAEFFF] pl-6 italic" itemProp="reviewBody">
         <p className="text-lg opacity-80 mb-4">"{project.testimonial.quote}"</p>
         <footer className="text-sm">
-          — <span itemProp="author" itemScope itemType="https://schema.org/Person">
+          - <span itemProp="author" itemScope itemType="https://schema.org/Person">
             <span itemProp="name">{project.testimonial.author}</span>
           </span>
         </footer>

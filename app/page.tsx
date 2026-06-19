@@ -17,6 +17,7 @@ import { socialLinks } from "@/data/social-links"
 import { siteConfig } from "@/data/site-config"
 import dynamic from "next/dynamic"
 import CountryCodeDropdown from "@/components/country-code-dropdown"
+import { pricingTiers } from "@/lib/pricingData"
 
 // Below-fold components — dynamically imported to reduce initial bundle
 const InfiniteTestimonialCarousel = dynamic(
@@ -34,6 +35,10 @@ const ProjectGallery = dynamic(
 const ServicesSection = dynamic(
   () => import("@/components/services-bento"),
   { loading: () => <div className="h-48" />, ssr: false }
+)
+const PricingSection = dynamic(
+  () => import("@/components/pricing-section"),
+  { loading: () => <div className="h-[700px] md:h-[640px]" />, ssr: false }
 )
 
 
@@ -76,6 +81,7 @@ interface FormData {
   details: string
   currency: string
   budget: string
+  selectedPackage: string
   services: Service[]
 }
 
@@ -225,8 +231,123 @@ function CurrencyDropdown({ value, onChange }: { value: string; onChange: (curre
   )
 }
 
+// Package Dropdown Component (matching CurrencyDropdown style)
+function PackageDropdown({ value, onChange }: { value: string; onChange: (pkg: string) => void }) {
+  const [isOpen, setIsOpen] = useState(false)
+  const [buttonRect, setButtonRect] = useState<DOMRect | null>(null)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  useEffect(() => {
+    if (isOpen && buttonRef.current) {
+      setButtonRect(buttonRef.current.getBoundingClientRect())
+    }
+  }, [isOpen])
+
+  const handleSelect = (pkg: string) => {
+    onChange(pkg)
+    setIsOpen(false)
+  }
+
+  return (
+    <div ref={dropdownRef} className="relative">
+      <button
+        ref={buttonRef}
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full px-4 py-3 bg-[#151515] border border-[#252525] rounded-xl text-[#EAEFFF] text-left flex items-center justify-between hover:border-[#353535] transition-colors focus:outline-none focus:ring-2 focus:ring-[#EAEFFF]/20"
+      >
+        <span className="flex items-center gap-2">
+          {value ? (
+            <>
+              <span className="font-bold">{value}</span>
+              <span className="font-normal text-[#EAEFFF]/80">package</span>
+            </>
+          ) : (
+            <span className="text-[#EAEFFF]/60">Select package</span>
+          )}
+        </span>
+        <motion.svg
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.2 }}
+          className="w-5 h-5 text-[#EAEFFF]/60"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </motion.svg>
+      </button>
+
+      {isOpen && buttonRect && typeof window !== 'undefined' && (
+        <AnimatePresence>
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            style={{
+              position: 'fixed',
+              top: `${buttonRect.bottom + 8}px`,
+              left: `${buttonRect.left}px`,
+              width: `${buttonRect.width}px`,
+              zIndex: 9999,
+            }}
+            className="bg-[#151515] border border-[#252525] rounded-xl shadow-2xl overflow-hidden"
+          >
+            {pricingTiers.map((tier) => (
+              <button
+                key={tier.name}
+                type="button"
+                onClick={() => handleSelect(tier.name)}
+                className={`w-full px-4 py-3 text-left hover:bg-[#1a1a1a] transition-colors flex items-center justify-between gap-3 ${
+                  value === tier.name ? 'bg-[#1a1a1a]' : ''
+                }`}
+              >
+                <div>
+                  <div>
+                    <span className="text-[#EAEFFF] font-bold">{tier.name}</span>{" "}
+                    <span className="text-[#EAEFFF]/80 font-normal">package</span>
+                  </div>
+                  <div className="text-[#EAEFFF]/60 text-sm">{tier.priceFrom}</div>
+                </div>
+                {value === tier.name && (
+                  <svg
+                    className="w-5 h-5 text-[#EAEFFF] shrink-0"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                )}
+              </button>
+            ))}
+          </motion.div>
+        </AnimatePresence>
+      )}
+    </div>
+  )
+}
+
 // Embedded MultiStepForm component
-function EmbeddedMultiStepForm({ onComplete }: { onComplete?: () => void }) {
+function EmbeddedMultiStepForm({ onComplete, initialPackage }: { onComplete?: () => void; initialPackage?: string }) {
   const [step, setStep] = useState(1)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [formStatus, setFormStatus] = useState<{
@@ -240,6 +361,8 @@ function EmbeddedMultiStepForm({ onComplete }: { onComplete?: () => void }) {
   const [toastMessage, setToastMessage] = useState("")
 
 
+  const isPackageMode = Boolean(initialPackage)
+
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -248,6 +371,7 @@ function EmbeddedMultiStepForm({ onComplete }: { onComplete?: () => void }) {
     details: "",
     currency: "USD",
     budget: "",
+    selectedPackage: initialPackage ?? "",
     services: [],
   })
 
@@ -268,7 +392,9 @@ function EmbeddedMultiStepForm({ onComplete }: { onComplete?: () => void }) {
   }
 
   const isStep3Valid = () => {
-    return formData.budget.trim() !== ""
+    return isPackageMode
+      ? formData.selectedPackage.trim() !== ""
+      : formData.budget.trim() !== ""
   }
 
   const isCurrentStepValid = () => {
@@ -309,8 +435,7 @@ function EmbeddedMultiStepForm({ onComplete }: { onComplete?: () => void }) {
     }
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleSubmit = async () => {
     setIsSubmitting(true)
     setFormStatus({ type: null, message: "" })
 
@@ -322,7 +447,7 @@ function EmbeddedMultiStepForm({ onComplete }: { onComplete?: () => void }) {
         message: `
 Services: ${formData.services.join(", ")}
 Phone: ${formData.countryCode} ${formData.phone}
-Budget: ${formData.currency} ${formData.budget}
+${isPackageMode ? `Chosen Package: ${formData.selectedPackage} package` : `Budget: ${formData.currency} ${formData.budget}`}
 
 Project Details:
 ${formData.details}
@@ -344,6 +469,7 @@ ${formData.details}
         details: "",
         currency: "USD",
         budget: "",
+        selectedPackage: initialPackage ?? "",
         services: [],
       })
       setStep(1)
@@ -380,7 +506,7 @@ ${formData.details}
           break
         }
         case 3:
-          errorMessage = "Please enter your budget"
+          errorMessage = isPackageMode ? "Please select a package" : "Please enter your budget"
           break
       }
       setFormStatus({
@@ -431,7 +557,7 @@ ${formData.details}
         </div>
       </div>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => e.preventDefault()}>
         <AnimatePresence mode="wait">
           {step === 1 && (
             <motion.div
@@ -551,7 +677,7 @@ ${formData.details}
                   onChange={handleChange}
                   required
                   rows={4}
-                  placeholder="Tell us about your project — what you're building, who it's for, and what you need from us."
+                  placeholder="Tell us about your project: what you're building, who it's for, and what you need from us."
                   className="w-full px-4 py-3 bg-[#151515] border border-[#252525] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#EAEFFF]/20 focus:border-[#353535] transition-colors resize-none text-[#EAEFFF]"
                 />
                 <div className="flex justify-end mt-1">
@@ -571,34 +697,46 @@ ${formData.details}
               exit={{ opacity: 0, x: 20 }}
               transition={{ duration: 0.3 }}
             >
-              <div className="grid grid-cols-2 gap-4 mb-6">
-                <div>
-                  <label htmlFor="currency" className="block text-sm font-medium mb-2">
-                    Currency
+              {isPackageMode ? (
+                <div className="mb-6">
+                  <label htmlFor="selectedPackage" className="block text-sm font-medium mb-2">
+                    Chosen Package <span className="text-red-400">*</span>
                   </label>
-                  <CurrencyDropdown
-                    value={formData.currency}
-                    onChange={(currency) => setFormData((prev) => ({ ...prev, currency }))}
+                  <PackageDropdown
+                    value={formData.selectedPackage}
+                    onChange={(pkg) => setFormData((prev) => ({ ...prev, selectedPackage: pkg }))}
                   />
                 </div>
-                <div>
-                  <label htmlFor="budget" className="block text-sm font-medium mb-2">
-                    Budget <span className="text-red-400">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="budget"
-                    name="budget"
-                    value={formData.budget}
-                    onChange={handleChange}
-                    required
-                    pattern="[0-9,]*" 
-                    inputMode="numeric"
-                    placeholder="2,000"
-                    className="w-full px-4 py-3 bg-[#151515] border border-[#252525] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#EAEFFF]/20 focus:border-[#353535] transition-colors text-[#EAEFFF]"
-                  />
+              ) : (
+                <div className="grid grid-cols-2 gap-4 mb-6">
+                  <div>
+                    <label htmlFor="currency" className="block text-sm font-medium mb-2">
+                      Currency
+                    </label>
+                    <CurrencyDropdown
+                      value={formData.currency}
+                      onChange={(currency) => setFormData((prev) => ({ ...prev, currency }))}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="budget" className="block text-sm font-medium mb-2">
+                      Budget <span className="text-red-400">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="budget"
+                      name="budget"
+                      value={formData.budget}
+                      onChange={handleChange}
+                      required
+                      pattern="[0-9,]*"
+                      inputMode="numeric"
+                      placeholder="2,000"
+                      className="w-full px-4 py-3 bg-[#151515] border border-[#252525] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#EAEFFF]/20 focus:border-[#353535] transition-colors text-[#EAEFFF]"
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
 
               <div className="bg-[#101010] p-4 rounded-xl mb-6">
                 <h4 className="font-medium mb-2">Review Your Information</h4>
@@ -616,7 +754,8 @@ ${formData.details}
                     <span className="opacity-70">Services:</span> {formData.services.join(", ")}
                   </p>
                   <p>
-                    <span className="opacity-70">Budget:</span> {formData.currency} {formData.budget}
+                    <span className="opacity-70">{isPackageMode ? "Chosen Package:" : "Budget:"}</span>{" "}
+                    {isPackageMode ? `${formData.selectedPackage} package` : `${formData.currency} ${formData.budget}`}
                   </p>
                 </div>
               </div>
@@ -661,7 +800,8 @@ ${formData.details}
             </button>
           ) : (
             <button
-              type="submit"
+              type="button"
+              onClick={handleSubmit}
               disabled={isSubmitting || !isCurrentStepValid()}
               className={`px-6 py-2 rounded-full transition-colors ${
                 !isSubmitting && isCurrentStepValid()
@@ -685,6 +825,7 @@ export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [videoError, setVideoError] = useState(false)
   const [showServiceForm, setShowServiceForm] = useState(false)
+  const [selectedPackage, setSelectedPackage] = useState<string | null>(null)
   const [showCalModal, setShowCalModal] = useState(false)
   const [showConnectModal, setShowConnectModal] = useState(false)
   const [currentProjectPage, setCurrentProjectPage] = useState(0)
@@ -754,7 +895,13 @@ export default function Home() {
 
   const closeServiceForm = () => {
     setShowServiceForm(false)
+    setSelectedPackage(null)
     document.body.style.overflow = "auto"
+  }
+
+  const openServiceFormWithPackage = (packageName: string) => {
+    setSelectedPackage(packageName)
+    openServiceForm()
   }
 
   const openCalModal = () => {
@@ -1201,11 +1348,11 @@ export default function Home() {
             </div>
             {!siteConfig.availabilityCapsule.acceptingProjects && (
               <div className="mx-6 mt-6 p-4 bg-[#252525] rounded-xl text-sm text-[#EAEFFF]/70 leading-relaxed">
-                We're fully booked right now — but we'd love to hear about your project. Send us the details and we'll reach out as soon as a slot opens up.
+                We're fully booked right now, but we'd love to hear about your project. Send us the details and we'll reach out as soon as a slot opens up.
               </div>
             )}
             <div className="p-6">
-              <EmbeddedMultiStepForm onComplete={closeServiceForm} />
+              <EmbeddedMultiStepForm onComplete={closeServiceForm} initialPackage={selectedPackage ?? undefined} />
             </div>
           </div>
         </div>
@@ -1291,7 +1438,7 @@ export default function Home() {
       transition={{ delay: 0.2, duration: 0.6 }}
       className="mx-auto max-w-2xl text-lg text-[#EAEFFF]/60 md:text-xl leading-relaxed"
     >
-      We design, build, and ship production-ready mobile apps and SaaS products — so you can start acquiring users, not managing developers.
+      We design, build, and ship production-ready mobile apps and SaaS products, so you can start acquiring users, not managing developers.
     </motion.p>
 
     {/* CTAs */}
@@ -1446,6 +1593,29 @@ export default function Home() {
         {/* Projects Section */}
         <ProjectGallery />
 
+        {/* Animated Divider - PRICING */}
+        <div className="relative py-10 overflow-hidden">
+          <motion.div
+            animate={{ x: [0, -1000] }}
+            transition={{
+              x: {
+                repeat: Infinity,
+                repeatType: "loop",
+                duration: 25,
+                ease: "linear",
+              },
+            }}
+            className="whitespace-nowrap text-[80px] md:text-[120px] font-bold opacity-10"
+          >
+            PRICINGPRICINGPRICINGPRICINGPRICINGPRICINGPRICINGPRICINGPRICINGPRICING
+          </motion.div>
+        </div>
+        <div className="text-center pb-8 -mt-4">
+  <h2 className="text-[#EAEFFF]/50 text-3xl md:text-xxl font-medium">Simple, fixed-scope pricing.</h2>
+</div>
+        {/* Pricing Section */}
+        <PricingSection onSelectPackage={openServiceFormWithPackage} />
+
         {/* Animated Divider - FLOW */}
         <div className="relative py-12 overflow-hidden">
   <motion.div
@@ -1492,7 +1662,7 @@ export default function Home() {
     content: (
       <div className="space-y-6 pb-4">
         <p className="text-[#EAEFFF]/70 text-2xl md:text-4xl leading-relaxed max-w-xl">
-          A 50% advance secures your slot in our build queue. Projects start from $999 — you'll know the full cost upfront with no hidden fees, ever.
+          A 50% advance secures your slot in our build queue. Projects start from $999, you'll know the full cost upfront with no hidden fees, ever.
         </p>
         <div className="flex flex-wrap gap-3 mt-6">
           {["50% advance", "Fixed pricing", "Slot confirmed", "No hidden costs"].map((tag) => (
@@ -1509,7 +1679,7 @@ export default function Home() {
     content: (
       <div className="space-y-6 pb-4">
         <p className="text-[#EAEFFF]/70 text-2xl md:text-4xl leading-relaxed max-w-xl">
-          We design every screen in Figma — flows, components, and a full design system. You review and approve before development begins. No surprises in the build phase.
+          We design every screen in Figma: flows, components, and a full design system. You review and approve before development begins. No surprises in the build phase.
         </p>
         <div className="flex flex-wrap gap-3 mt-6">
           {["Figma designs", "User flows", "Component system", "Your approval"].map((tag) => (
@@ -1610,7 +1780,7 @@ export default function Home() {
                 Your idea is good. Let's make sure it gets built right.
               </h3>
               <p className="text-lg md:text-xl opacity-70 mb-12 max-w-2xl mx-auto">
-                Most app ideas die in a Notion doc. Share yours — and get a clear scope, timeline, and quote in 24 hours. Free, no pressure.
+                Most app ideas die in a Notion doc. Share yours, and get a clear scope, timeline, and quote in 24 hours. Free, no pressure.
               </p>
               <button
                 onClick={openLetsBuild}

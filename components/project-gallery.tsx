@@ -76,7 +76,9 @@ const ProjectGallery = () => {
                 className="pl-4 basis-[280px] md:basis-[360px] lg:basis-[420px]"
               >
                 <Link href={`/projects/${project.slug}`} className="group block">
-                  <div className="relative h-[420px] w-full overflow-hidden rounded-2xl md:h-[480px]">
+                  <div
+                    className="relative h-[420px] w-full rounded-2xl md:h-[480px] [clip-path:inset(0_round_1rem)] [transform:translateZ(0)] [backface-visibility:hidden]"
+                  >
                     {project.image ? (
                       <img
                         src={project.image}

@@ -499,7 +499,7 @@ export default function RootLayout({
                   name: "Charmify",
                   applicationCategory: "SocialNetworkingApplication",
                   operatingSystem: "iOS, Android",
-                  description: "AI-powered dating app built with Flutter and OpenAI — developed by SCULPT",
+                  description: "AI-powered dating app built with Flutter and OpenAI, developed by SCULPT",
                   author: { "@id": "https://www.sculpt.work/#organization" },
                   aggregateRating: { "@type": "AggregateRating", ratingValue: "4.8", ratingCount: "120", bestRating: "5" }
                 },
@@ -508,7 +508,7 @@ export default function RootLayout({
                   name: "Woque",
                   applicationCategory: "HealthApplication",
                   operatingSystem: "iOS, Android",
-                  description: "Wellness and habit-tracking mobile app built with Flutter — developed by SCULPT",
+                  description: "Wellness and habit-tracking mobile app built with Flutter, developed by SCULPT",
                   author: { "@id": "https://www.sculpt.work/#organization" }
                 },
                 {
@@ -516,7 +516,7 @@ export default function RootLayout({
                   name: "Funutrition",
                   applicationCategory: "HealthApplication",
                   operatingSystem: "iOS, Android",
-                  description: "Gamified nutrition tracking app built with Flutter — developed by SCULPT",
+                  description: "Gamified nutrition tracking app built with Flutter, developed by SCULPT",
                   author: { "@id": "https://www.sculpt.work/#organization" }
                 },
                 {
@@ -524,13 +524,13 @@ export default function RootLayout({
                   name: "MelodAI",
                   applicationCategory: "MusicApplication",
                   operatingSystem: "iOS, Android",
-                  description: "AI-generated music app using OpenAI audio models — developed by SCULPT",
+                  description: "AI-generated music app using OpenAI audio models, developed by SCULPT",
                   author: { "@id": "https://www.sculpt.work/#organization" }
                 },
                 {
                   "@type": "Review",
                   author: { "@type": "Person", name: "Sarah M." },
-                  reviewBody: "SCULPT delivered our app in under 60 days. The quality was exceptional — it launched on the App Store and immediately hit our download targets.",
+                  reviewBody: "SCULPT delivered our app in under 60 days. The quality was exceptional, it launched on the App Store and immediately hit our download targets.",
                   reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
                   itemReviewed: { "@id": "https://www.sculpt.work/#professional-service" }
                 },

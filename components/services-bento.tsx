@@ -309,7 +309,7 @@ export default function ServicesSection() {
                   <h3 className="text-[#EAEFFF] font-bold">Web Applications</h3>
                 </div>
                 <p className="text-[#EAEFFF]/55 text-sm font-bold leading-relaxed">
-                  Full-stack Next.js apps with Supabase — dashboards, portals, and internal tools with real-time data.
+                  Full-stack Next.js apps with Supabase, dashboards, portals, and internal tools with real-time data.
                 </p>
               </div>
             </CardContent>
@@ -327,7 +327,7 @@ export default function ServicesSection() {
                   <h3 className="text-[#EAEFFF] font-bold">SaaS Platforms</h3>
                 </div>
                 <p className="text-[#EAEFFF]/55 text-sm font-bold leading-relaxed">
-                  Auth, billing, multi-tenancy — everything a paying product needs before you acquire your first user.
+                  Auth, billing, multi-tenancy, everything a paying product needs before you acquire your first user.
                 </p>
               </div>
             </CardContent>
@@ -345,7 +345,7 @@ export default function ServicesSection() {
                 </div>
                 <div className="space-y-2">
                   <p className="text-[#EAEFFF]/55 text-sm font-bold leading-relaxed">
-                    LLMs, voice AI, RAG pipelines, and agents embedded into your product — not bolted on as an afterthought.
+                    LLMs, voice AI, RAG pipelines, and agents embedded into your product, not bolted on as an afterthought.
                   </p>
                   <div className="flex flex-wrap gap-1.5 pt-1">
                     {["OpenAI", "Claude", "Deepgram", "ElevenLabs"].map((t) => (
@@ -370,7 +370,7 @@ export default function ServicesSection() {
                 </div>
                 <div className="space-y-2">
                   <p className="text-[#EAEFFF]/55 text-sm font-bold leading-relaxed">
-                    High-conversion pages built for ad traffic. Designed to turn visitors into discovery calls — not just look nice.
+                    High-conversion pages built for ad traffic. Designed to turn visitors into discovery calls, not just look nice.
                   </p>
                   <div className="flex flex-wrap gap-1.5 pt-1">
                     {["Framer Motion", "Next.js", "CRO-optimised"].map((t) => (
