@@ -154,7 +154,7 @@ export const projects: Project[] = [
     technologies: ["Flutter", "Supabase", "Hive", "Dart"],
     testimonial: {
       quote:
-        "Looks promising! Great work so far man.",
+        "Looks promising! Great work man.",
       author: "Anurag Sharma, Arctic Bee"
     },
     appStoreUrl:"https://apps.apple.com/in/app/funutrition-meals-learning/id6751509563" ,

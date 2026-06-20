@@ -205,7 +205,7 @@ export default function ClientProjectPage({ project }: ClientProjectPageProps) {
               width={800}
               height={600}
               alt={`${project.title} ${project.category} app screenshot ${index + 2}`}
-              className="h-full w-full md:w-auto rounded-lg object-contain"
+              className="h-full w-full md:w-auto rounded-2xl object-contain"
               loading="lazy"
             />
           </motion.div>
@@ -275,9 +275,12 @@ export default function ClientProjectPage({ project }: ClientProjectPageProps) {
               <p className="text-lg opacity-80 mb-8">Let's discuss how we can bring your vision to life with the same expertise and attention to detail.</p>
               <Link
                 href="/#contact"
-                className="inline-flex items-center border border-[#EAEFFF] px-6 py-3 rounded-full hover:bg-[#EAEFFF] hover:text-[#101010] transition-colors"
+                className="relative overflow-hidden inline-flex items-center border-2 border-[#EAEFFF] text-[#EAEFFF] px-6 py-3 rounded-full font-bold hover:text-[#101010] group transition-all duration-300 hover:scale-105"
               >
-                Get in touch <ArrowRight className="ml-2 h-4 w-4" />
+                <div className="absolute inset-0 bg-[#EAEFFF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out" />
+                <span className="relative z-10 flex items-center">
+                  Get in touch <ArrowRight className="ml-2 h-4 w-4" />
+                </span>
               </Link>
             </div>
           </section>
@@ -294,20 +297,6 @@ export default function ClientProjectPage({ project }: ClientProjectPageProps) {
                 © {new Date().getFullYear()} {siteConfig.company.name} All rights reserved.
               </p>
             </div>
-            <nav aria-label="Footer Navigation">
-              <Link 
-                href="/" 
-                className="text-sm opacity-70 hover:opacity-100 transition-opacity mr-6"
-              >
-                Back to Portfolio
-              </Link>
-              <Link 
-                href="/#contact" 
-                className="text-sm opacity-70 hover:opacity-100 transition-opacity"
-              >
-                Start Your Project
-              </Link>
-            </nav>
           </div>
         </footer>
       </div>

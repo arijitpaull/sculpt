@@ -1,6 +1,7 @@
 "use client"
 
-import { Apple, Smartphone, Globe } from "lucide-react"
+import { Globe } from "lucide-react"
+import { SiAppstore, SiGoogleplay } from "react-icons/si"
 import Link from "next/link"
 
 interface ProjectLinksProps {
@@ -24,11 +25,11 @@ export default function ProjectLinks({ appStoreUrl, playStoreUrl, websiteUrl, av
             href={appStoreUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="p-2 rounded-lg bg-[#252525] hover:bg-[#EAEFFF] hover:text-[#101010] transition-all duration-300"
+            className="p-2 rounded-xl bg-[#252525] hover:bg-[#EAEFFF] hover:text-[#101010] transition-all duration-300"
             aria-label="View on App Store"
             title="View on App Store"
           >
-            <Apple className="h-5 w-5" />
+            <SiAppstore className="h-5 w-5" />
           </Link>
           {availabilityNotice && (
             <span className="text-xs text-[#EAEFFF]/40 italic whitespace-nowrap">
@@ -43,11 +44,11 @@ export default function ProjectLinks({ appStoreUrl, playStoreUrl, websiteUrl, av
           href={playStoreUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="p-2 rounded-lg bg-[#252525] hover:bg-[#EAEFFF] hover:text-[#101010] transition-all duration-300"
+          className="p-2 rounded-xl bg-[#252525] hover:bg-[#EAEFFF] hover:text-[#101010] transition-all duration-300"
           aria-label="View on Play Store"
           title="View on Play Store"
         >
-          <Smartphone className="h-5 w-5" />
+          <SiGoogleplay className="h-5 w-5" />
         </Link>
       )}
       
@@ -56,7 +57,7 @@ export default function ProjectLinks({ appStoreUrl, playStoreUrl, websiteUrl, av
           href={websiteUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="p-2 rounded-lg bg-[#252525] hover:bg-[#EAEFFF] hover:text-[#101010] transition-all duration-300"
+          className="p-2 rounded-xl bg-[#252525] hover:bg-[#EAEFFF] hover:text-[#101010] transition-all duration-300"
           aria-label="Visit Website"
           title="Visit Website"
         >

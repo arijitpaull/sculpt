@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, type RefObject } from "react"
+import { useEffect, useRef, useState, type RefObject } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import type { SiteConfig } from "@/data/site-config"
 
@@ -39,6 +39,8 @@ export default function ProjectAvailabilityCapsule({
 }: ProjectAvailabilityCapsuleProps) {
   const [isHeroVisible, setIsHeroVisible] = useState(true)
   const [isExpanded, setIsExpanded] = useState(false)
+  const capsuleRef = useRef<HTMLDivElement>(null)
+  const collapseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     const heroElement = heroRef.current
@@ -47,9 +49,16 @@ export default function ProjectAvailabilityCapsule({
       return
     }
 
+    // Debounce: a fast scroll can briefly flicker the intersection ratio
+    // across the threshold, toggling the capsule in and out for a frame.
+    let debounceTimeout: ReturnType<typeof setTimeout> | null = null
+
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsHeroVisible(entry.isIntersecting)
+        if (debounceTimeout) clearTimeout(debounceTimeout)
+        debounceTimeout = setTimeout(() => {
+          setIsHeroVisible(entry.isIntersecting)
+        }, 100)
       },
       {
         threshold: 0.2,
@@ -59,8 +68,41 @@ export default function ProjectAvailabilityCapsule({
 
     observer.observe(heroElement)
 
-    return () => observer.disconnect()
+    return () => {
+      if (debounceTimeout) clearTimeout(debounceTimeout)
+      observer.disconnect()
+    }
   }, [heroRef])
+
+  // Clear any pending auto-collapse timer on unmount
+  useEffect(() => {
+    return () => {
+      if (collapseTimeoutRef.current) clearTimeout(collapseTimeoutRef.current)
+    }
+  }, [])
+
+  // Touch devices don't fire hover events, so tapping the capsule expands it
+  // for exactly 5 seconds before it auto-collapses.
+  const expandWithAutoCollapse = () => {
+    setIsExpanded(true)
+    if (collapseTimeoutRef.current) clearTimeout(collapseTimeoutRef.current)
+    collapseTimeoutRef.current = setTimeout(() => setIsExpanded(false), 5000)
+  }
+
+  // Tapping anywhere else collapses it immediately, even before the 5s timer fires.
+  useEffect(() => {
+    if (!isExpanded) return
+
+    const handlePointerDownOutside = (event: PointerEvent) => {
+      if (capsuleRef.current && !capsuleRef.current.contains(event.target as Node)) {
+        setIsExpanded(false)
+        if (collapseTimeoutRef.current) clearTimeout(collapseTimeoutRef.current)
+      }
+    }
+
+    document.addEventListener("pointerdown", handlePointerDownOutside)
+    return () => document.removeEventListener("pointerdown", handlePointerDownOutside)
+  }, [isExpanded])
 
   const currentState: CapsuleState = config.acceptingProjects ? config.available : config.unavailable
   const pulseColor = config.acceptingProjects ? "#3DFF7A" : "#FF5A5A"
@@ -70,8 +112,16 @@ export default function ProjectAvailabilityCapsule({
     <AnimatePresence>
       {isHeroVisible && (
         <motion.div
-          onHoverStart={() => setIsExpanded(true)}
-          onHoverEnd={() => setIsExpanded(false)}
+          ref={capsuleRef}
+          onHoverStart={() => {
+            setIsExpanded(true)
+            if (collapseTimeoutRef.current) clearTimeout(collapseTimeoutRef.current)
+          }}
+          onHoverEnd={() => {
+            setIsExpanded(false)
+            if (collapseTimeoutRef.current) clearTimeout(collapseTimeoutRef.current)
+          }}
+          onClick={expandWithAutoCollapse}
           aria-label={`${currentState.label} ${currentState.description}`}
           initial={{ opacity: 0, y: 40, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}

@@ -53,6 +53,20 @@ html::-webkit-scrollbar {
 
 * {
   letter-spacing: -0.07em;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Form fields still need normal text selection so people can edit what they type */
+input,
+textarea,
+select {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  user-select: text;
+  -webkit-touch-callout: default;
 }
 
 @layer utilities {

@@ -117,6 +117,17 @@ const CountryCodeDropdown: React.FC<CountryCodeDropdownProps> = ({
     }
   };
 
+  // The trigger button is narrow (it shares a row with the phone field), but the
+  // dropdown needs room for full country names — widen it with a floor, clamped
+  // to the viewport so it never overflows off-screen on mobile.
+  const viewportWidth = typeof window !== 'undefined' ? window.innerWidth : 360;
+  const dropdownWidth = buttonRect
+    ? Math.min(Math.max(buttonRect.width, 300), viewportWidth - 16)
+    : 0;
+  const dropdownLeft = buttonRect
+    ? Math.min(Math.max(buttonRect.left, 8), viewportWidth - dropdownWidth - 8)
+    : 0;
+
   return (
     <div ref={dropdownRef} className={`relative ${className}`}>
       {/* Trigger Button */}
@@ -162,8 +173,8 @@ const CountryCodeDropdown: React.FC<CountryCodeDropdownProps> = ({
             style={{
               position: 'fixed',
               top: `${buttonRect.bottom + 8}px`,
-              left: `${buttonRect.left}px`,
-              width: `${buttonRect.width}px`,
+              left: `${dropdownLeft}px`,
+              width: `${dropdownWidth}px`,
               zIndex: 9999,
               maxHeight: '320px',
             }}
@@ -191,7 +202,7 @@ const CountryCodeDropdown: React.FC<CountryCodeDropdownProps> = ({
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search country or code..."
-                  className="w-full pl-10 pr-4 py-2 bg-[#1a1a1a] border border-[#252525] rounded-lg text-[#EAEFFF] placeholder-[#EAEFFF]/40 focus:outline-none focus:ring-2 focus:ring-[#EAEFFF]/20 focus:border-[#353535]"
+                  className="w-full pl-10 pr-4 py-2.5 leading-normal bg-[#1a1a1a] border border-[#252525] rounded-lg text-[#EAEFFF] placeholder-[#EAEFFF]/40 focus:outline-none focus:ring-2 focus:ring-[#EAEFFF]/20 focus:border-[#353535]"
                 />
               </div>
             </div>

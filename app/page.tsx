@@ -1460,15 +1460,18 @@ export default function Home() {
   </button>
 
 
-  {/* See How We Build — pre-filled, dims on hover */}
+  {/* See How We Build — same hover treatment as the "Let's Connect!" CTA */}
   <button
-  onClick={() => document.getElementById("flow")?.scrollIntoView({ behavior: "smooth" })}
-  className="group relative inline-flex items-center gap-1 text-xl font-medium text-[#EAEFFF]/60 hover:text-[#EAEFFF] transition-colors duration-200"
->
-  See How We Build
-  <ArrowDown className="h-6 w-26"/>
-  <span className="absolute bottom-0 left-0 h-px w-0 bg-[#EAEFFF]/60 transition-all duration-300 group-hover:w-full" />
-</button>
+    onClick={() => document.getElementById("flow")?.scrollIntoView({ behavior: "smooth" })}
+    className="text-base font-normal underline hover:opacity-100 transition-all duration-300 relative inline-block group"
+    style={{ color: '#EAEFFF', opacity: 0.5 }}
+  >
+    <span className="inline-flex items-center gap-1 group-hover:scale-110 group-active:scale-95 transition-transform duration-200">
+      See How We Build
+      <ArrowDown className="h-4 w-4" />
+    </span>
+    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#EAEFFF] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
+  </button>
 </motion.div>
   </div>
 
@@ -1540,7 +1543,7 @@ export default function Home() {
 </motion.div>
 
   {/* Gradient overlay */}
-  <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#101010] via-[#101010]/80 to-transparent z-20" />
+  <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#101010] via-[#101010]/80 to-transparent z-20 pointer-events-none" />
 
 </section>
 

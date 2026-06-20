@@ -43,17 +43,22 @@ const PricingSection = ({ onSelectPackage }: { onSelectPackage: (packageName: st
                 {tier.priceFrom}
               </p>
 
-              <p className="text-[#EAEFFF]/85 group-hover:text-[#101010]/85 text-lg md:text-xl font-semibold leading-snug mb-5 transition-colors duration-300">
-                {tier.forWho}
+              <p className="text-[#EAEFFF]/85 group-hover:text-[#101010]/85 text-lg md:text-xl leading-snug mb-6 transition-colors duration-300">
+                <span className="font-semibold">{tier.forWhoBold}</span>{" "}
+                <span className="font-normal">{tier.forWhoRest}</span>
               </p>
 
-              <p className="text-[#EAEFFF]/70 group-hover:text-[#101010]/70 text-base md:text-lg leading-relaxed mb-6 transition-colors duration-300">
-                {tier.whatYouGet}
-              </p>
-
-              <p className="text-[#EAEFFF]/40 group-hover:text-[#101010]/50 text-sm leading-relaxed mb-8 transition-colors duration-300">
-                {tier.includes}
-              </p>
+              <ul className="space-y-2 mb-8">
+                {tier.includes.map((item, i) => (
+                  <li
+                    key={i}
+                    className="flex items-start gap-2.5 text-[#EAEFFF]/40 group-hover:text-[#101010]/50 text-sm leading-relaxed tracking-normal transition-colors duration-300"
+                  >
+                    <span className="mt-[7px] h-1 w-1 rounded-full bg-current shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
 
               <div className="mt-auto space-y-1">
                 <p className="text-[#EAEFFF]/35 group-hover:text-[#101010]/45 text-xs font-mono transition-colors duration-300">
