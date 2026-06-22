@@ -1417,35 +1417,57 @@ export default function Home() {
   </span>
 </motion.div>
 
-    {/* Headline */}
-    <motion.h1
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.1, duration: 0.7 }}
+    {/* Headline — word-by-word fade + blur in */}
+    <h1
       className="text-5xl font-medium tracking-tight sm:text-7xl md:text-8xl leading-[1.1]"
       style={{ color: '#EAEFFF' }}
     >
-      Your app idea,{" "}
-      <span style={{ color: '#EAEFFF', opacity: 0.4 }}>launch-ready</span>
-      <br />
-      in 60 days.
-    </motion.h1>
+      {[
+        { text: "Your" },
+        { text: "app" },
+        { text: "idea," },
+        { text: "launch-ready", dim: true, breakAfter: true },
+        { text: "in" },
+        { text: "60" },
+        { text: "days." },
+      ].map((word, index) => (
+        <span key={index}>
+          <motion.span
+            initial={{ opacity: 0, filter: "blur(8px)" }}
+            animate={{ opacity: word.dim ? 0.4 : 1, filter: "blur(0px)" }}
+            transition={{ duration: 0.5, delay: 0.1 + index * 0.1 }}
+            style={{ color: '#EAEFFF', display: "inline-block" }}
+          >
+            {word.text}
+          </motion.span>
+          {word.breakAfter ? <br /> : " "}
+        </span>
+      ))}
+    </h1>
 
-    {/* Subheadline */}
-    <motion.p
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.2, duration: 0.6 }}
-      className="mx-auto max-w-2xl text-lg text-[#EAEFFF]/60 md:text-xl leading-relaxed"
-    >
-      We design, build, and ship production-ready mobile apps and SaaS products, so you can start acquiring users, not managing developers.
-    </motion.p>
+    {/* Subheadline — word-by-word fade in, no blur, right after the headline */}
+    <p className="mx-auto max-w-2xl text-lg text-[#EAEFFF]/60 md:text-xl leading-relaxed">
+      {"We design, build, and ship production-ready mobile apps and SaaS products, so you can start acquiring users, not managing developers."
+        .split(" ")
+        .map((word, index) => (
+          <span key={index}>
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, delay: 1.2 + index * 0.04 }}
+              style={{ display: "inline-block" }}
+            >
+              {word}
+            </motion.span>{" "}
+          </span>
+        ))}
+    </p>
 
     {/* CTAs */}
 <motion.div
   initial={{ opacity: 0, y: 16 }}
   animate={{ opacity: 1, y: 0 }}
-  transition={{ delay: 0.3, duration: 0.6 }}
+  transition={{ delay: 2.4, duration: 0.6 }}
   className="flex flex-col sm:flex-row items-center justify-center gap-7"
 >
   {/* Book a Call — outlined, fills on hover */}
