@@ -1755,10 +1755,27 @@ export default function Home() {
     content: (
       <div className="space-y-6 pb-4">
         <p className="text-[#EAEFFF]/70 text-2xl md:text-4xl leading-relaxed max-w-xl">
-          Final payment, full code ownership transferred to you. Includes 30 days of free post-launch support and a 1-year maintenance contract option.
+          Final payment clears and full code ownership transfers to you, no strings attached. Every build ships with 30 days of free post-launch support as you settle in.
         </p>
         <div className="flex flex-wrap gap-3 mt-6">
-          {["Full ownership", "Code handoff", "30-day support", "1-year maintenance"].map((tag) => (
+          {["Full ownership", "Code handoff", "Documentation", "30-day support"].map((tag) => (
+            <span key={tag} className="px-4 py-2 bg-[#EAEFFF]/5 border border-[#EAEFFF]/10 rounded-full text-[#EAEFFF]/50 text-base">
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    ),
+  },
+  {
+    title: "Maintenance",
+    content: (
+      <div className="space-y-6 pb-4">
+        <p className="text-[#EAEFFF]/70 text-2xl md:text-4xl leading-relaxed max-w-xl">
+          The relationship doesn't end at handoff. Most clients move into a year-long app maintenance contract, from $250/month with your first month free, covering bug fixes, performance monitoring, and new feature releases so your app keeps running smoothly and keeps growing its user base.
+        </p>
+        <div className="flex flex-wrap gap-3 mt-6">
+          {["1-year contract", "Bug fixes", "Performance monitoring", "Feature releases"].map((tag) => (
             <span key={tag} className="px-4 py-2 bg-[#EAEFFF]/5 border border-[#EAEFFF]/10 rounded-full text-[#EAEFFF]/50 text-base">
               {tag}
             </span>
@@ -1856,7 +1873,7 @@ export default function Home() {
                 fontWeight: 'bold'
               }}
             >
-              Want to work together?
+              Want to work at SCULPT?
             </p>
             <button
               onClick={openConnectModal}

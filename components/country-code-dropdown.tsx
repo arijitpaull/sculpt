@@ -121,12 +121,28 @@ const CountryCodeDropdown: React.FC<CountryCodeDropdownProps> = ({
   // dropdown needs room for full country names — widen it with a floor, clamped
   // to the viewport so it never overflows off-screen on mobile.
   const viewportWidth = typeof window !== 'undefined' ? window.innerWidth : 360;
+  const viewportHeight = typeof window !== 'undefined' ? window.innerHeight : 640;
   const dropdownWidth = buttonRect
     ? Math.min(Math.max(buttonRect.width, 300), viewportWidth - 16)
     : 0;
   const dropdownLeft = buttonRect
     ? Math.min(Math.max(buttonRect.left, 8), viewportWidth - dropdownWidth - 8)
     : 0;
+
+  // Flip the dropdown above the trigger when there isn't enough room below it
+  // (e.g. the field sits near the bottom of the viewport), so the list never
+  // renders off-screen.
+  const gap = 8;
+  const margin = 16;
+  const spaceBelow = buttonRect ? viewportHeight - buttonRect.bottom - gap - margin : 0;
+  const spaceAbove = buttonRect ? buttonRect.top - gap - margin : 0;
+  const openUpward = spaceBelow < 280 && spaceAbove > spaceBelow;
+  const dropdownMaxHeight = Math.max(160, Math.min(320, openUpward ? spaceAbove : spaceBelow));
+  const dropdownPositionStyle = buttonRect
+    ? openUpward
+      ? { bottom: `${viewportHeight - buttonRect.top + gap}px` }
+      : { top: `${buttonRect.bottom + gap}px` }
+    : {};
 
   return (
     <div ref={dropdownRef} className={`relative ${className}`}>
@@ -166,17 +182,19 @@ const CountryCodeDropdown: React.FC<CountryCodeDropdownProps> = ({
         <AnimatePresence>
           <motion.div
             ref={dropdownRef}
-            initial={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: openUpward ? 10 : -10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            exit={{ opacity: 0, y: openUpward ? 10 : -10 }}
             transition={{ duration: 0.2 }}
             style={{
               position: 'fixed',
-              top: `${buttonRect.bottom + 8}px`,
               left: `${dropdownLeft}px`,
               width: `${dropdownWidth}px`,
               zIndex: 9999,
-              maxHeight: '320px',
+              maxHeight: `${dropdownMaxHeight}px`,
+              display: 'flex',
+              flexDirection: 'column',
+              ...dropdownPositionStyle,
             }}
             className="bg-[#151515] border border-[#252525] rounded-xl shadow-2xl overflow-hidden"
           >
@@ -268,7 +286,7 @@ const CountryCodeDropdown: React.FC<CountryCodeDropdownProps> = ({
             )}
 
             {/* Country List */}
-            <div className="max-h-48 overflow-y-auto custom-scrollbar">
+            <div className="flex-1 min-h-0 overflow-y-auto custom-scrollbar">
               {filteredCountries.length > 0 ? (
                 filteredCountries.map((country, index) => (
                   <button

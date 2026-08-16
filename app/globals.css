@@ -79,6 +79,13 @@ select {
   }
 }
 
+/* Overrides the site-wide -0.07em letter-spacing for form body text (labels, inputs, options)
+   where tight tracking hurts legibility. Headings intentionally stay outside this scope. */
+.tracking-reset,
+.tracking-reset * {
+  letter-spacing: normal;
+}
+
 body {
   font-feature-settings: "rlig" 1, "calt" 1;
   background-color: #101010;
