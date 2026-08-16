@@ -4,6 +4,26 @@ import { Resend } from "resend"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
+// Resend occasionally hits a transient network/DNS blip and returns an error
+// instead of throwing — retry a couple of times before treating it as a real failure.
+async function sendWithRetry(
+  send: () => ReturnType<typeof resend.emails.send>,
+  attempts = 3,
+  delayMs = 600,
+): Promise<Awaited<ReturnType<typeof resend.emails.send>>> {
+  let last: Awaited<ReturnType<typeof resend.emails.send>> | undefined
+  for (let i = 0; i < attempts; i++) {
+    try {
+      last = await send()
+      if (!last.error) return last
+    } catch (err) {
+      last = { data: null, error: { name: "application_error", message: (err as Error).message } as any }
+    }
+    if (i < attempts - 1) await new Promise((resolve) => setTimeout(resolve, delayMs))
+  }
+  return last!
+}
+
 interface EmailData {
   name: string
   email: string
@@ -47,7 +67,7 @@ export async function sendEmail(data: EmailData) {
     }
 
     // Email to the business using verified domain
-    const businessEmail = await resend.emails.send({
+    const businessEmail = await sendWithRetry(() => resend.emails.send({
       from: "SCULPT Contact <noreply@sculpt.work>",
       to: "sculptvisions@gmail.com", // Corrected email address
       subject: `New contact form submission from ${name}`,
@@ -70,10 +90,10 @@ export async function sendEmail(data: EmailData) {
           </div>
         </div>
       `,
-    })
+    }))
 
     // Auto-reply email to the user using verified domain
-    const autoReplyEmail = await resend.emails.send({
+    const autoReplyEmail = await sendWithRetry(() => resend.emails.send({
       from: "SCULPT Team <noreply@sculpt.work>",
       to: email, // This sends to the user's email address
       subject: "Hey! SCULPT received your idea 👍🏼",
@@ -276,7 +296,7 @@ export async function sendEmail(data: EmailData) {
         </body>
         </html>
       `,
-    })
+    }))
 
     // Check if both emails were sent successfully
     if (businessEmail.error) {
@@ -372,7 +392,7 @@ export async function sendProjectInquiry(data: ProjectInquiryData) {
       timeZone: "Asia/Kolkata",
     })
 
-    const businessEmail = await resend.emails.send({
+    const businessEmail = await sendWithRetry(() => resend.emails.send({
       from: "SCULPT Inquiries <noreply@sculpt.work>",
       to: "sculptvisions@gmail.com",
       subject: `New Project Inquiry — ${name}${company ? ` (${company})` : ""}`,
@@ -420,9 +440,9 @@ export async function sendProjectInquiry(data: ProjectInquiryData) {
           </div>
         </div>
       `,
-    })
+    }))
 
-    const autoReplyEmail = await resend.emails.send({
+    const autoReplyEmail = await sendWithRetry(() => resend.emails.send({
       from: "SCULPT Team <noreply@sculpt.work>",
       to: email,
       subject: "We've received your project inquiry — SCULPT",
@@ -480,7 +500,7 @@ export async function sendProjectInquiry(data: ProjectInquiryData) {
         </body>
         </html>
       `,
-    })
+    }))
 
     if (businessEmail.error) {
       console.error("Error sending inquiry business email:", businessEmail.error)
