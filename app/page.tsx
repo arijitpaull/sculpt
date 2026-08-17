@@ -1413,7 +1413,7 @@ export default function Home() {
     }}
   />
   <span style={{ lineHeight: '1', verticalAlign: 'middle' }}>
-    Trusted by founders in 🇳🇱 🇬🇷 🇦🇺 🇮🇳 🇬🇧
+    Trusted by founders in 🇳🇱 🇺🇸 🇦🇺 🇮🇳 🇬🇧
   </span>
 </motion.div>
 
