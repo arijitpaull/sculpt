@@ -213,8 +213,8 @@ export const projects: Project[] = [
     technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion", "Resend SMTP", "Vercel", "Figma", "After Effects", "Jitter"],
     testimonial: {
       quote:
-        "",
-      author: ""
+        "We had a great experience working with Sculpt on the ACENAVI website. All interactions were professional, responsive, and they understood our vision quickly.",
+      author: "Meenakshi Reddy"
     },
     websiteUrl: "https://acenavi.in",
     gallery: [
@@ -222,6 +222,74 @@ export const projects: Project[] = [
       "/images/an_ss1.webp",
       "/images/an_ss2.webp",
       "/images/an_ss3.webp"
+    ]
+  },
+  {
+    id: "8",
+    title: "KLMATM Digital",
+    slug: "klmatm-digital",
+    category: "Web & Branding",
+    description:
+      "Minimal, premium brand website for a digital product studio, engineered for a fast first launch and finished with full technical SEO.",
+    fullDescription:
+      "KLMATM Digital is a digital product studio building high-utility mobile apps and marketplaces for complex, regional ecosystems. We were originally brought on to build their flagship app, and partway through discovery realized the newly registered LLC had no marketing website to point users, press, or app reviewers to while their Apple Developer account was still pending approval. We designed and shipped a minimal, editorial-style brand site on a tight timeline, then returned before the app's own launch to layer in scroll animation, interactive React components, and complete technical SEO.",
+    image: "/images/klmatm-thumbnail.webp",
+    challenge:
+      "KLMATM Digital needed two things moving in parallel: a working app and a company people could actually find online. Apple's developer account review created an unplanned waiting period, and without a live marketing URL, there was nothing to send early users, press, or partners to. The design brief added its own tension, too: the site had to read as minimal and restrained, while still feeling premium and interactive enough that visitors wouldn't mistake restraint for an unfinished placeholder.",
+    solution:
+      "We split delivery into two phases. Phase one shipped a stripped-back version of the site fast, the layout, copy, and warm, editorial color palette the client had already signed off on, live on their own domain within days, so KLMATM had a real marketing presence the moment they needed one, with animation and SEO intentionally deferred. Phase two landed just before the app itself launched: we layered in scroll-triggered motion, interactive React components, and section-to-section transitions that keep every scroll short and purposeful, guiding visitors from what the company does straight through to booking a call. We closed the project with full technical SEO: sitemaps, structured data, Search Console setup, and performance tuning targeting top Lighthouse scores across the board.",
+    results:
+      "KLMATM Digital's marketing site went live and fully indexed before the app itself cleared Apple's review, giving the company a credible public presence from day one instead of a placeholder page. The minimal-but-motion-rich direction landed exactly as intended: despite how little sits on any single screen, the site reads as premium and considered throughout. The phased rollout meant visitors never encountered an unfinished page, only one that kept improving in the background.",
+    technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion", "Vercel"],
+    testimonial: {
+      quote: "SCULPT delivered an exceptional landing page for KLMATM DIGITAL LLC. Communication throughout the entire process was seamless. A 100% pleasure to work with, I highly recommend SCULPT for top-tier PREMIUM web development.",
+      author: "Kent McLaurin"
+    },
+    websiteUrl: "https://klmatmdigital.com",
+    gallery: [
+      "/images/kl_banner.webp",
+      "/images/kl_ss1.webp",
+      "/images/kl_ss2.webp",
+      "/images/kl_ss3.webp"
+    ]
+  },
+  {
+    id: "9",
+    title: "LegacyStep",
+    slug: "legacystep",
+    category: "Finance & Productivity",
+    description:
+      "A calm, guided estate-management app that helps independent executors organise every task, document, and financial record in one secure place.",
+    fullDescription:
+      "Legacy Step is a mobile-first estate-management app for independent executors—the people responsible for managing a loved one’s affairs after their death. Built as a complete iOS product rather than a lightweight MVP, it replaces scattered spreadsheets, paper notes, and email threads with a clear, supportive workspace. Executors can move through a structured estate plan, securely store important documents, record income and expenses, export records as PDFs, and optionally work alongside one co-executor from separate devices.",
+    image: "/images/legacystep-thumbnail.webp",
+    challenge:
+      "Estate administration is a long, emotionally demanding process with many legal, financial, and documentary responsibilities. Independent executors often have no dedicated system to guide them, which makes it easy to lose track of urgent actions, supporting paperwork, payments, and progress. The product needed to make a complex process feel calm and approachable while protecting sensitive estate information and supporting secure collaboration between two people.",
+    solution:
+      "We designed and developed a polished Flutter app centred on a stage-by-stage executor journey, helping users understand what needs attention now and what comes next. The app combines guided tasks, a secure document vault, an estate financial ledger, reminders, progress tracking, and PDF exports in one cohesive experience. Supabase powers authentication, secure storage, real-time data, and row-level security, while Riverpod manages app state and RevenueCat supports the iOS subscription flow. We also built secure co-executor invitations, offline-aware syncing, and an iOS home-screen widget so users can see their next priorities at a glance.",
+    results:
+      "Legacy Step launched as a complete, App Store-ready estate administration tool that gives executors a clear, organised way to manage a process that is usually fragmented and overwhelming. The finished product brings tasks, documents, finances, collaboration, and reporting into one private workspace, creating a dependable foundation for users to manage an estate with greater confidence and clarity.",
+    technologies: [
+      "Flutter",
+      "Dart",
+      "Supabase",
+      "PostgreSQL",
+      "Riverpod",
+      "GoRouter",
+      "RevenueCat",
+      "PDF Generation",
+      "iOS WidgetKit"
+    ],
+    testimonial: {
+      quote: "",
+      author: ""
+    },
+    appStoreUrl: "https://apps.apple.com/app/legacystep-estate-manager/id6799408806",
+    gallery: [
+      "/images/ls_banner.webp",
+      "/images/ls_ss1.webp",
+      "/images/ls_ss2.webp",
+      "/images/ls_ss3.webp"
     ]
   }
 ]

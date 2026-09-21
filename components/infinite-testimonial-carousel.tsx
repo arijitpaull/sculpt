@@ -43,7 +43,7 @@ const testimonials: Testimonial[] = [
   {
     id: "6",
     name: "Meenakshi Reddy 🇮🇳",
-    role: "Client, ACENAVI",
+    role: "Founder, ACENAVI",
     content: "We had a great experience working with Sculpt on the ACENAVI website. All interactions were professional, responsive, and they understood our vision quickly.",
   },
   {
@@ -51,6 +51,12 @@ const testimonials: Testimonial[] = [
     name: "Tanya Singh 🇮🇳",
     role: "Client",
     content: "Great experience! Fixed all bugs quickly and gave the app a clean, modern design. Very professional and responsive. Highly recommend!",
+  },
+  {
+    id: "8",
+    name: "Kent McLaurin 🇺🇸",
+    role: "Co-founder, KLMATM DIGITAL LLC",
+    content: "  SCULPT delivered an exceptional landing page for KLMATM DIGITAL LLC. Communication throughout the entire process was seamless. A 100% pleasure to work with, I highly recommend SCULPT for top-tier PREMIUM web development.",
   },
 ];
 

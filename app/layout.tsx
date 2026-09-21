@@ -482,16 +482,17 @@ export default function RootLayout({
                   "@type": "ItemList",
                   "@id": "https://www.sculpt.work/#projects",
                   name: "SCULPT App Development Portfolio",
-                  description: "7 live apps shipped across 5 countries by the SCULPT development agency",
-                  numberOfItems: 7,
+                  description: "8 live apps and websites shipped across 5 countries by the SCULPT development agency",
+                  numberOfItems: 8,
                   itemListElement: [
                     { "@type": "ListItem", position: 1, name: "Charmify - AI Dating App", url: "https://www.sculpt.work/#projects" },
                     { "@type": "ListItem", position: 2, name: "Woque - Wellness App", url: "https://www.sculpt.work/#projects" },
-                    { "@type": "ListItem", position: 3, name: "Funutrition - Nutrition App", url: "https://www.sculpt.work/#projects" },
-                    { "@type": "ListItem", position: 4, name: "MelodAI - AI Music App", url: "https://www.sculpt.work/#projects" },
-                    { "@type": "ListItem", position: 5, name: "Maidaan - Sports Platform", url: "https://www.sculpt.work/#projects" },
-                    { "@type": "ListItem", position: 6, name: "Mentara - EdTech Platform", url: "https://www.sculpt.work/#projects" },
-                    { "@type": "ListItem", position: 7, name: "Workfolio - Portfolio Builder", url: "https://www.sculpt.work/#projects" }
+                    { "@type": "ListItem", position: 3, name: "IoT Weather Integration - IoT Automation Platform", url: "https://www.sculpt.work/#projects" },
+                    { "@type": "ListItem", position: 4, name: "Dakkapel Offerte - Roof Measurement App", url: "https://www.sculpt.work/#projects" },
+                    { "@type": "ListItem", position: 5, name: "Funutrition - Nutrition App", url: "https://www.sculpt.work/#projects" },
+                    { "@type": "ListItem", position: 6, name: "MelodAI - AI Music App", url: "https://www.sculpt.work/#projects" },
+                    { "@type": "ListItem", position: 7, name: "ACENAVI - HR SaaS Website", url: "https://www.sculpt.work/#projects" },
+                    { "@type": "ListItem", position: 8, name: "KLMATM Digital - Brand & Web Design", url: "https://www.sculpt.work/#projects" }
                   ]
                 },
                 {
