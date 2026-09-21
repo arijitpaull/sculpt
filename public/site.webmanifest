@@ -5,24 +5,12 @@
     "start_url": "/",
     "display": "standalone",
     "background_color": "#101010",
-    "theme_color": "#EAEFFF",
+    "theme_color": "#101010",
     "orientation": "portrait-primary",
     "scope": "/",
     "lang": "en-US",
     "dir": "ltr",
     "categories": ["business", "productivity", "technology"],
-    "screenshots": [
-      {
-        "src": "/images/screenshot-mobile.png",
-        "sizes": "375x667",
-        "type": "image/png"
-      },
-      {
-        "src": "/images/screenshot-desktop.png",
-        "sizes": "1200x800",
-        "type": "image/png"
-      }
-    ],
     "icons": [
       {
         "src": "/images/icon-72x72.png",
@@ -81,7 +69,7 @@
         "url": "/#projects",
         "icons": [
           {
-            "src": "/images/shortcut-projects.png",
+            "src": "/images/icon-192x192.png",
             "sizes": "192x192",
             "type": "image/png"
           }
@@ -94,11 +82,11 @@
         "url": "/#contact",
         "icons": [
           {
-            "src": "/images/shortcut-contact.png",
+            "src": "/images/icon-192x192.png",
             "sizes": "192x192",
             "type": "image/png"
           }
         ]
       }
     ]
-  }
+}
