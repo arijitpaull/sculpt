@@ -99,9 +99,43 @@ body::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
 
-.testimonial-scroller {
-  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+/* Testimonial wall: CSS-driven so hovering a lane pauses it (hover-to-preview videos) */
+.wall-track {
+  animation-duration: var(--wall-duration, 20s);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.wall-track-up {
+  animation-name: wall-up;
+}
+
+.wall-track-left {
+  animation-name: wall-left;
+}
+
+.wall-track-reverse {
+  animation-direction: reverse;
+}
+
+.wall-lane:hover .wall-track {
+  animation-play-state: paused;
+}
+
+@keyframes wall-up {
+  from { transform: translateY(0); }
+  to { transform: translateY(calc(-50% - 0.5rem)); }
+}
+
+@keyframes wall-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-50% - 0.5rem)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wall-track {
+    animation: none;
+  }
 }
 
 .project-card {

@@ -1,6 +1,7 @@
 "use client";
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useCallback, useState } from "react";
+import { AnimatePresence } from "framer-motion";
+import { VideoCard, VideoLightbox, type VideoTestimonial } from "@/components/video-testimonial";
 
 interface Testimonial {
   id: string;
@@ -60,22 +61,55 @@ const testimonials: Testimonial[] = [
   },
 ];
 
-// Desktop: 3 vertical columns
-const col1 = testimonials.slice(0, 3);
-const col2 = testimonials.slice(2, 6);
-const col3 = testimonials.slice(4);
+// Video testimonials — files live in /public/videos. Add just the file name
+// (mp4, webm, mov…), the person's name and their designation.
+const videoTestimonials: VideoTestimonial[] = [
+  //{ video: "video1.mp4", name: "Arijit Paul 🇮🇳", role: "Founder, SCULPT" },
+];
 
-// Mobile: 3 horizontal rows with alternating directions
-const row1 = testimonials.slice(0, 4);
-const row2 = [...testimonials].reverse().slice(0, 4);
-const row3 = testimonials.slice(2, 6);
+// ─── Mixing videos into the wall ─────────────────────────────────────────────
+
+type WallItem =
+  | { kind: "text"; data: Testimonial }
+  | { kind: "video"; data: VideoTestimonial };
+
+// Spread videos round-robin across the lanes, dropping one in after every
+// `every` text cards so they never bunch up.
+const buildLanes = (textLanes: Testimonial[][], videos: VideoTestimonial[], every = 2): WallItem[][] => {
+  const perLane: VideoTestimonial[][] = textLanes.map(() => []);
+  videos.forEach((v, i) => perLane[i % textLanes.length].push(v));
+
+  return textLanes.map((texts, laneIndex) => {
+    const queue = [...perLane[laneIndex]];
+    const lane: WallItem[] = [];
+    texts.forEach((t, i) => {
+      lane.push({ kind: "text", data: t });
+      if ((i + 1) % every === 0 && queue.length) lane.push({ kind: "video", data: queue.shift()! });
+    });
+    // Anything left over goes at the end of the lane.
+    queue.forEach((v) => lane.push({ kind: "video", data: v }));
+    return lane;
+  });
+};
+
+// Desktop: 3 vertical columns
+const desktopLanes = buildLanes(
+  [testimonials.slice(0, 3), testimonials.slice(2, 6), testimonials.slice(4)],
+  videoTestimonials,
+);
+
+// Mobile: 3 horizontal rows (alternating direction)
+const mobileLanes = buildLanes(
+  [testimonials.slice(0, 4), [...testimonials].reverse().slice(0, 4), testimonials.slice(2, 6)],
+  videoTestimonials,
+);
 
 // ─── Card ────────────────────────────────────────────────────────────────────
 
 const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
   const tags = testimonial.role.split(",").map((t) => t.trim()).filter(Boolean);
   return (
-    <div className="p-6 rounded-2xl border border-[#252525] bg-[#151515] mb-4 md:w-full w-72 flex-shrink-0 md:flex-shrink">
+    <div className="p-6 rounded-2xl border border-[#252525] bg-[#151515] md:w-full w-72 flex-shrink-0 md:flex-shrink">
       <p className="text-[#EAEFFF]/80 leading-relaxed mb-5">"{testimonial.content}"</p>
       <div>
         <p className="font-medium text-[#EAEFFF] mb-2">{testimonial.name}</p>
@@ -91,40 +125,56 @@ const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
   );
 };
 
+// Renders a lane's items twice so the CSS loop is seamless.
+const LaneItems = ({
+  items,
+  onOpen,
+  videoClassName,
+}: {
+  items: WallItem[];
+  onOpen: (v: VideoTestimonial) => void;
+  videoClassName: string;
+}) =>
+  [0, 1].map((dupIndex) => (
+    <React.Fragment key={dupIndex}>
+      {items.map((item, i) =>
+        item.kind === "text" ? (
+          <TestimonialCard key={`${dupIndex}-${i}-t`} testimonial={item.data} />
+        ) : (
+          <VideoCard key={`${dupIndex}-${i}-v`} item={item.data} onOpen={onOpen} className={videoClassName} />
+        ),
+      )}
+    </React.Fragment>
+  ));
+
 // ─── Desktop: vertical column ─────────────────────────────────────────────────
 
 const TestimonialsColumn = ({
-  testimonials,
+  items,
+  onOpen,
   duration = 15,
   reverse = false,
 }: {
-  testimonials: Testimonial[];
+  items: WallItem[];
+  onOpen: (v: VideoTestimonial) => void;
   duration?: number;
   reverse?: boolean;
 }) => {
   return (
     <div
-      className="overflow-hidden flex-1 relative"
+      className="wall-lane overflow-hidden flex-1 relative"
       style={{
-        maxHeight: "560px",
+        maxHeight: "680px",
         maskImage: "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)",
         WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)",
       }}
     >
-      <motion.div
-        initial={{ translateY: reverse ? "-50%" : "0%" }}
-        animate={{ translateY: reverse ? "0%" : "-50%" }}
-        transition={{ duration, repeat: Infinity, ease: "linear", repeatType: "loop" }}
-        className="flex flex-col"
+      <div
+        className={`wall-track wall-track-up flex flex-col gap-4 ${reverse ? "wall-track-reverse" : ""}`}
+        style={{ ["--wall-duration" as string]: `${duration}s` }}
       >
-        {[0, 1].map((_, dupIndex) => (
-          <React.Fragment key={dupIndex}>
-            {testimonials.map((t) => (
-              <TestimonialCard key={`${t.id}-${dupIndex}`} testimonial={t} />
-            ))}
-          </React.Fragment>
-        ))}
-      </motion.div>
+        <LaneItems items={items} onOpen={onOpen} videoClassName="w-full" />
+      </div>
     </div>
   );
 };
@@ -132,37 +182,30 @@ const TestimonialsColumn = ({
 // ─── Mobile: horizontal row ───────────────────────────────────────────────────
 
 const TestimonialsRow = ({
-  testimonials,
+  items,
+  onOpen,
   duration = 20,
   reverse = false,
 }: {
-  testimonials: Testimonial[];
+  items: WallItem[];
+  onOpen: (v: VideoTestimonial) => void;
   duration?: number;
   reverse?: boolean;
 }) => {
   return (
     <div
-      className="overflow-hidden relative mb-4"
+      className="wall-lane overflow-hidden relative mb-4"
       style={{
         maskImage: "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
         WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
       }}
     >
-      <motion.div
-        initial={{ translateX: reverse ? "-50%" : "0%" }}
-        animate={{ translateX: reverse ? "0%" : "-50%" }}
-        transition={{ duration, repeat: Infinity, ease: "linear", repeatType: "loop" }}
-        className="flex flex-row gap-4"
-        style={{ width: "max-content" }}
+      <div
+        className={`wall-track wall-track-left flex flex-row items-center gap-4 w-max ${reverse ? "wall-track-reverse" : ""}`}
+        style={{ ["--wall-duration" as string]: `${duration}s` }}
       >
-        {[0, 1].map((_, dupIndex) => (
-          <React.Fragment key={dupIndex}>
-            {testimonials.map((t) => (
-              <TestimonialCard key={`${t.id}-${dupIndex}`} testimonial={t} />
-            ))}
-          </React.Fragment>
-        ))}
-      </motion.div>
+        <LaneItems items={items} onOpen={onOpen} videoClassName="w-44 flex-shrink-0" />
+      </div>
     </div>
   );
 };
@@ -170,6 +213,9 @@ const TestimonialsRow = ({
 // ─── Main component ───────────────────────────────────────────────────────────
 
 const InfiniteTestimonialCarousel = () => {
+  const [active, setActive] = useState<VideoTestimonial | null>(null);
+  const close = useCallback(() => setActive(null), []);
+
   return (
     <div className="w-full py-12">
       {/* Leave a Review button */}
@@ -192,19 +238,21 @@ const InfiniteTestimonialCarousel = () => {
 
       {/* Mobile: 3 horizontal rows (alternating direction) */}
       <div className="md:hidden flex flex-col">
-        <TestimonialsRow testimonials={row1} duration={22} />
-        <TestimonialsRow testimonials={row2} duration={18} reverse />
-        <TestimonialsRow testimonials={row3} duration={24} />
+        <TestimonialsRow items={mobileLanes[0]} onOpen={setActive} duration={22} />
+        <TestimonialsRow items={mobileLanes[1]} onOpen={setActive} duration={18} reverse />
+        <TestimonialsRow items={mobileLanes[2]} onOpen={setActive} duration={24} />
       </div>
 
       {/* Desktop: 3 vertical columns */}
       <div className="hidden md:block max-w-7xl mx-auto px-6">
         <div className="flex gap-4 items-start">
-          <TestimonialsColumn testimonials={col1} duration={18} />
-          <TestimonialsColumn testimonials={col2} duration={22} reverse />
-          <TestimonialsColumn testimonials={col3} duration={16} />
+          <TestimonialsColumn items={desktopLanes[0]} onOpen={setActive} duration={18} />
+          <TestimonialsColumn items={desktopLanes[1]} onOpen={setActive} duration={22} reverse />
+          <TestimonialsColumn items={desktopLanes[2]} onOpen={setActive} duration={16} />
         </div>
       </div>
+
+      <AnimatePresence>{active && <VideoLightbox item={active} onClose={close} />}</AnimatePresence>
     </div>
   );
 };
