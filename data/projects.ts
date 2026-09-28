@@ -242,7 +242,7 @@ export const projects: Project[] = [
       "KLMATM Digital's marketing site went live and fully indexed before the app itself cleared Apple's review, giving the company a credible public presence from day one instead of a placeholder page. The minimal-but-motion-rich direction landed exactly as intended: despite how little sits on any single screen, the site reads as premium and considered throughout. The phased rollout meant visitors never encountered an unfinished page, only one that kept improving in the background.",
     technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion", "Vercel"],
     testimonial: {
-      quote: "SCULPT delivered an exceptional landing page for KLMATM DIGITAL LLC. Communication throughout the entire process was seamless. A 100% pleasure to work with, I highly recommend SCULPT for top-tier PREMIUM web development.",
+      quote: "What has impressed me most is that he doesn't approach a project as simply 'build what the client asked for and move on.' He thinks about the bigger picture, asks thoughtful questions, communicates clearly, and is genuinely invested in the success of the product.",
       author: "Kent McLaurin"
     },
     websiteUrl: "https://klmatmdigital.com",
@@ -281,8 +281,8 @@ export const projects: Project[] = [
       "iOS WidgetKit"
     ],
     testimonial: {
-      quote: "",
-      author: ""
+      quote: "Throughout the development of LegacyStep, he has been dependable, easy to work with, and willing to go the extra mile when something needed additional thought or attention. He has also been very good at explaining technical matters in a way that is understandable to someone who is not a developer.",
+      author: "Kent McLaurin"
     },
     appStoreUrl: "https://apps.apple.com/app/legacystep-estate-manager/id6799408806",
     gallery: [

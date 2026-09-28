@@ -57,7 +57,7 @@ const testimonials: Testimonial[] = [
     id: "8",
     name: "Kent McLaurin 🇺🇸",
     role: "Co-founder, KLMATM DIGITAL LLC",
-    content: "  SCULPT delivered an exceptional landing page for KLMATM DIGITAL LLC. Communication throughout the entire process was seamless. A 100% pleasure to work with, I highly recommend SCULPT for top-tier PREMIUM web development.",
+    content: "I've had an excellent experience working with Arijit and SCULPT. Arijit is responsive, conscientious, professional, and extremely customer-focused.",
   },
 ];
 
