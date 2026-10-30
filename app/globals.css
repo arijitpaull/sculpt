@@ -99,6 +99,24 @@ body::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
 
+/* Lenis smooth scrolling (components/smooth-scroll.tsx) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
 /* Testimonial wall: CSS-driven so hovering a lane pauses it (hover-to-preview videos) */
 .wall-track {
   animation-duration: var(--wall-duration, 20s);
@@ -150,5 +168,15 @@ body::-webkit-scrollbar {
 @media (hover: none) and (pointer: coarse) {
   .cursor-follower {
     display: none;
+  }
+}
+
+/* Respect reduced-motion: near-instant animations, short transitions */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.2s !important;
   }
 }

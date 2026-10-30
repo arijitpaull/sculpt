@@ -54,15 +54,18 @@ export const VideoCard = ({
   item,
   onOpen,
   className = "",
+  landscapeClassName = className,
 }: {
   item: VideoTestimonial;
   onOpen: (item: VideoTestimonial) => void;
   className?: string;
+  /** Sizing used once the file turns out to be landscape (defaults to `className`). */
+  landscapeClassName?: string;
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [previewing, setPreviewing] = useState(false);
   const [progress, setProgress] = useState(0);
-  // Landscape files sit letterboxed inside the vertical card (black bars top/bottom).
+  // The card takes the video's own shape: 16:9 for landscape files, 9:16 for portrait.
   const [landscape, setLandscape] = useState(false);
 
   const showThumbnail = (v: HTMLVideoElement) => {
@@ -76,17 +79,28 @@ export const VideoCard = ({
     if (v && v.readyState >= 1) showThumbnail(v);
   }, []);
 
+  // The overlay follows the pointer directly, not the play() promise — that can
+  // resolve late on a big file and flip the overlay off after the mouse has left.
+  const wantPreview = useRef(false);
+
   const startPreview = () => {
     const v = videoRef.current;
     if (!v) return;
+    wantPreview.current = true;
+    setPreviewing(true);
     v.muted = true;
     v.currentTime = 0;
-    v.play().then(() => setPreviewing(true)).catch(() => {});
+    v.play()
+      .then(() => {
+        if (!wantPreview.current) v.pause();
+      })
+      .catch(() => {});
   };
 
   const stopPreview = () => {
     const v = videoRef.current;
     if (!v) return;
+    wantPreview.current = false;
     v.pause();
     setPreviewing(false);
     setProgress(0);
@@ -98,10 +112,11 @@ export const VideoCard = ({
       role="button"
       tabIndex={0}
       aria-label={`Play testimonial from ${item.name}`}
-      onMouseEnter={startPreview}
+      // Hover only. mouseover (guarded) instead of mouseenter: React can miss the enter
+      // right after the lightbox closes over the card. No focus-driven preview — a click
+      // leaves the card focused, and it would replay every time the window regains focus.
+      onMouseOver={() => !wantPreview.current && startPreview()}
       onMouseLeave={stopPreview}
-      onFocus={startPreview}
-      onBlur={stopPreview}
       onClick={() => onOpen(item)}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
@@ -109,7 +124,7 @@ export const VideoCard = ({
           onOpen(item);
         }
       }}
-      className={`relative aspect-[9/16] rounded-2xl overflow-hidden border border-[#252525] bg-black cursor-pointer select-none outline-none focus-visible:ring-2 focus-visible:ring-[#EAEFFF] ${className}`}
+      className={`relative ${landscape ? "aspect-video" : "aspect-[9/16]"} isolate rounded-2xl overflow-hidden border border-[#252525] bg-black cursor-pointer select-none outline-none focus-visible:ring-2 focus-visible:ring-[#EAEFFF] ${landscape ? landscapeClassName : className}`}
     >
       <video
         ref={videoRef}
@@ -123,34 +138,47 @@ export const VideoCard = ({
           const v = e.currentTarget;
           if (!v.paused && v.duration) setProgress((v.currentTime / v.duration) * 100);
         }}
-        className={`absolute inset-0 h-full w-full ${landscape ? "object-contain" : "object-cover"}`}
+        className="absolute inset-0 z-0 h-full w-full object-cover"
       />
 
-      {/* Bottom dimming gradient */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#101010]/95 via-[#101010]/35 to-transparent" />
+      {/* Everything drawn over the video lives in one permanently composited layer above it.
+          Without this, Safari/Chrome can paint the <video> on top of overlays that are
+          mid-fade inside the moving, masked lane — the name/fade would randomly vanish. */}
+      <div className="pointer-events-none absolute inset-0 z-10 transform-gpu">
+        {/* At rest: dim the whole frame + darker fade at the bottom so the name reads.
+            Both fade away while the muted preview plays. */}
+        <div
+          className={`pointer-events-none absolute inset-0 will-change-[opacity] transition-opacity duration-300 ${previewing ? "opacity-0" : "opacity-100"}`}
+        >
+          <div className="absolute inset-0 bg-black/35" />
+          <div className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black/95 via-black/60 to-transparent" />
+        </div>
 
-      {/* Muted badge (only while previewing) */}
-      <div
-        className={`absolute top-3 left-3 flex items-center gap-1.5 rounded-full border border-[#EAEFFF]/20 bg-[#101010]/60 px-2 py-1 text-[10px] uppercase tracking-wider text-[#EAEFFF] transition-opacity ${previewing ? "opacity-100" : "opacity-0"}`}
-      >
-        <MutedIcon className="h-2.5 w-2.5" />
-        Muted
-      </div>
+        {/* Muted badge (only while previewing) */}
+        <div
+          className={`absolute top-3 left-3 flex items-center gap-1.5 rounded-full border border-[#EAEFFF]/20 bg-[#101010]/60 px-2 py-1 text-[10px] uppercase tracking-wider text-[#EAEFFF] will-change-[opacity] transition-opacity ${previewing ? "opacity-100" : "opacity-0"}`}
+        >
+          <MutedIcon className="h-2.5 w-2.5" />
+          Muted
+        </div>
 
-      {/* Play affordance */}
-      <div className="absolute top-3 right-3 grid h-8 w-8 place-items-center rounded-full border border-[#EAEFFF]/20 bg-[#101010]/60 text-[#EAEFFF]">
-        <PlayIcon />
-      </div>
+        {/* Play affordance */}
+        <div className="absolute top-3 right-3 grid h-8 w-8 place-items-center rounded-full border border-[#EAEFFF]/20 bg-[#101010]/60 text-[#EAEFFF]">
+          <PlayIcon />
+        </div>
 
-      {/* Name + designation */}
-      <div className="absolute inset-x-0 bottom-0 p-4 pb-5">
-        <p className="text-sm font-medium leading-tight text-[#EAEFFF]">{item.name}</p>
-        <p className="mt-1 text-[11px] text-[#EAEFFF]/60">{item.role}</p>
-      </div>
+        {/* Name + designation */}
+        <div
+          className={`pointer-events-none absolute inset-x-0 bottom-0 p-4 pb-5 will-change-[opacity] transition-opacity duration-300 ${previewing ? "opacity-0" : "opacity-100"}`}
+        >
+          <p className="text-sm font-medium leading-tight text-[#EAEFFF]">{item.name}</p>
+          <p className="mt-1 text-[11px] text-[#EAEFFF]/75">{item.role}</p>
+        </div>
 
-      {/* Progress bar (only while previewing) */}
-      <div className={`absolute inset-x-0 bottom-0 h-[3px] bg-[#EAEFFF]/15 transition-opacity ${previewing ? "opacity-100" : "opacity-0"}`}>
-        <div className="h-full bg-[#EAEFFF]" style={{ width: `${progress}%` }} />
+        {/* Progress bar (only while previewing) */}
+        <div className={`absolute inset-x-0 bottom-0 h-[3px] bg-[#EAEFFF]/15 will-change-[opacity] transition-opacity ${previewing ? "opacity-100" : "opacity-0"}`}>
+          <div className="h-full bg-[#EAEFFF]" style={{ width: `${progress}%` }} />
+        </div>
       </div>
     </div>
   );
@@ -158,6 +186,9 @@ export const VideoCard = ({
 
 // ─── Full-screen player ──────────────────────────────────────────────────────
 // Plays with sound in the video's native aspect ratio (landscape stays landscape).
+// ← / → skip back / forward by SKIP_SECONDS; the progress bar can be dragged.
+
+const SKIP_SECONDS = 5;
 
 export const VideoLightbox = ({
   item,
@@ -170,10 +201,19 @@ export const VideoLightbox = ({
   const [playing, setPlaying] = useState(true);
   const [muted, setMuted] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [scrubbing, setScrubbing] = useState(false);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
+      if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+        e.preventDefault();
+        const v = videoRef.current;
+        if (!v || !v.duration) return;
+        const delta = e.key === "ArrowRight" ? SKIP_SECONDS : -SKIP_SECONDS;
+        v.currentTime = Math.min(v.duration, Math.max(0, v.currentTime + delta));
+        setProgress((v.currentTime / v.duration) * 100);
+      }
     };
     document.addEventListener("keydown", onKey);
     const prevOverflow = document.body.style.overflow;
@@ -215,11 +255,14 @@ export const VideoLightbox = ({
     setMuted(v.muted);
   };
 
-  const seek = (e: React.MouseEvent<HTMLDivElement>) => {
+  const seek = (e: React.PointerEvent<HTMLDivElement>) => {
     const v = videoRef.current;
     if (!v || !v.duration) return;
     const rect = e.currentTarget.getBoundingClientRect();
-    v.currentTime = ((e.clientX - rect.left) / rect.width) * v.duration;
+    const ratio = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));
+    v.currentTime = ratio * v.duration;
+    // Move the bar right away; timeupdate only fires a few times a second.
+    setProgress(ratio * 100);
   };
 
   return (
@@ -289,16 +332,30 @@ export const VideoLightbox = ({
           </button>
         </div>
 
-        {/* Seekable progress bar */}
+        {/* Seekable progress bar — click or drag. The tall transparent strip is the hit area. */}
         <div
-          role="progressbar"
+          role="slider"
+          aria-label="Seek"
           aria-valuenow={Math.round(progress)}
           aria-valuemin={0}
           aria-valuemax={100}
-          onClick={seek}
-          className="absolute inset-x-0 bottom-0 h-1.5 cursor-pointer bg-[#EAEFFF]/15"
+          onPointerDown={(e) => {
+            e.currentTarget.setPointerCapture(e.pointerId);
+            setScrubbing(true);
+            seek(e);
+          }}
+          onPointerMove={(e) => scrubbing && seek(e)}
+          onPointerUp={() => setScrubbing(false)}
+          onPointerCancel={() => setScrubbing(false)}
+          className="group absolute inset-x-0 bottom-0 flex h-5 cursor-pointer touch-none items-end"
         >
-          <div className="h-full bg-[#EAEFFF]" style={{ width: `${progress}%` }} />
+          <div className="relative h-1.5 w-full bg-[#EAEFFF]/15">
+            <div className="h-full bg-[#EAEFFF]" style={{ width: `${progress}%` }} />
+            <div
+              className={`absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#EAEFFF] transition-opacity ${scrubbing ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
+              style={{ left: `${progress}%` }}
+            />
+          </div>
         </div>
       </motion.div>
     </motion.div>

@@ -56,7 +56,7 @@ const testimonials: Testimonial[] = [
   {
     id: "8",
     name: "Kent McLaurin 🇺🇸",
-    role: "Co-founder, KLMATM DIGITAL LLC",
+    role: "Co-founder, KLMATM Digital LLC",
     content: "I've had an excellent experience working with Arijit and SCULPT. Arijit is responsive, conscientious, professional, and extremely customer-focused.",
   },
 ];
@@ -64,7 +64,7 @@ const testimonials: Testimonial[] = [
 // Video testimonials — files live in /public/videos. Add just the file name
 // (mp4, webm, mov…), the person's name and their designation.
 const videoTestimonials: VideoTestimonial[] = [
-  //{ video: "video1.mp4", name: "Arijit Paul 🇮🇳", role: "Founder, SCULPT" },
+  { video: "kent-mclaurin.mp4", name: "Kent McLaurin 🇺🇸", role: "Co-founder, KLMATM Digital LLC" },
 ];
 
 // ─── Mixing videos into the wall ─────────────────────────────────────────────
@@ -130,10 +130,12 @@ const LaneItems = ({
   items,
   onOpen,
   videoClassName,
+  landscapeVideoClassName = videoClassName,
 }: {
   items: WallItem[];
   onOpen: (v: VideoTestimonial) => void;
   videoClassName: string;
+  landscapeVideoClassName?: string;
 }) =>
   [0, 1].map((dupIndex) => (
     <React.Fragment key={dupIndex}>
@@ -141,7 +143,13 @@ const LaneItems = ({
         item.kind === "text" ? (
           <TestimonialCard key={`${dupIndex}-${i}-t`} testimonial={item.data} />
         ) : (
-          <VideoCard key={`${dupIndex}-${i}-v`} item={item.data} onOpen={onOpen} className={videoClassName} />
+          <VideoCard
+            key={`${dupIndex}-${i}-v`}
+            item={item.data}
+            onOpen={onOpen}
+            className={videoClassName}
+            landscapeClassName={landscapeVideoClassName}
+          />
         ),
       )}
     </React.Fragment>
@@ -204,7 +212,8 @@ const TestimonialsRow = ({
         className={`wall-track wall-track-left flex flex-row items-center gap-4 w-max ${reverse ? "wall-track-reverse" : ""}`}
         style={{ ["--wall-duration" as string]: `${duration}s` }}
       >
-        <LaneItems items={items} onOpen={onOpen} videoClassName="w-44 flex-shrink-0" />
+        {/* Landscape cards get the text-card width so they aren't tiny in the row */}
+        <LaneItems items={items} onOpen={onOpen} videoClassName="w-44 flex-shrink-0" landscapeVideoClassName="w-72 flex-shrink-0" />
       </div>
     </div>
   );

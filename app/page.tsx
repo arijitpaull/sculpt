@@ -175,7 +175,7 @@ function CurrencyDropdown({ value, onChange }: { value: string; onChange: (curre
             }}
             className="bg-[#151515] border border-[#252525] rounded-xl shadow-2xl overflow-hidden"
           >
-            <div className="max-h-64 overflow-y-auto custom-scrollbar">
+            <div data-lenis-prevent className="max-h-64 overflow-y-auto custom-scrollbar">
               {currencies.map((currency) => (
                 <button
                   key={currency.code}
@@ -1339,7 +1339,7 @@ export default function Home() {
       {/* Service Form Modal */}
       {showServiceForm && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#151515] rounded-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+          <div data-lenis-prevent className="bg-[#151515] rounded-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center p-6 border-b border-[#252525]">
               <h3 className="text-xl font-bold">Request Services</h3>
               <button onClick={closeServiceForm} className="hover:opacity-70 transition-opacity" title="Close">

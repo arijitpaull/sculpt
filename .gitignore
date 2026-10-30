@@ -25,3 +25,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+# Uncompressed source videos (compressed copies live in public/videos)
+video-originals/

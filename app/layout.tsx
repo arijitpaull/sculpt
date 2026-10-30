@@ -3,6 +3,7 @@ import "./globals.css"
 import { Analytics } from "@vercel/analytics/react"
 import { Suspense } from "react"
 import Script from "next/script"
+import SmoothScroll from "@/components/smooth-scroll"
 
 // Separate viewport export (required in Next.js 15+)
 export const viewport = {
@@ -561,6 +562,7 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-[#101010] text-[#EAEFFF] font-helvetica antialiased">
+        <SmoothScroll />
         {/* Enhanced SEO Header Content for LLM Understanding */}
         <div style={{ display: "none" }} itemScope itemType="https://schema.org/Organization">
           <h1 itemProp="name">SCULPT - Premium App Development Agency</h1>
