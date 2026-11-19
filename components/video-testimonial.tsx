@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 export interface VideoTestimonial {
   /** File name inside /public/videos, e.g. "video1.mp4" */
@@ -311,10 +311,30 @@ export const VideoLightbox = ({
           className="block max-h-[88vh] max-w-[92vw] cursor-pointer"
         />
 
+        {/* Centre status: a big play button stays up while paused (tap to resume) and
+            pops out when playback starts, so a tap on the video always shows what happened. */}
+        <AnimatePresence>
+          {!playing && (
+            <motion.button
+              key="center-play"
+              type="button"
+              onClick={togglePlay}
+              aria-label="Play"
+              initial={{ opacity: 0, scale: 0.7 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.35 }}
+              transition={{ duration: 0.22, ease: [0.2, 0.8, 0.2, 1] }}
+              className="absolute left-1/2 top-1/2 -ml-8 -mt-8 grid h-16 w-16 place-items-center rounded-full border border-[#EAEFFF]/25 bg-[#101010]/60 text-[#EAEFFF] backdrop-blur-sm"
+            >
+              <PlayIcon className="ml-1 h-6 w-6" />
+            </motion.button>
+          )}
+        </AnimatePresence>
+
         {/* Bottom dimming gradient + name/role. On phones the player is small and this would
             cover half the video, so there it hides while playing and returns when paused. */}
         <div
-          className={`pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#101010]/90 to-transparent px-4 pt-16 pb-5 transition-opacity duration-300 ${playing ? "max-md:opacity-0" : ""}`}
+          className={`pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#101010]/90 to-transparent px-4 pt-16 pb-9 transition-opacity duration-300 ${playing ? "max-md:opacity-0" : ""}`}
         >
           <p className="text-base font-medium leading-tight text-[#EAEFFF]">{item.name}</p>
           <p className="mt-1 text-xs text-[#EAEFFF]/60">{item.role}</p>
@@ -341,7 +361,8 @@ export const VideoLightbox = ({
           </button>
         </div>
 
-        {/* Seekable progress bar — click or drag. The tall transparent strip is the hit area. */}
+        {/* Seekable progress bar — click or drag. The tall transparent strip is the hit area; the
+            track is inset from every edge so the thumb never gets clipped by the rounded corners. */}
         <div
           role="slider"
           aria-label="Seek"
@@ -356,12 +377,12 @@ export const VideoLightbox = ({
           onPointerMove={(e) => scrubbing && seek(e)}
           onPointerUp={() => setScrubbing(false)}
           onPointerCancel={() => setScrubbing(false)}
-          className="group absolute inset-x-0 bottom-0 flex h-5 cursor-pointer touch-none items-end"
+          className="group absolute inset-x-0 bottom-0 flex h-8 cursor-pointer touch-none items-center px-4"
         >
-          <div className="relative h-1.5 w-full bg-[#EAEFFF]/15">
-            <div className="h-full bg-[#EAEFFF]" style={{ width: `${progress}%` }} />
+          <div className="relative h-1.5 w-full rounded-full bg-[#EAEFFF]/20">
+            <div className="h-full rounded-full bg-[#EAEFFF]" style={{ width: `${progress}%` }} />
             <div
-              className={`absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#EAEFFF] transition-opacity ${scrubbing ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
+              className={`absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#EAEFFF] shadow-[0_0_0_3px_rgba(16,16,16,0.35)] transition-opacity ${scrubbing ? "opacity-100" : "opacity-0 group-hover:opacity-100 [@media(hover:none)]:opacity-100"}`}
               style={{ left: `${progress}%` }}
             />
           </div>
