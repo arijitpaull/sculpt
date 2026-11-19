@@ -27,3 +27,6 @@ yarn-error.log*
 next-env.d.ts
 # Uncompressed source videos (compressed copies live in public/videos)
 video-originals/
+
+# Original PNG exports (WebP copies live in public/images)
+image-originals/

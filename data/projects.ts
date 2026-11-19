@@ -291,5 +291,55 @@ export const projects: Project[] = [
       "/images/ls_ss2.webp",
       "/images/ls_ss3.webp"
     ]
+  },
+  {
+    id: "10",
+    title: "Kaching",
+    slug: "kaching",
+    category: "Creator Marketplace",
+    description:
+      "A marketplace app where Instagram creators book campaigns at local outlets and earn discounts for stories, redesigned and extended by SCULPT.",
+    fullDescription:
+      "Kaching connects brands such as cafés, pubs and salons with Instagram creators. Brands publish campaigns tied to their outlets, and creators book a visit, post a story that tags the brand, and receive a discount through an in-app wallet. The product already existed when we joined: an iOS app, a backend, a brand dashboard and an admin console had been built by earlier developers. SCULPT took over the creator app and the web side to redesign the experience, ship new releases and extend the platform with new kinds of campaigns.",
+    image: "/images/kaching-thumbnail.webp",
+    challenge:
+      "When we took over, the creator app worked but still felt like a first build. Screens did not match each other, some elements were left in their default look, such as a white calendar picker in a dark app, and the sign-in, profile and waitlist screens felt unrelated to the rest of the product. Early test builds could also loop back to the sign-in screen, and Instagram verification could hang for many minutes. The platform supported only one kind of campaign, a discount at an outlet. Brands had no way to run an event, to talk to a creator before approving them, or to manage more than one brand from a single login, and the landing page was a basic first version that did little to explain the product to brands.",
+    solution:
+      "We redesigned the creator app screen by screen, starting with a floating navigation bar and a consistent dark theme across sign-in, waitlist, profile and booking screens. We added skeleton loading and pull-to-refresh with cached data so screens open instantly, an in-app camera for capturing the bill, and profile pages that resume where a creator left off. We then extended the product in releases, beginning with a Coming Soon state for campaigns that are visible before they open, with booking in advance. Next we added event campaigns, which use passes instead of time slots, a venue shown on an in-app map sheet with a hero-image transition from campaign card to campaign page, and \"up to\" money wording so a brand can set a ceiling that creators can discuss in their note. We chose to unlock a creator's pass after their first verified story and treat the remaining content as pending, as normal campaigns already do, so that the pass is not held back until every post is done. We rebuilt the invite-only waitlist as a short exchange of three messages, with the creator's note, one reply from the brand, and the creator's agree or disagree. A request the brand has replied to is approved automatically after 24 hours unless the creator cancels, and we work this out when the request is read, so there is no scheduler to maintain. On the brand dashboard we added a Reject, Waiting and Approve switch so a wrong click can be undone, offers that ask for up to five stories, people-per-booking, and a brand switcher, team page and brand groups so one login can run several brands. Every server change was additive and switched on by app version, so creators still on the App Store version never see a feature their build cannot handle, and we put each server change live before the app build that needed it. Alongside this we redesigned the landing page with scroll-driven sections, a new navigation with a mobile menu, a brand band, a photo collage, a phone video, a three-step explanation and a FAQ, and we added automated tests, including tests that pin how ordinary campaigns behave so the event work could not change them.",
+    results:
+      "Kaching now runs ordinary discount campaigns and event campaigns on one platform, and brands can reply to creators, undo an approval and manage several brands without a separate account for each. Version 1.3 of the app is on the App Store and 1.4, the event release, is prepared for TestFlight. The redesigned landing page and the brand dashboard are live.",
+    technologies: [
+      "Expo",
+      "React Native",
+      "TypeScript",
+      "Expo Router",
+      "NativeWind",
+      "Reanimated",
+      "React Native Maps",
+      "EAS and TestFlight",
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "Mongoose",
+      "Resend",
+      "React",
+      "Vite",
+      "Tailwind CSS",
+      "Leaflet",
+      "OpenStreetMap",
+      "Cloudflare Workers"
+    ],
+    testimonial: {
+      quote: "",
+      author: ""
+    },
+    appStoreUrl: "https://apps.apple.com/in/app/kaching-social-currency-app/id6762119228",
+    websiteUrl: "https://letskaching.com",
+    gallery: [
+      "/images/ka_banner.webp",
+      "/images/ka_ss1.webp",
+      "/images/ka_ss2.webp",
+      "/images/ka_ss3.webp"
+    ]
   }
 ]
