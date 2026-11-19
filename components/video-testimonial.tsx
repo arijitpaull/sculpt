@@ -112,12 +112,16 @@ export const VideoCard = ({
       role="button"
       tabIndex={0}
       aria-label={`Play testimonial from ${item.name}`}
-      // Hover only. mouseover (guarded) instead of mouseenter: React can miss the enter
-      // right after the lightbox closes over the card. No focus-driven preview — a click
-      // leaves the card focused, and it would replay every time the window regains focus.
-      onMouseOver={() => !wantPreview.current && startPreview()}
-      onMouseLeave={stopPreview}
-      onClick={() => onOpen(item)}
+      // Mouse hover only. pointerover (guarded) instead of pointerenter: React can miss the
+      // enter right after the lightbox closes over the card. Touch taps are ignored, so on
+      // phones a tap just opens the player. No focus-driven preview — a click leaves the card
+      // focused, and it would replay every time the window regains focus.
+      onPointerOver={(e) => e.pointerType === "mouse" && !wantPreview.current && startPreview()}
+      onPointerLeave={(e) => e.pointerType === "mouse" && stopPreview()}
+      onClick={() => {
+        stopPreview();
+        onOpen(item);
+      }}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
@@ -301,12 +305,17 @@ export const VideoLightbox = ({
             const v = e.currentTarget;
             if (v.duration) setProgress((v.currentTime / v.duration) * 100);
           }}
+          onPlay={() => setPlaying(true)}
+          onPause={() => setPlaying(false)}
           onEnded={() => setPlaying(false)}
           className="block max-h-[88vh] max-w-[92vw] cursor-pointer"
         />
 
-        {/* Bottom dimming gradient + name/role */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#101010]/90 to-transparent px-4 pt-16 pb-5">
+        {/* Bottom dimming gradient + name/role. On phones the player is small and this would
+            cover half the video, so there it hides while playing and returns when paused. */}
+        <div
+          className={`pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#101010]/90 to-transparent px-4 pt-16 pb-5 transition-opacity duration-300 ${playing ? "max-md:opacity-0" : ""}`}
+        >
           <p className="text-base font-medium leading-tight text-[#EAEFFF]">{item.name}</p>
           <p className="mt-1 text-xs text-[#EAEFFF]/60">{item.role}</p>
         </div>
