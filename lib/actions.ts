@@ -288,7 +288,7 @@ export async function sendEmail(data: EmailData) {
                   <a href="mailto:admin@sculpt.work" class="contact-link">admin@sculpt.work</a>
                 </p>
                 <p style="margin: 5px 0;">
-                  <a href="https://sculpt.work" class="contact-link">sculpt.work</a>
+                  <a href="https://www.sculptvisions.in" class="contact-link">sculptvisions.in</a>
                 </p>
               </div>
             </div>
@@ -433,7 +433,7 @@ export async function sendProjectInquiry(data: ProjectInquiryData) {
 
             <div style="padding: 20px 32px 28px 32px; border-top: 1px solid #252525;">
               <p style="margin:0; font-size:13px; color:#EAEFFF; opacity:0.6;">
-                Submitted ${submittedAt} IST via sculpt.work/project-inquiry &middot; Reply directly to this email to respond to ${escapeHtml(name)}.
+                Submitted ${submittedAt} IST via sculptvisions.in/project-inquiry &middot; Reply directly to this email to respond to ${escapeHtml(name)}.
               </p>
             </div>
 
@@ -493,7 +493,7 @@ export async function sendProjectInquiry(data: ProjectInquiryData) {
               </p>
               <div style="font-size:14px; color:#EAEFFF; opacity:0.8;">
                 <p style="margin:5px 0;"><a href="mailto:admin@sculpt.work" style="color:#EAEFFF; text-decoration:none;">admin@sculpt.work</a></p>
-                <p style="margin:5px 0;"><a href="https://sculpt.work" style="color:#EAEFFF; text-decoration:none;">sculpt.work</a></p>
+                <p style="margin:5px 0;"><a href="https://www.sculptvisions.in" style="color:#EAEFFF; text-decoration:none;">sculptvisions.in</a></p>
               </div>
             </div>
           </div>

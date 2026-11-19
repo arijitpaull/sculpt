@@ -70,7 +70,7 @@ export function ServiceSchema({
     provider: {
       "@type": "Organization",
       name: provider,
-      url: "https://www.sculpt.work"
+      url: "https://www.sculptvisions.in"
     },
     areaServed: {
       "@type": "Place",
@@ -121,7 +121,7 @@ export function PortfolioItemSchema({
     creator: {
       "@type": "Organization",
       name: creator,
-      url: "https://www.sculpt.work"
+      url: "https://www.sculptvisions.in"
     },
     genre,
     keywords: keywords.join(", "),

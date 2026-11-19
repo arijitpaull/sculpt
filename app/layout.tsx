@@ -19,7 +19,7 @@ export const viewport = {
 }
 
 export const metadata = {
-  metadataBase: new URL('https://www.sculpt.work'),
+  metadataBase: new URL('https://www.sculptvisions.in'),
   
   // Enhanced basic meta tags
   title: {
@@ -83,8 +83,8 @@ export const metadata = {
   ].join(", "),
   
   authors: [
-    { name: "Arijit Paul", url: "https://www.sculpt.work" },
-    { name: "SCULPT Team", url: "https://www.sculpt.work" }
+    { name: "Arijit Paul", url: "https://www.sculptvisions.in" },
+    { name: "SCULPT Team", url: "https://www.sculptvisions.in" }
   ],
   
   creator: "SCULPT - Arijit Paul",
@@ -103,7 +103,7 @@ export const metadata = {
     siteName: "SCULPT - App Development Agency",
     title: "SCULPT - Premium App Development Agency",
     description: "Transform your digital vision into reality with SCULPT's expert app developers. Specializing in mobile apps, web development, and AI solutions. Available on Fiverr, Upwork, or direct hire.",
-    url: "https://www.sculpt.work",
+    url: "https://www.sculptvisions.in",
     locale: "en_US",
     images: [
       {
@@ -171,10 +171,10 @@ export const metadata = {
 
   // App-specific metadata
   alternates: {
-    canonical: "https://www.sculpt.work",
+    canonical: "https://www.sculptvisions.in",
     languages: {
-      "en-US": "https://www.sculpt.work",
-      "en-GB": "https://www.sculpt.work",
+      "en-US": "https://www.sculptvisions.in",
+      "en-GB": "https://www.sculptvisions.in",
     },
   },
 
@@ -198,7 +198,7 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <head>
         {/* Canonical Link */}
-        <link rel="canonical" href="https://www.sculpt.work" />
+        <link rel="canonical" href="https://www.sculptvisions.in" />
 
         {/* Preload critical fonts — eliminates render-blocking on mobile */}
         <link rel="preload" as="font" href="/fonts/HelveticaNeue.woff2" type="font/woff2" crossOrigin="anonymous" />
@@ -221,24 +221,24 @@ export default function RootLayout({
               "@graph": [
                 {
                   "@type": "Organization",
-                  "@id": "https://www.sculpt.work/#organization",
+                  "@id": "https://www.sculptvisions.in/#organization",
                   name: "SCULPT",
                   alternateName: "SCULPT Agency",
-                  url: "https://www.sculpt.work",
+                  url: "https://www.sculptvisions.in",
                   logo: {
                     "@type": "ImageObject",
-                    "@id": "https://www.sculpt.work/#logo",
-                    url: "https://www.sculpt.work/images/sculpt_logo.webp",
-                    contentUrl: "https://www.sculpt.work/images/sculpt_logo.webp",
+                    "@id": "https://www.sculptvisions.in/#logo",
+                    url: "https://www.sculptvisions.in/images/sculpt_logo.webp",
+                    contentUrl: "https://www.sculptvisions.in/images/sculpt_logo.webp",
                     width: 512,
                     height: 512,
                     caption: "SCULPT Logo"
                   },
                   image: {
                     "@type": "ImageObject",
-                    "@id": "https://www.sculpt.work/#image",
-                    url: "https://www.sculpt.work/images/s_banner.webp",
-                    contentUrl: "https://www.sculpt.work/images/s_banner.webp",
+                    "@id": "https://www.sculptvisions.in/#image",
+                    url: "https://www.sculptvisions.in/images/s_banner.webp",
+                    contentUrl: "https://www.sculptvisions.in/images/s_banner.webp",
                     width: 1200,
                     height: 630,
                     caption: "SCULPT - App Development Agency"
@@ -254,7 +254,7 @@ export default function RootLayout({
                     "@type": "Person",
                     name: "Arijit Paul",
                     jobTitle: "Founder & Lead Developer",
-                    url: "https://www.sculpt.work"
+                    url: "https://www.sculptvisions.in"
                   },
                   contactPoint: {
                     "@type": "ContactPoint",
@@ -292,19 +292,19 @@ export default function RootLayout({
                 },
                 {
                   "@type": "WebSite",
-                  "@id": "https://www.sculpt.work/#website",
-                  url: "https://www.sculpt.work",
+                  "@id": "https://www.sculptvisions.in/#website",
+                  url: "https://www.sculptvisions.in",
                   name: "SCULPT - App Development Agency",
                   description: "Premium development agency for mobile app development, web development, and AI solutions.",
                   publisher: {
-                    "@id": "https://www.sculpt.work/#organization"
+                    "@id": "https://www.sculptvisions.in/#organization"
                   },
                   potentialAction: [
                     {
                       "@type": "SearchAction",
                       target: {
                         "@type": "EntryPoint",
-                        urlTemplate: "https://www.sculpt.work/search?q={search_term_string}"
+                        urlTemplate: "https://www.sculptvisions.in/search?q={search_term_string}"
                       },
                       "query-input": "required name=search_term_string"
                     }
@@ -313,11 +313,11 @@ export default function RootLayout({
                 },
                 {
                   "@type": "Service",
-                  "@id": "https://www.sculpt.work/#service",
+                  "@id": "https://www.sculptvisions.in/#service",
                   name: "App Development Services",
                   description: "Comprehensive mobile app development, web development, and AI solution services for businesses worldwide.",
                   provider: {
-                    "@id": "https://www.sculpt.work/#organization"
+                    "@id": "https://www.sculptvisions.in/#organization"
                   },
                   serviceType: [
                     "Mobile App Development",
@@ -363,9 +363,9 @@ export default function RootLayout({
                 },
                 {
                   "@type": "ProfessionalService",
-                  "@id": "https://www.sculpt.work/#professional-service",
+                  "@id": "https://www.sculptvisions.in/#professional-service",
                   name: "SCULPT Development Agency",
-                  image: "https://www.sculpt.work/images/s_banner.webp",
+                  image: "https://www.sculptvisions.in/images/s_banner.webp",
                   description: "Expert app development agency providing custom software solutions, mobile apps, and AI tools for businesses worldwide.",
                   priceRange: "$500-$50000",
                   address: {
@@ -378,7 +378,7 @@ export default function RootLayout({
                     latitude: "28.7041",
                     longitude: "77.1025"
                   },
-                  url: "https://www.sculpt.work",
+                  url: "https://www.sculptvisions.in",
                   telephone: "+91-9650639071",
                   email: "admin@sculpt.work",
                   openingHoursSpecification: {
@@ -399,25 +399,25 @@ export default function RootLayout({
                 },
                 {
                   "@type": "BreadcrumbList",
-                  "@id": "https://www.sculpt.work/#breadcrumbs",
+                  "@id": "https://www.sculptvisions.in/#breadcrumbs",
                   itemListElement: [
                     {
                       "@type": "ListItem",
                       position: 1,
                       name: "Home",
-                      item: "https://www.sculpt.work"
+                      item: "https://www.sculptvisions.in"
                     },
                     {
                       "@type": "ListItem",
                       position: 2,
                       name: "Projects",
-                      item: "https://www.sculpt.work/#projects"
+                      item: "https://www.sculptvisions.in/#projects"
                     },
                     {
                       "@type": "ListItem",
                       position: 3,
                       name: "Contact",
-                      item: "https://www.sculpt.work/#contact"
+                      item: "https://www.sculptvisions.in/#contact"
                     }
                   ]
                 }
@@ -447,7 +447,7 @@ export default function RootLayout({
                   name: "How can I hire SCULPT for my project?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "You can hire SCULPT through multiple channels: 1) Find us on Fiverr as a top-rated app developer, 2) Connect with us on Upwork for larger projects, 3) Contact us directly through our website at sculpt.work for custom quotes and enterprise solutions, or 4) Book a consultation call to discuss your project requirements."
+                    text: "You can hire SCULPT through multiple channels: 1) Find us on Fiverr as a top-rated app developer, 2) Connect with us on Upwork for larger projects, 3) Contact us directly through our website at sculptvisions.in for custom quotes and enterprise solutions, or 4) Book a consultation call to discuss your project requirements."
                   }
                 },
                 {
@@ -487,19 +487,19 @@ export default function RootLayout({
               "@graph": [
                 {
                   "@type": "ItemList",
-                  "@id": "https://www.sculpt.work/#projects",
+                  "@id": "https://www.sculptvisions.in/#projects",
                   name: "SCULPT App Development Portfolio",
                   description: "8 live apps and websites shipped across 5 countries by the SCULPT development agency",
                   numberOfItems: 8,
                   itemListElement: [
-                    { "@type": "ListItem", position: 1, name: "Charmify - AI Dating App", url: "https://www.sculpt.work/#projects" },
-                    { "@type": "ListItem", position: 2, name: "Woque - Wellness App", url: "https://www.sculpt.work/#projects" },
-                    { "@type": "ListItem", position: 3, name: "IoT Weather Integration - IoT Automation Platform", url: "https://www.sculpt.work/#projects" },
-                    { "@type": "ListItem", position: 4, name: "Dakkapel Offerte - Roof Measurement App", url: "https://www.sculpt.work/#projects" },
-                    { "@type": "ListItem", position: 5, name: "Funutrition - Nutrition App", url: "https://www.sculpt.work/#projects" },
-                    { "@type": "ListItem", position: 6, name: "MelodAI - AI Music App", url: "https://www.sculpt.work/#projects" },
-                    { "@type": "ListItem", position: 7, name: "ACENAVI - HR SaaS Website", url: "https://www.sculpt.work/#projects" },
-                    { "@type": "ListItem", position: 8, name: "KLMATM Digital - Brand & Web Design", url: "https://www.sculpt.work/#projects" }
+                    { "@type": "ListItem", position: 1, name: "Charmify - AI Dating App", url: "https://www.sculptvisions.in/#projects" },
+                    { "@type": "ListItem", position: 2, name: "Woque - Wellness App", url: "https://www.sculptvisions.in/#projects" },
+                    { "@type": "ListItem", position: 3, name: "IoT Weather Integration - IoT Automation Platform", url: "https://www.sculptvisions.in/#projects" },
+                    { "@type": "ListItem", position: 4, name: "Dakkapel Offerte - Roof Measurement App", url: "https://www.sculptvisions.in/#projects" },
+                    { "@type": "ListItem", position: 5, name: "Funutrition - Nutrition App", url: "https://www.sculptvisions.in/#projects" },
+                    { "@type": "ListItem", position: 6, name: "MelodAI - AI Music App", url: "https://www.sculptvisions.in/#projects" },
+                    { "@type": "ListItem", position: 7, name: "ACENAVI - HR SaaS Website", url: "https://www.sculptvisions.in/#projects" },
+                    { "@type": "ListItem", position: 8, name: "KLMATM Digital - Brand & Web Design", url: "https://www.sculptvisions.in/#projects" }
                   ]
                 },
                 {
@@ -508,7 +508,7 @@ export default function RootLayout({
                   applicationCategory: "SocialNetworkingApplication",
                   operatingSystem: "iOS, Android",
                   description: "AI-powered dating app built with Flutter and OpenAI, developed by SCULPT",
-                  author: { "@id": "https://www.sculpt.work/#organization" },
+                  author: { "@id": "https://www.sculptvisions.in/#organization" },
                   aggregateRating: { "@type": "AggregateRating", ratingValue: "4.8", ratingCount: "120", bestRating: "5" }
                 },
                 {
@@ -517,7 +517,7 @@ export default function RootLayout({
                   applicationCategory: "HealthApplication",
                   operatingSystem: "iOS, Android",
                   description: "Wellness and habit-tracking mobile app built with Flutter, developed by SCULPT",
-                  author: { "@id": "https://www.sculpt.work/#organization" }
+                  author: { "@id": "https://www.sculptvisions.in/#organization" }
                 },
                 {
                   "@type": "SoftwareApplication",
@@ -525,7 +525,7 @@ export default function RootLayout({
                   applicationCategory: "HealthApplication",
                   operatingSystem: "iOS, Android",
                   description: "Gamified nutrition tracking app built with Flutter, developed by SCULPT",
-                  author: { "@id": "https://www.sculpt.work/#organization" }
+                  author: { "@id": "https://www.sculptvisions.in/#organization" }
                 },
                 {
                   "@type": "SoftwareApplication",
@@ -533,28 +533,28 @@ export default function RootLayout({
                   applicationCategory: "MusicApplication",
                   operatingSystem: "iOS, Android",
                   description: "AI-generated music app using OpenAI audio models, developed by SCULPT",
-                  author: { "@id": "https://www.sculpt.work/#organization" }
+                  author: { "@id": "https://www.sculptvisions.in/#organization" }
                 },
                 {
                   "@type": "Review",
                   author: { "@type": "Person", name: "Sarah M." },
                   reviewBody: "SCULPT delivered our app in under 60 days. The quality was exceptional, it launched on the App Store and immediately hit our download targets.",
                   reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
-                  itemReviewed: { "@id": "https://www.sculpt.work/#professional-service" }
+                  itemReviewed: { "@id": "https://www.sculptvisions.in/#professional-service" }
                 },
                 {
                   "@type": "Review",
                   author: { "@type": "Person", name: "James K." },
                   reviewBody: "Best development agency I've worked with. Professional, fast, and the final product exceeded my expectations.",
                   reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
-                  itemReviewed: { "@id": "https://www.sculpt.work/#professional-service" }
+                  itemReviewed: { "@id": "https://www.sculptvisions.in/#professional-service" }
                 },
                 {
                   "@type": "Review",
                   author: { "@type": "Person", name: "Priya R." },
                   reviewBody: "SCULPT built our Flutter app from scratch. The UI was stunning and the code quality meant zero post-launch bugs.",
                   reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
-                  itemReviewed: { "@id": "https://www.sculpt.work/#professional-service" }
+                  itemReviewed: { "@id": "https://www.sculptvisions.in/#professional-service" }
                 }
               ]
             })

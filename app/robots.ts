@@ -33,7 +33,7 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
       },
     ],
-    sitemap: 'https://www.sculpt.work/sitemap.xml',
-    host: 'https://www.sculpt.work',
+    sitemap: 'https://www.sculptvisions.in/sitemap.xml',
+    host: 'https://www.sculptvisions.in',
   }
 }

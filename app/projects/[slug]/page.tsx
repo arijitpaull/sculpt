@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     },
 
     alternates: {
-      canonical: `https://www.sculpt.work/projects/${project.slug}`
+      canonical: `https://www.sculptvisions.in/projects/${project.slug}`
     }
   }
 }

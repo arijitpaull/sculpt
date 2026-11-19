@@ -7,7 +7,7 @@ export const metadata = {
   description:
     "Tell SCULPT about your app idea before we get on a call — scope, platform, budget, and timeline in one quick form.",
   alternates: {
-    canonical: "https://www.sculpt.work/project-inquiry",
+    canonical: "https://www.sculptvisions.in/project-inquiry",
   },
   robots: {
     index: false,

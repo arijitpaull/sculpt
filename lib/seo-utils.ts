@@ -88,7 +88,7 @@ export interface SEOData {
       provider: {
         '@type': 'Organization',
         name: service.provider,
-        url: 'https://www.sculpt.work'
+        url: 'https://www.sculptvisions.in'
       },
       serviceType: service.serviceType,
       areaServed: {
@@ -368,7 +368,7 @@ export interface SEOData {
       creator: {
         '@type': 'Organization',
         name: work.creator,
-        url: 'https://www.sculpt.work'
+        url: 'https://www.sculptvisions.in'
       },
       genre: work.genre,
       keywords: work.keywords.join(', '),
@@ -467,7 +467,7 @@ export interface SEOData {
         name: article.publisher,
         logo: {
           '@type': 'ImageObject',
-          url: 'https://www.sculpt.work/images/s_logo.png'
+          url: 'https://www.sculptvisions.in/images/s_logo.png'
         }
       },
       ...(article.wordCount && { wordCount: article.wordCount }),
@@ -756,7 +756,7 @@ export interface SEOData {
       title: "SCULPT - Premier App Development Freelancing Agency | Hire Expert Developers",
       description: "SCULPT is a leading software freelancing agency specializing in mobile app development, web development, and AI solutions. Hire expert developers through Fiverr, Upwork, or direct consultation. Custom software development for startups and enterprises.",
       keywords: generateAIKeywords("app", ["Flutter", "React Native", "Next.js", "OpenAI", "Supabase"], "India"),
-      canonicalUrl: "https://www.sculpt.work",
+      canonicalUrl: "https://www.sculptvisions.in",
       ogImage: "/images/s_banner.png"
     }),
   
@@ -765,7 +765,7 @@ export interface SEOData {
       title: "Mobile App Development Services | Flutter & React Native Experts | SCULPT",
       description: "Professional mobile app development services using Flutter and React Native. Custom iOS and Android apps for startups and enterprises. Hire SCULPT's expert mobile developers on Fiverr, Upwork, or directly.",
       keywords: generateAIKeywords("mobile app", ["Flutter", "React Native", "iOS", "Android", "Firebase"], "India"),
-      canonicalUrl: "https://www.sculpt.work/services/app-development",
+      canonicalUrl: "https://www.sculptvisions.in/services/app-development",
       ogImage: "/images/app-development-banner.png"
     }),
   
@@ -773,7 +773,7 @@ export interface SEOData {
       title: "Web Development Services | Next.js & React Experts | SCULPT Agency",
       description: "Custom web development services using Next.js, React, and modern frameworks. Responsive websites, web applications, and e-commerce solutions. Professional web developers available for hire.",
       keywords: generateAIKeywords("web", ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel"], "India"),
-      canonicalUrl: "https://www.sculpt.work/services/web-development",
+      canonicalUrl: "https://www.sculptvisions.in/services/web-development",
       ogImage: "/images/web-development-banner.png"
     }),
   
@@ -781,7 +781,7 @@ export interface SEOData {
       title: "AI Development Services | OpenAI Integration & Custom AI Solutions | SCULPT",
       description: "Expert AI development services including OpenAI integration, chatbots, and custom AI solutions. Transform your business with intelligent automation and AI-powered applications.",
       keywords: generateAIKeywords("AI", ["OpenAI", "ChatGPT", "Machine Learning", "Artificial Intelligence", "Automation"], "India"),
-      canonicalUrl: "https://www.sculpt.work/services/ai-development",
+      canonicalUrl: "https://www.sculptvisions.in/services/ai-development",
       ogImage: "/images/ai-development-banner.png"
     })
   }
@@ -806,13 +806,13 @@ export interface SEOData {
       
       instagram: `✨ ${project.title} ✨\n\n${project.description.substring(0, 100)}...\n\n🛠️ Tech: ${project.technologies.slice(0, 3).join(', ')}\n📱 Category: ${project.category}\n\n#SCULPT #AppDevelopment #${project.technologies[0]} #TechInnovation #SoftwareAgency`,
       
-      facebook: `🎉 Proud to showcase ${project.title}!\n\n${project.description}\n\nThis ${project.category.toLowerCase()} project demonstrates our expertise in ${project.technologies.join(', ')}.\n\nLooking for custom software development? SCULPT is here to bring your vision to life!\n\n💼 Available on Fiverr, Upwork, or direct hire\n🌐 sculpt.work`
+      facebook: `🎉 Proud to showcase ${project.title}!\n\n${project.description}\n\nThis ${project.category.toLowerCase()} project demonstrates our expertise in ${project.technologies.join(', ')}.\n\nLooking for custom software development? SCULPT is here to bring your vision to life!\n\n💼 Available on Fiverr, Upwork, or direct hire\n🌐 sculptvisions.in`
     }
   }
   
   // Generate sitemap entries
   export function generateSitemapEntries(projects: Array<{slug: string}>) {
-    const baseUrl = 'https://www.sculpt.work'
+    const baseUrl = 'https://www.sculptvisions.in'
     
     const staticPages = [
       { url: baseUrl, changeFrequency: 'weekly' as const, priority: 1.0 },

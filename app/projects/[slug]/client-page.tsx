@@ -26,20 +26,20 @@ export default function ClientProjectPage({ project }: ClientProjectPageProps) {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "CreativeWork",
-            "@id": `https://www.sculpt.work/projects/${project.slug}#creativework`,
+            "@id": `https://www.sculptvisions.in/projects/${project.slug}#creativework`,
             "name": project.title,
             "description": project.fullDescription,
-            "image": `https://www.sculpt.work${project.image}`,
-            "url": `https://www.sculpt.work/projects/${project.slug}`,
+            "image": `https://www.sculptvisions.in${project.image}`,
+            "url": `https://www.sculptvisions.in/projects/${project.slug}`,
             "author": {
               "@type": "Organization",
               "name": "SCULPT",
-              "url": "https://www.sculpt.work"
+              "url": "https://www.sculptvisions.in"
             },
             "creator": {
               "@type": "Organization", 
               "name": "SCULPT",
-              "url": "https://www.sculpt.work"
+              "url": "https://www.sculptvisions.in"
             },
             "dateCreated": "2024-01-01",
             "datePublished": "2024-01-01",
@@ -57,7 +57,7 @@ export default function ClientProjectPage({ project }: ClientProjectPageProps) {
               "applicationCategory": project.category,
               "operatingSystem": "Cross-platform",
               "softwareVersion": "1.0",
-              "screenshot": project.gallery.map(img => `https://www.sculpt.work${img}`)
+              "screenshot": project.gallery.map(img => `https://www.sculptvisions.in${img}`)
             },
             "review": {
               "@type": "Review",
