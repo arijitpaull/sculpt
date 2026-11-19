@@ -150,8 +150,25 @@ html.lenis body {
   to { transform: translateX(calc(-50% - 0.5rem)); }
 }
 
+/* Section word strips (components/marquee-divider.tsx): two identical halves,
+   moved exactly one half so the loop restarts without a jump. */
+.marquee-track {
+  animation: marquee-left var(--marquee-duration, 60s) linear infinite;
+  will-change: transform;
+}
+
+.marquee-reverse {
+  animation-direction: reverse;
+}
+
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .wall-track {
+  .wall-track,
+  .marquee-track {
     animation: none;
   }
 }

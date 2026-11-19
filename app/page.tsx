@@ -17,6 +17,7 @@ import { socialLinks } from "@/data/social-links"
 import { siteConfig } from "@/data/site-config"
 import dynamic from "next/dynamic"
 import CountryCodeDropdown from "@/components/country-code-dropdown"
+import MarqueeDivider from "@/components/marquee-divider"
 import { pricingTiers } from "@/lib/pricingData"
 
 // Below-fold components — dynamically imported to reduce initial bundle
@@ -1570,22 +1571,7 @@ export default function Home() {
 </section>
 
         {/* Animated Divider - TESTIMONIALS */}
-        <div className="relative py-1 overflow-hidden">
-          <motion.div
-            animate={{ x: [0, -1000] }}
-            transition={{
-              x: {
-                repeat: Infinity,
-                repeatType: "loop",
-                duration: 25,
-                ease: "linear",
-              },
-            }}
-            className="whitespace-nowrap text-[80px] md:text-[120px] font-bold opacity-10"
-          >
-            TESTIMONIALSTESTIMONIALSTESTIMONIALSTESTIMONIALSTESTIMONIALSTESTIMONIALSTESTIMONIALS
-          </motion.div>
-        </div>
+        <MarqueeDivider word="TESTIMONIALS" className="py-1" />
         <div className="text-center pb-8 -mt-4">
   <h2 className="text-[#EAEFFF]/50 text-3xl md:text-xxl font-medium">Real clients. Real results.</h2>
 </div>
@@ -1596,22 +1582,7 @@ export default function Home() {
 
 
                 {/* Animated Divider - PROJECTS */}
-                <div className="relative py-10 overflow-hidden">
-          <motion.div
-            animate={{ x: [-1000, 0] }}
-            transition={{
-              x: {
-                repeat: Infinity,
-                repeatType: "loop",
-                duration: 25,
-                ease: "linear",
-              },
-            }}
-            className="whitespace-nowrap text-[80px] md:text-[120px] font-bold opacity-10"
-          >
-            PROJECTSPROJECTSPROJECTSPROJECTSPROJECTSPROJECTSPROJECTSPROJECTSPROJECTSPROJECTS
-          </motion.div>
-        </div>
+                <MarqueeDivider word="PROJECTS" reverse className="py-10" />
         <div className="text-center pb-8 -mt-4">
   <h2 className="text-[#EAEFFF]/50 text-3xl md:text-xxl font-medium">Our best work. Shipped and live.</h2>
 </div>
@@ -1619,22 +1590,7 @@ export default function Home() {
         <ProjectGallery />
 
         {/* Animated Divider - PRICING */}
-        <div className="relative py-10 overflow-hidden">
-          <motion.div
-            animate={{ x: [0, -1000] }}
-            transition={{
-              x: {
-                repeat: Infinity,
-                repeatType: "loop",
-                duration: 25,
-                ease: "linear",
-              },
-            }}
-            className="whitespace-nowrap text-[80px] md:text-[120px] font-bold opacity-10"
-          >
-            PRICINGPRICINGPRICINGPRICINGPRICINGPRICINGPRICINGPRICINGPRICINGPRICING
-          </motion.div>
-        </div>
+        <MarqueeDivider word="PRICING" className="py-10" />
         <div className="text-center pb-8 -mt-4">
   <h2 className="text-[#EAEFFF]/50 text-3xl md:text-xxl font-medium">Simple, fixed-scope pricing.</h2>
 </div>
@@ -1642,22 +1598,7 @@ export default function Home() {
         <PricingSection onSelectPackage={openServiceFormWithPackage} />
 
         {/* Animated Divider - FLOW */}
-        <div className="relative py-12 overflow-hidden">
-  <motion.div
-    animate={{ x: [-1000, 0] }}
-    transition={{
-      x: {
-        repeat: Infinity,
-        repeatType: "loop",
-        duration: 20,
-        ease: "linear",
-      },
-    }}
-    className="whitespace-nowrap text-[80px] md:text-[120px] font-bold opacity-10"
-  >
-    FLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOWFLOW
-  </motion.div>
-</div>
+        <MarqueeDivider word="FLOW" reverse className="py-12" />
 <div className="text-center pb-8 -mt-4">
   <h2 className="text-[#EAEFFF]/50 text-3xl md:text-xxl font-medium">From idea to App Store. Our exact process.</h2>
 </div>
@@ -1789,15 +1730,7 @@ export default function Home() {
 
 
         {/* Animated Divider - SERVICES */}
-<div className="relative py-12 overflow-hidden">
-  <motion.div
-    animate={{ x: [0, -1000] }}
-    transition={{ x: { repeat: Infinity, repeatType: "loop", duration: 20, ease: "linear" } }}
-    className="whitespace-nowrap text-[80px] md:text-[120px] font-bold opacity-10"
-  >
-    SERVICESSERVICESSERVICESSERVICESSERVICESSERVICESSERVICES
-  </motion.div>
-</div>
+<MarqueeDivider word="SERVICES" className="py-12" />
 <div className="text-center pb-8 -mt-4">
   <h2 className="text-[#EAEFFF]/50 text-3xl md:text-xxl font-medium">One team. The full stack. Zero handoffs.</h2>
 </div>
